@@ -66,7 +66,7 @@ const onChange = (value) => {
 };
 const Filter = () => {
     return <div className='flex'>
-        <IoFilterSharp className='size-7 text-[#D9D9D9] pr-1'/> <Cascader options={options} onChange={onChange} placeholder="Lọc theo"
+        <Cascader options={options} onChange={onChange} placeholder="Lọc theo" prefix={<IoFilterSharp className='size-6 text-[#D9D9D9] pr-1' />}
             style={{
                 width: '300px',
             }} />

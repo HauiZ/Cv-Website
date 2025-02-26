@@ -9,6 +9,10 @@ import { FiPhoneCall } from "react-icons/fi";
 import { MdEmail } from "react-icons/md";
 import Listjob from "../../component/ListJob/Listjob";
 import BrandList from "../../component/BrandList/BrandList";
+import Topjob from "../../component/Topjob/Topjob";
+import Topbrand from "../../component/Topjob/Topbrand";
+import Slider from "../../component/Slider/Slider";
+import { FaAngleRight } from "react-icons/fa6";
 
 const Notification = () => (
     <div className="flex flex-col justify-center items-center gap-y-1">
@@ -19,9 +23,50 @@ const Notification = () => (
             <button className="noti w-[250px] bg-white flex gap-x-1"> <IoLocationSharp size="1.5rem" />Địa điểm <IoIosArrowDown size="1.1rem" /></button>
             <button className="noti w-[150px] text-[white] bg-[#5DDA33] hover:bg-[white] hover:text-[#5DDA33]">Tìm kiếm</button>
         </div>
-        <div className="w-[800px] h-[240px] bg-white mt-2 flex items-center relative">
-            <button className="w-[30px] border-[#5DDA33] border-2">a</button>
-            <button className="w-[30px] border-[#5DDA33] border-2 right-0 absolute">b</button>
+        <div className="flex justify-center mt-2 gap-x-10">
+            <div className="w-[300px] h-[240px] bg-white rounded-2xl">
+                <ul className="space-y-5 ml-3 pr-3">
+                    <li>
+                        <div className=" hover:text-[#5DDA33] flex justify-between">
+                            <a href="#" className="font-semibold">Công nghệ thông tin</a>
+                            <FaAngleRight className="text-[#D9D9D9]" />
+                        </div>
+                    </li>
+                    <li>
+                        <div className=" hover:text-[#5DDA33] flex justify-between">
+                            <a href="#" className="font-semibold">Kinh doanh - Bán hàng</a>
+                            <FaAngleRight className="text-[#D9D9D9]" />
+                        </div>
+                    </li>
+                    <li>
+                        <div className=" hover:text-[#5DDA33] flex justify-between">
+                            <a href="#" className="font-semibold">Bất động sản - Xây dựng</a>
+                            <FaAngleRight className="text-[#D9D9D9]" />
+                        </div>
+                    </li>
+                    <li>
+                        <div className=" hover:text-[#5DDA33] flex justify-between">
+                            <a href="#" className="font-semibold">Tài chính - Ngân hàng</a>
+                            <FaAngleRight className="text-[#D9D9D9]" />
+                        </div>
+                    </li>
+                    <li>
+                        <div className=" hover:text-[#5DDA33] flex justify-between">
+                            <a href="#" className="font-semibold">Markerting - Quảng cáo</a>
+                            <FaAngleRight className="text-[#D9D9D9]" />
+                        </div>
+                    </li>
+                    <li>
+                        <div className=" hover:text-[#5DDA33] flex justify-between">
+                            <a href="#" className="font-semibold">Nhân sự - Hành chính</a>
+                            <FaAngleRight className="text-[#D9D9D9]" />
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div className="w-[600px] h-[240px] relative rounded-2xl">
+                <Slider />
+            </div>
         </div>
     </div>
 
@@ -61,8 +106,10 @@ function Home() {
         <div className="w-full h-[560px] bg-[#F5F5F5]">
             <Listjob />
         </div>
-        <div className="w-full h-[900px]">
+        <div className="w-full h-[1010px]">
             <BrandList />
+            <Topjob />
+            <Topbrand />
         </div>
         <Hotline />
         <div className="w-full h-[300px]"></div>

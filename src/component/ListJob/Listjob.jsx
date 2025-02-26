@@ -26,7 +26,7 @@ const LikeButton = () => {
 const Listjob = () => {
     return <div className="flex justify-center">
         <div className="">
-            <h1 className="text-3xl font-bold text-[#5DDA33] mb-3">Danh sách việc làm</h1>
+            <h1 className="text-3xl font-bold text-[#0C8E5E] mb-3">Danh sách việc làm</h1>
             <div className="flex gap-x-10">
                 <Filter />
                 <button className="bg-[#E0E0E0] ml-30 p-2 rounded-2xl">TP Hồ Chí Minh</button>

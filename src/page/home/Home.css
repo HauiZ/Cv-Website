@@ -1,0 +1,11 @@
+
+@import "tailwindcss";
+
+@layer components{
+    .header {
+        @apply w-full h-[75px] bg-white fixed z-50 object-contain;
+    }
+    .noti {
+        @apply h-[50px] border-2 px-4 py-2 ml-3 rounded-[20px] font-semibold items-center justify-between border-[#E0E0E0] hover:text-[#5DDA33];
+    }
+}

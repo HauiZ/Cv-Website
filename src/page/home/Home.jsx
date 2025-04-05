@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState, useEffect} from "react";
 import './Home.css'
 import Header from '../../component/Header/Header'
 import Footer from "../../component/Footer/Footer";
@@ -11,26 +11,7 @@ import { FaAngleRight } from "react-icons/fa6";
 import Header1 from '../../component/Header/Header1'
 import Hotline from "../../component/HotLine/HotLine";
 import Search from "../../component/Search/Search";
-
-const SwitchHeader = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const handleLogin = () => {
-        setIsLoggedIn(true);
-    };
-    
-    const handleLogout = () => {
-        setIsLoggedIn(false);
-    };
-    return (
-        <div>
-            {isLoggedIn ? (
-                <Header1 func={handleLogout}/>
-            ) : (
-                <Header func={handleLogin}/>
-            )}
-        </div>
-    );
-};
+import { useAuth } from "../../auth/AuthContext";
 
 const Mix = () => (
     <div className="flex flex-col justify-center items-center gap-y-1">
@@ -86,9 +67,26 @@ const Mix = () => (
 );
 
 function Home() {
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const { logout } = useAuth(); 
+
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        setIsAuthenticated(!!token);
+    }, []); 
+
+    const handleLogout = () => {
+        logout(); 
+        setIsAuthenticated(false); 
+    };
+
     return <>
         <div className="header">
-            <SwitchHeader />
+            {isAuthenticated ? (
+                <Header1  onLogout={handleLogout} />
+            ) : (
+                <Header />
+            )}
         </div>
         <div className="w-full h-[450px] bg-[url('../../image/background_ColorGreen.png')] bg-cover pt-[75px]">
             <Mix />

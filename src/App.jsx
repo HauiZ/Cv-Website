@@ -1,16 +1,27 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import './App.css'
-import Home from './page/home/Home'
-import JobDiscrip from './page/jobDiscrip/JobDiscrip'
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import routes from "./routes";
+import { useEffect, useState } from "react";
+
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setIsAuthenticated(!!token);
+  }, []);
+
   return (
-    <Router>
+    <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/job" element={<JobDiscrip />} />
+        {routes.map((route, index) => {
+          if (route.isPrivate && !isAuthenticated) {
+            return <Route key={index} path={route.path} element={<Navigate to="/login" replace />} />;
+          }
+          return <Route key={index} path={route.path} element={route.element} />;
+        })}
       </Routes>
-    </Router>
-  )
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;

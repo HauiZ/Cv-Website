@@ -289,7 +289,7 @@ function Search() {
             <div className="w-[200px] bg-white">  <ListJob /></div>
             <input type="text" placeholder="| Vị trí tuyển dụng & tên công ty" className="w-[330px] h-[50px]" />
             <div className="w-[250px] bg-white"> <ListLocation /> </div>
-            <button className="w-[150px] h-[50px] px-4 py-2 ml-3 rounded-[20px] font-semibold items-center
+            <button className="w-[150px] h-[40px] px-4 py-2 ml-3 rounded-[20px] font-semibold items-center
             justify-between text-[white] bg-[#5DDA33] hover:bg-[white] hover:text-[#5DDA33]">Tìm kiếm</button>
         </div>
     )

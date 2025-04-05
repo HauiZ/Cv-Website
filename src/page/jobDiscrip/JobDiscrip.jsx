@@ -2,6 +2,7 @@ import React from "react";
 import { FaRegClock, FaMapMarkerAlt, FaDollarSign } from "react-icons/fa";
 import Footer from "../../component/Footer/Footer";
 import Header1 from "../../component/Header/Header1";
+import Search from "../../component/Search/Search";
 const JobDiscrip = () => {
   return (
     <div className="bg-gray-100 min-h-screen">
@@ -9,10 +10,10 @@ const JobDiscrip = () => {
         <Header1 />
       </header>
 
-      <div className="p-4 flex justify-center bg-white shadow-md">
-        <input placeholder="Vị trí tuyển dụng & Tên công ty" className="mr-2 w-1/3" />
-        <input placeholder="Địa điểm" className="mr-2 w-1/4" />
-        <button variant="default">Tìm kiếm</button>
+      <div className="p-4 flex justify-center bg-white shadow-md bg-[url('../../image/background_ColorGreen.png')]">
+        <div>
+          <Search />
+        </div>
       </div>
 
       <div className="container mx-auto mt-6 p-4 grid grid-cols-3 gap-6">
@@ -62,7 +63,7 @@ const JobDiscrip = () => {
         </div>
       </div>
 
-      
+
       <footer>
         <Footer />
       </footer>

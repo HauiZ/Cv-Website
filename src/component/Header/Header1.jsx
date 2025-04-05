@@ -6,12 +6,19 @@ import { Avatar, Space } from 'antd';
 import { DownOutlined, SettingOutlined } from '@ant-design/icons';
 import { Dropdown } from 'antd';
 import { CiLogout } from "react-icons/ci";
+import { useAuth } from "../../auth/AuthContext";
+import { useNavigate } from "react-router-dom";
 
-const Header1 = ({func}) => {
+const Header1 = ({ onLogout }) => {
+    const { user, logout } = useAuth();
+    const navigate = useNavigate();
+
     const items = [
         {
             key: '1',
-            label: 'My Account',
+            label: <span>
+                {user ? user.email : "Loading..."} {/* Conditional check */}
+            </span>,
             disabled: true,
         },
         {
@@ -37,14 +44,17 @@ const Header1 = ({func}) => {
         },
         {
             key: '5',
-            label: <a href="{func}" >
+            label: <button onClick={() => {
+                onLogout();
+                navigate("/");
+            }}>
                 Logout
-            </a>,
+            </button >,
             icon: <CiLogout />,
             extra: '⌘L',
         },
     ];
-    
+
     const User = () => (
         <Dropdown
             menu={{

@@ -1,7 +1,8 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import routes from "./routes";
 import { useEffect, useState } from "react";
-
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
@@ -20,6 +21,7 @@ function App() {
           return <Route key={index} path={route.path} element={route.element} />;
         })}
       </Routes>
+      <ToastContainer />
     </BrowserRouter>
   );
 }

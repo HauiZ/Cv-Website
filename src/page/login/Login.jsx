@@ -18,8 +18,8 @@ export default function Login() {
         password,
       });
       if (res.data.token) {
-        login(res.data.token); // Call login function to set the token
-        navigate("/"); // Redirect to the homepage
+        login(res.data.token);
+        navigate("/");
       } else {
         setMessage("Login failed: No token received");
       }
@@ -28,29 +28,46 @@ export default function Login() {
     }
   };
 
+  const handleGoogleLogin = () => {
+    window.location.href = 'http://localhost:3000/api/auth/google';
+  };
+
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
       <div className="p-6 bg-white shadow-lg rounded-lg w-96">
         <h2 className="text-2xl font-bold mb-4">Login</h2>
+
         <form onSubmit={handleLogin}>
-          <input 
-            type="email" 
-            placeholder="Email" 
-            className="w-full p-2 border rounded mb-2" 
-            value={email} 
+          <input
+            type="email"
+            placeholder="Email"
+            className="w-full p-2 border rounded mb-2"
+            value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-          <input 
-            type="password" 
-            placeholder="Password" 
-            className="w-full p-2 border rounded mb-2" 
-            value={password} 
+          <input
+            type="password"
+            placeholder="Password"
+            className="w-full p-2 border rounded mb-2"
+            value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <button className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-700">Login</button>
+          <button className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-700">
+            Login
+          </button>
         </form>
+
+        <hr className="my-4" />
+
+        <button
+          onClick={handleGoogleLogin}
+          className="w-full bg-red-500 text-white p-2 rounded hover:bg-red-600"
+        >
+          Login with Google
+        </button>
+
         {message && <p className="mt-2 text-red-500">{message}</p>}
       </div>
     </div>

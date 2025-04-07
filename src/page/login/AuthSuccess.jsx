@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../auth/AuthContext';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 const AuthSuccess = () => {
     const location = useLocation();
@@ -16,7 +16,7 @@ const AuthSuccess = () => {
             login(token);
             toast.success('Đăng nhập thành công!');
             navigate('/');
-        } else {
+        } else if (!token) {
             toast.error('Đăng nhập thất bại!');
             navigate('/login');
         }

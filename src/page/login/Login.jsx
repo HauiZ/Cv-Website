@@ -3,6 +3,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../auth/AuthContext";
 
+import { toast } from "react-toastify";
+
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,6 +21,7 @@ export default function Login() {
       });
       if (res.data.token) {
         login(res.data.token);
+        toast.success('Đăng nhập thành công!');
         navigate("/");
       } else {
         setMessage("Login failed: No token received");

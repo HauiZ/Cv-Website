@@ -10,14 +10,14 @@ import { useAuth } from "../../auth/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 const Header1 = ({ onLogout }) => {
-    const { user, logout } = useAuth();
+    const { user, logout, candidateInfo, recruiterInfo } = useAuth();
     const navigate = useNavigate();
 
     const items = [
         {
             key: '1',
             label: <span>
-                {user ? user.email : "Loading..."} {/* Conditional check */}
+                {candidateInfo ? candidateInfo.email : "Loading..."} {/* Conditional check */}
             </span>,
             disabled: true,
         },

@@ -55,11 +55,11 @@ const OverViewContent = () => {
 
 
     </div>
-      {/* <div>
+      <div>
         <CvCard></CvCard>
         <CreateCvFrame></CreateCvFrame>
       </div>
-     */}
+    
     </>
   );
 };

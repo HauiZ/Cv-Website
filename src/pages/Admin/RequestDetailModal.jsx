@@ -5,7 +5,7 @@ const RequestDetailModal = ({ request, onClose, onApprove, onReject }) => {
   if (!request) return null;
 
   return (
-    <div className="fixed inset-0 bg-opacity-50 flex justify-center items-center z-50">
+    <div className="fixed inset-0 bg-black/75 flex justify-center items-center z-50">
       <div className="bg-white p-5 rounded-md shadow-md relative min-w-[300px] max-w-[400px]">
         <button
           onClick={onClose}

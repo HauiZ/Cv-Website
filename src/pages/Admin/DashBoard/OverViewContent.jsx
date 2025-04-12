@@ -6,8 +6,6 @@ import {
   faSpinner
 } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
-import CvCard from "./CvCard";
-import CreateCvFrame from "./CreateCvFrame";
 
 const stats = [
   {
@@ -55,11 +53,7 @@ const OverViewContent = () => {
 
 
     </div>
-      <div>
-        <CvCard></CvCard>
-        <CreateCvFrame></CreateCvFrame>
-      </div>
-    
+
     </>
   );
 };

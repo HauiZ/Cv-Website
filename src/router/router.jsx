@@ -4,10 +4,13 @@ import LoginBusiness from '../pages/Login/LoginBusiness'
 import SignUpBusiness from '../pages/SignUp/SignUpBusiness'
 import ForgotPassword from '../pages/ForgotPassword/ForgotPassword'
 import InputNewPassword from '../pages/ForgotPassword/InputNewPassword'
-import AdminHome from '../pages/Admin/AminHome'
+import AdminHome from '../pages/Admin/DashBoard/AdminHome'
 import { createBrowserRouter } from 'react-router-dom'
+import AdminLayout from '../layouts/adminLayout'
+import { adminRoutes } from './adminRoutes'
 
 const router = createBrowserRouter([
+  ...adminRoutes,
   {
     path: '/',
     element: <LoginPersonal />,
@@ -29,10 +32,16 @@ const router = createBrowserRouter([
     path: '/ForgotPassword',
     element: <ForgotPassword />,
   },
-  {
-    path: '/test',
-    element: <AdminHome />,
-  },
+  // {
+  //   path: '/test',
+  //   element: <AdminLayout/>,
+  //   children:[
+  //     {
+  //       path: "/test/one",
+  //       element: <AdminHome/>
+  //     }
+  //   ]
+  // },
 ]);
 
 export default router;

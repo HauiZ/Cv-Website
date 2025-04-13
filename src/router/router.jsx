@@ -8,12 +8,18 @@ import AdminHome from '../pages/Admin/DashBoard/AdminHome'
 import { createBrowserRouter } from 'react-router-dom'
 import AdminLayout from '../layouts/adminLayout'
 import { adminRoutes } from './adminRoutes'
+import Home from '../pages/home/Home'
 
 const router = createBrowserRouter([
   ...adminRoutes,
   {
-    path: '/',
+    path: '/login',
     element: <LoginPersonal />,
+    errorElement: <div>404 ERROR</div>,
+  },
+  {
+    path: '/',
+    element: <Home />,
     errorElement: <div>404 ERROR</div>,
   },
   {
@@ -22,7 +28,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/Home',
-    element: <div>done</div>,
+    element: <Home/>,
   },
   {
     path: '/SignUp',

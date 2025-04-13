@@ -4,14 +4,14 @@ import './index.css'
 import App from './App.jsx'
 import { ToastProvider } from "./contexts/ToastContext";
 import { LoaderProvider } from './contexts/LoaderContext';
-import { AuthWrapper } from './contexts/AuthContext.jsx';
+import { AuthProvider } from './contexts/AuthContext';
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <ToastProvider>
       <LoaderProvider>
-        <AuthWrapper>
+        <AuthProvider>
           <App />
-        </AuthWrapper>
+        </AuthProvider>
       </LoaderProvider>
     </ToastProvider>
   </StrictMode>,

@@ -5,7 +5,7 @@ import { signUpPersonalSchema } from "../../utils/ValidationSchemas";
 import { useForm } from 'react-hook-form';
 import useLoading from "../../hooks/useLoading";
 import Loader from "../../components/Loader";
-import { createUsersApi } from "../../utils/api";
+import { createUsersApi } from "../../services/api";
 import { useToast } from "../../contexts/ToastContext";
 import { useNavigate } from "react-router";
 import {faUser,faLock} from "../../utils/fontAwsomeLib"

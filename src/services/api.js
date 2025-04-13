@@ -1,4 +1,4 @@
-import axios from './axios.customize';
+import axios from '../utils/axios.customize';
 
 
 const createUsersApi = (username,email,password,confirmpassword)=>{
@@ -13,7 +13,7 @@ const createUsersApi = (username,email,password,confirmpassword)=>{
 
 }
 const loginApi= (email,password)=>{
-  const URL_API = "/auth/login";
+  const URL_API = "/auth/login/candidate";
 
   const data = {
     email, password
@@ -21,6 +21,11 @@ const loginApi= (email,password)=>{
   console.log("Backend URL:", import.meta.env.VITE_BACKEND_URL);
 
   return axios.post(URL_API, data);
+}
+const getAccountApi = () =>{
+  const URL_API = "/auth/getAccount";
+  const res = axios.get(URL_API);
+  return res;
 }
 
 export{

@@ -6,10 +6,10 @@ import Input from "../../components/BttnInput";
 import BttnSignIn from "../../components/BttnSignIn";
 import useLoading from "../../hooks/useLoading";
 import Loader from "../../components/Loader";
-import { loginApi } from "../../utils/api";
 import { useToast } from "../../contexts/ToastContext";
 import { useNavigate } from "react-router";
 import {  faLock } from "../../utils/fontAwsomeLib";
+import useAuth from "../../hooks/useAuth";
 
 function LoginPersonal() {
   const navigate = useNavigate();
@@ -23,25 +23,24 @@ function LoginPersonal() {
   });
 
   const { loading, withLoading } = useLoading(); // fix: destructure properly
-
+  const {login} = useAuth();
   const { showToast } = useToast();
 
   const onSubmit = async (data) => {
-    const { email, password } = data;
     await withLoading(async () => {
       await new Promise((res) => setTimeout(res, 2000)); // fake delay
-
-      try {
-        const res = await loginApi(email, password);
-        showToast("Đăng nhập thành công!", "success");
-        localStorage.setItem("access_token", res.data.token)
-        console.log("API Response:", res);
-        navigate('/Home');
-      } catch (err) {
-        const errorMessage = err?.response?.data?.message || 'Có lỗi xảy ra!';
-        showToast(errorMessage, "error");
-        console.error(errorMessage)
-      }
+      await login(data);
+      // try {
+      //   const res = await loginApi(email, password);
+      //   showToast("Đăng nhập thành công!", "success");
+      //   localStorage.setItem("access_token", res.data.token)
+      //   console.log("API Response:", res);
+      //   navigate('/Home');
+      // } catch (err) {
+      //   const errorMessage = err?.response?.data?.message || 'Có lỗi xảy ra!';
+      //   showToast(errorMessage, "error");
+      //   console.error(errorMessage)
+      // }
     });
   };
 

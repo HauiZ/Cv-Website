@@ -2,7 +2,7 @@ import React, { useState, useEffect} from "react";
 import './Home.css'
 import Header from './component/Header/Header'
 import Footer from "./component/Footer/Footer";
-import Listjob from "./component/ListJob/Listjob";
+import ListJobBox from "./component/ListJob/Listjob";
 import BrandList from "./component/BrandList/BrandList";
 import Topjob from "./component/Topjob/Topjob";
 import Topbrand from "./component/Topjob/Topbrand";
@@ -73,7 +73,9 @@ function Home() {
     useEffect(() => {
         const token = localStorage.getItem("acess_token");
         setIsAuthenticated(!!token);
+        
     }, []); 
+
 
     const handleLogout = () => {
         logout(); 
@@ -95,8 +97,8 @@ function Home() {
         }>
             <Mix />
         </div>
-        <div className="w-full h-[560px] bg-[#F5F5F5]">
-            <Listjob />
+        <div className="w-full h-[630px] bg-[#F5F5F5]">
+            <ListJobBox />
         </div>
         <div className="w-full h-[1010px]">
             <BrandList />

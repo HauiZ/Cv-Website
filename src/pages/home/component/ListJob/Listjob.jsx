@@ -1,53 +1,71 @@
-import React from "react";
-import Filter from "./Filter.jsx";
-import { FaAngleRight } from "react-icons/fa6";
-import { FaAngleLeft } from "react-icons/fa6";
-import Listjobbox from "./Listjobbox.jsx";
+import React, { useEffect, useState } from "react";
+import { fetchJobs } from "../../../../services/api";
+import JobItem from "./JobItem";
+import Filter from "./Filter";
+import LocationFilter from "./LocationFilter";
+import Pagination from "./Pagination";
 
-const LikeButton = () => {
-    const [liked, setLiked] = useState(false);
+const ListJobBox = () => {
+  const [jobs, setJobs] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalJobs, setTotalJobs] = useState(0);
+  const jobsPerPage = 9;
 
-    const handleClick = () => {
-        setLiked(!liked);
+  useEffect(() => {
+    const loadJobs = async () => {
+      const data = await fetchJobs();
+      setTotalJobs(data.length);
+      setJobs(data);
     };
+    loadJobs();
+  }, []);
 
-    return (
-        <button
-            onClick={handleClick}
-            className={`rounded-full p-1 size-6 absolute right-0 mt-1 mr-2 border-1
-                ${liked ? 'border-red-500' : 'border-[#0C8E5E]'}`
-            }
+  const totalPages = Math.ceil(totalJobs / jobsPerPage);
 
-        >
-            <GoHeartFill className={`${liked ? 'text-red-500' : 'text-[#0C8E5E]'}`} />
-        </button>
-    );
-};
-const Listjob = () => {
-    return <div className="flex justify-center">
-        <div className="">
-            <h1 className="text-3xl font-bold text-[#0C8E5E] mb-3">Danh sách việc làm</h1>
-            <div className="flex gap-x-10">
-                <Filter />
-                <button className="bg-[#E0E0E0] ml-30 p-2 rounded-2xl">TP Hồ Chí Minh</button>
-                <button className="bg-[#E0E0E0] p-2 rounded-2xl">Hà Nội</button>
-                <button className="bg-[#E0E0E0] p-2 rounded-2xl">Miền Nam</button>
-                <button className="bg-[#E0E0E0] p-2 rounded-2xl">Miền Bắc</button>
-            </div>
-            <Listjobbox />
-            
-            <div className="flex items-center justify-center mt-5 gap-x-10">
-                <button className="border-2 border-[#5DDA33] text-[#5DDA33] rounded-full">
-                    <FaAngleLeft />
-                </button>
-                <p className="text-center text-gray-500">Page 1 of 10</p>
-                <button className="border-2 border-[#5DDA33] text-[#5DDA33] rounded-full">
-                    <FaAngleRight />
-                </button>
-            </div>
+  // Get current jobs for the page
+  const indexOfLastJob = currentPage * jobsPerPage;
+  const indexOfFirstJob = indexOfLastJob - jobsPerPage;
+  const currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
+
+  // Change page
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+    // Scroll to top when changing page (optional)
+    window.scrollTo(0, 0);
+  };
+
+  return (
+    <div className="flex justify-center">
+      <div>
+        <div className="my-3">
+          <h1 className="text-3xl font-bold text-[#0C8E5E] ">
+            Danh sách việc làm
+          </h1>
+        </div>
+        <div className="flex gap-x-10 mb-5 justify-between">
+          <div>
+            <Filter />
+          </div>
+          <div className="">
+            <LocationFilter />
+          </div>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 mt- w-fit">
+          {currentJobs.map((job, index) => (
+            <JobItem key={job.id} job={job} />
+          ))}
         </div>
 
+        {totalPages > 1 && (
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
+        )}
+      </div>
     </div>
+  );
 };
 
-export default Listjob;
+export default ListJobBox;

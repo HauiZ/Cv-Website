@@ -1,0 +1,131 @@
+[
+  {
+    "id": 1,
+    "title": "Fullstack Developer",
+    "location": "TP.HCM",
+    "salary": "20 triệu",
+    "company": "ABC Tech",
+    "href": "/job/1",
+    "logo": "/logo.png",
+    "description": "Chi tiết công việc...",
+    "created_at": "2025-04-15T08:00:00Z"
+  },
+  {
+    "id": 2,
+    "title": "Backend Developer",
+    "location": "Đà Nẵng",
+    "salary": "18 triệu",
+    "company": "XYZ Corp",
+    "href": "/job/2",
+    "logo": "/logo.png",
+    "extra": "Field không cần thiết"
+  },
+  {
+    "id": 3,
+    "title": "Frontend Engineer",
+    "location": "Hà Nội",
+    "salary": "22 triệu",
+    "company": "VietSoft",
+    "href": "/job/3",
+    "logo": "/logo.png",
+    "description": "Phát triển giao diện người dùng",
+    "created_at": "2025-04-14T10:30:00Z"
+  },
+  {
+    "id": 4,
+    "title": "Mobile Developer",
+    "location": "TP.HCM",
+    "salary": "25 triệu",
+    "company": "MobileTech",
+    "href": "/job/4",
+    "logo": "/logo.png",
+    "description": "Phát triển ứng dụng di động",
+    "created_at": "2025-04-13T14:45:00Z"
+  },
+  {
+    "id": 5,
+    "title": "DevOps Engineer",
+    "location": "Hà Nội",
+    "salary": "30 triệu",
+    "company": "CloudViet",
+    "href": "/job/5",
+    "logo": "/logo.png",
+    "description": "Quản lý hệ thống cloud",
+    "created_at": "2025-04-12T09:15:00Z"
+  },
+  {
+    "id": 6,
+    "title": "UI/UX Designer",
+    "location": "TP.HCM",
+    "salary": "19 triệu",
+    "company": "DesignHub",
+    "href": "/job/6",
+    "logo": "/logo.png",
+    "description": "Thiết kế giao diện người dùng",
+    "created_at": "2025-04-11T11:20:00Z"
+  },
+  {
+    "id": 7,
+    "title": "Data Scientist",
+    "location": "Cần Thơ",
+    "salary": "24 triệu",
+    "company": "DataVN",
+    "href": "/job/7",
+    "logo": "/logo.png",
+    "description": "Phân tích dữ liệu lớn",
+    "created_at": "2025-04-10T16:00:00Z"
+  },
+  {
+    "id": 8,
+    "title": "Product Manager",
+    "location": "Đà Nẵng",
+    "salary": "27 triệu",
+    "company": "ProductNow",
+    "href": "/job/8",
+    "logo": "/logo.png",
+    "extra": "Làm việc từ xa"
+  },
+  {
+    "id": 9,
+    "title": "QA Engineer",
+    "location": "Hà Nội",
+    "salary": "17 triệu",
+    "company": "TestPro",
+    "href": "/job/9",
+    "logo": "/logo.png",
+    "description": "Kiểm thử phần mềm",
+    "created_at": "2025-04-09T13:45:00Z"
+  },
+  {
+    "id": 10,
+    "title": "Blockchain Developer",
+    "location": "TP.HCM",
+    "salary": "35 triệu",
+    "company": "BlockViet",
+    "href": "/job/10",
+    "logo": "/logo.png",
+    "description": "Phát triển ứng dụng blockchain",
+    "created_at": "2025-04-08T10:30:00Z"
+  },
+  {
+    "id": 11,
+    "title": "System Administrator",
+    "location": "Vũng Tàu",
+    "salary": "21 triệu",
+    "company": "SysAdmin",
+    "href": "/job/11",
+    "logo": "/logo.png",
+    "extra": "Hỗ trợ di chuyển"
+  },
+  {
+    "id": 12,
+    "title": "Game Developer",
+    "location": "TP.HCM",
+    "salary": "26 triệu",
+    "company": "GameStudio",
+    "href": "/job/12",
+    "logo": "/logo.png",
+    "description": "Phát triển game mobile",
+    "created_at": "2025-04-07T09:00:00Z"
+  }
+]

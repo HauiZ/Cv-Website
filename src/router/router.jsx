@@ -8,7 +8,9 @@ import AdminHome from '../pages/Admin/DashBoard/AdminHome'
 import { createBrowserRouter } from 'react-router-dom'
 import AdminLayout from '../layouts/adminLayout'
 import { adminRoutes } from './adminRoutes'
+import HomeLayout from "../layouts/HomeLayout";
 import Home from '../pages/home/Home'
+import ProfileCompany from '../pages/profileCompany/ProfileCompany'
 
 const router = createBrowserRouter([
   ...adminRoutes,
@@ -38,16 +40,16 @@ const router = createBrowserRouter([
     path: '/ForgotPassword',
     element: <ForgotPassword />,
   },
-  // {
-  //   path: '/test',
-  //   element: <AdminLayout/>,
-  //   children:[
-  //     {
-  //       path: "/test/one",
-  //       element: <AdminHome/>
-  //     }
-  //   ]
-  // },
+  {
+    path: '/test',
+    element: <HomeLayout/>,
+    children:[
+      {
+        path: "/test",
+        element: <ProfileCompany/>
+      }
+    ]
+  },
 ]);
 
 export default router;

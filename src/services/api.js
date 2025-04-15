@@ -25,10 +25,10 @@ const loginApi= (email,password)=>{
 const getAccountApi = () =>{
   const URL_API = "/auth/getAccount";
   const res = axios.get(URL_API);
-  return res;
+  return res.data;
 }
 
 export{
   loginApi,
-  createUsersApi
+  createUsersApi,
 }

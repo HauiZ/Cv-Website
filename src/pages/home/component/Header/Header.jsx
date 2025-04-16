@@ -8,6 +8,9 @@ const Header = () => {
   const handleLoginClick = () => {
     navigate("/login");
   };
+  const handleSignUpClick = () => {
+    navigate("/SignUp");
+  }
 
   return (
     <div className="w-full h-[75px] bg-white fixed top-0 left-0 z-50 object-contain">
@@ -39,7 +42,7 @@ const Header = () => {
           >
             Đăng nhập
           </button>
-          <button className="button text-[white] bg-[#5DDA33] hover:bg-[white] hover:text-[#5DDA33] ">
+          <button className="button text-[white] bg-[#5DDA33] hover:bg-[white] hover:text-[#5DDA33] " onClick={handleSignUpClick}>
             Đăng ký
           </button>
           <button className="button bg-[black] text-[white] hover:text-[#5DDA33] ">

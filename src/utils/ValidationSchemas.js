@@ -25,10 +25,10 @@ export const loginSchema = yup.object().shape({
 
 // Signup Personal
 export const signUpPersonalSchema = yup.object().shape({
-  username: yup.string().required("Please enter user name"),
+  userName: yup.string().required("Please enter user name"),
   email: emailSchema,
   password: passwordSchema,
-  confirmpassword: yup
+  confirmPassword: yup
     .string()
     .oneOf([yup.ref("password"), null], "Passwords do not match")
     .required("Please confirm your password"),

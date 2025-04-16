@@ -7,8 +7,8 @@ import BttnSignIn from "../../components/BttnSignIn";
 import useLoading from "../../hooks/useLoading";
 import Loader from "../../components/Loader";
 import { useToast } from "../../contexts/ToastContext";
-import { useNavigate } from "react-router";
-import {  faLock } from "../../utils/fontAwsomeLib";
+import { useNavigate } from "react-router-dom";  // Make sure to import from react-router-dom
+import { faLock } from "../../utils/fontAwsomeLib";
 import useAuth from "../../hooks/useAuth";
 
 function LoginPersonal() {
@@ -22,29 +22,16 @@ function LoginPersonal() {
     resolver: yupResolver(loginSchema),
   });
 
-  const { loading, withLoading } = useLoading(); // fix: destructure properly
-  const {login} = useAuth();
-  const { showToast } = useToast();
+  const { loading, withLoading } = useLoading();
+  // Pass the navigation function to useAuth
+  const { login } = useAuth((path) => navigate(path));  
 
   const onSubmit = async (data) => {
     await withLoading(async () => {
       await new Promise((res) => setTimeout(res, 2000)); // fake delay
       await login(data);
-      // try {
-      //   const res = await loginApi(email, password);
-      //   showToast("Đăng nhập thành công!", "success");
-      //   localStorage.setItem("access_token", res.data.token)
-      //   console.log("API Response:", res);
-      //   navigate('/Home');
-      // } catch (err) {
-      //   const errorMessage = err?.response?.data?.message || 'Có lỗi xảy ra!';
-      //   showToast(errorMessage, "error");
-      //   console.error(errorMessage)
-      // }
     });
   };
-
-
 
   return (
     <div className="flex flex-col relative">

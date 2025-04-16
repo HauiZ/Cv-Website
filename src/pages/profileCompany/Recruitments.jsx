@@ -1,9 +1,7 @@
 import React from "react";
 
 export default function Recruitments() {
-  const content = [
-
-  ]
+  const content = [];
   return (
     <div className="w-[33rem] h-[30rem]  mt-5 rounded-[1em] bg-white">
       {/* banner */}
@@ -16,9 +14,11 @@ export default function Recruitments() {
         </h1>
       </div>
       <div className="content p-5 text-[0.95rem] space-y-3 leading-relaxed">
-        {content.map((paragraph, index) => (
-          <p key={index}>{paragraph}</p>
-        ))}
+        <div>
+          {currentJobs.map((job, index) => (
+            <JobItem key={job.id} job={job} />
+          ))}
+        </div>
       </div>
     </div>
   );

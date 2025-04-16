@@ -1,13 +1,13 @@
 import axios from "../utils/axios.customize";
 
-const createUsersApi = (username, email, password, confirmpassword) => {
+const createUsersApi = (userName, email, password, confirmPassword) => {
   const URL_API = "/users/registerCandidate";
 
   const data = {
-    username,
+    userName,
     email,
     password,
-    confirmpassword,
+    confirmPassword,
   };
   console.log("Backend URL:", import.meta.env.VITE_BACKEND_URL);
 
@@ -46,4 +46,49 @@ const fetchJobs = async () => {
   }));
 };
 
-export { loginApi, createUsersApi, fetchJobs };
+// const fetchUserProfile = async (token) => {
+//   try {
+//     const response = await axios.get(
+//       "/users/getProfile" /*{
+//                 headers: {
+//                     Authorization: `Bearer ${token}`,
+//                 },
+//             }*/
+//     );
+//     const userData = response.data.user;
+//     setUser(userData);
+//     setRole(userData.roles);
+
+//     if (userData.roles?.includes("candidate") && userData.personalUser) {
+//       setCandidateInfo(userData.personalUser);
+//     } else {
+//       setCandidateInfo(null);
+//     }
+
+//     if (userData.roles?.includes("recruiter") && userData.companyUser) {
+//       setRecruiterInfo(userData.companyUser);
+//     } else {
+//       setRecruiterInfo(null);
+//     }
+
+//     setIsAdmin(userData.roles?.includes("admin"));
+//   } catch (error) {
+//     console.error("Lỗi khi lấy thông tin profile:", error);
+//     setUser(null);
+//     setRole(null);
+//     setCandidateInfo(null);
+//     setRecruiterInfo(null);
+//     setIsAdmin(false);
+//     localStorage.removeItem("access_token");
+//   } finally {
+//     setLoading(false);
+//   }
+// };
+
+const testApi = async () => {
+  const res = await axios.get("/users/getProfile");
+  return res; // chỉ lấy phần user
+};
+
+
+export { loginApi, createUsersApi, fetchJobs,testApi };

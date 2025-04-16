@@ -1,8 +1,0 @@
-
-@import "tailwindcss";
-
-@layer components{
-    .header {
-        @apply w-full h-[75px] bg-white fixed z-50 object-contain;
-    }
-}

@@ -15,9 +15,9 @@ export default function Recruitments() {
       </div>
       <div className="content p-5 text-[0.95rem] space-y-3 leading-relaxed">
         <div>
-          {currentJobs.map((job, index) => (
+          {/* {currentJobs.map((job, index) => (
             <JobItem key={job.id} job={job} />
-          ))}
+          ))} */}
         </div>
       </div>
     </div>

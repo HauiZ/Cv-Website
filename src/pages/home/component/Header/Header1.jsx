@@ -14,7 +14,7 @@ const Header1 = () => {
     const navigate = useNavigate();
 
     const avatar = user?.LinkAvatar || user?.linkLogo;
-    const displayName = user?.username || "Chưa đăng nhập";
+    const displayName = user?.userName || "Chưa đăng nhập";
     const email = user?.email || "";
 
     const items = [

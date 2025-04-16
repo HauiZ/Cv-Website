@@ -13,4 +13,4 @@ const GoogleMap = ({ placeName }) => {
     ></iframe>
   );
 };
-
+export default GoogleMap;

@@ -1,6 +1,7 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot, faMap } from "@fortawesome/free-solid-svg-icons";
+import GoogleMap from "../../components/GoogleMap";
 export default function ContractInfo() {
   const address = "dong da hn hai phong binh duong";
   return (
@@ -34,14 +35,7 @@ export default function ContractInfo() {
             />
           </div>
           <div className="h-[18em] w-[18em] m-auto">
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.520072541659!2d106.78408977427243!3d10.847992257871153!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752772b245dff1%3A0xb838977f3d419d!2zSOG7jWMgdmnhu4duIEPDtG5nIG5naOG7hyBCxrB1IENow61uaCBWaeG7hW4gVGjDtG5nIGPGoSBz4bufIHThuqFpIFRQLkhDTQ!5e0!3m2!1svi!2s!4v1740382526819!5m2!1svi!2s"
-              width="100%"
-              height="100%"
-              style={{ border: 0 }}
-              allowFullScreen=""
-              loading="lazy"
-            ></iframe>
+            <GoogleMap placeName="abcd"/>
           </div>
         </div>
       </div>

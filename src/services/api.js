@@ -87,7 +87,8 @@ const fetchJobs = async () => {
 
 const testApi = async () => {
   const res = await axios.get("/users/getProfile");
-  return res; // chỉ lấy phần user
+  const data = res.data.user;
+  return data; // chỉ lấy phần user
 };
 
 

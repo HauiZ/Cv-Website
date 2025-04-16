@@ -7,12 +7,12 @@ import Footer from "../pages/home/component/Footer/Footer";
 import { useAuthContext } from "../contexts/AuthContext";
 
 export default function AdminLayout() {
-  const { isAuthenticated } = useAuthContext();
+  const { isAuthenticated,user } = useAuthContext();
 
   return (
     <div className="pt-[75px]">
       {/* Nếu đã đăng nhập (có user), dùng Header1 có avatar/menu, ngược lại dùng Header mặc định */}
-      {isAuthenticated ? <Header1 /> : <Header />}
+      {isAuthenticated && user ? <Header1 /> : <Header />}
 
       <div>
         <Outlet />

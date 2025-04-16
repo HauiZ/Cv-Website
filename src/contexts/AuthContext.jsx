@@ -5,15 +5,17 @@ import { testApi } from "../services/api";
 const AuthContext = createContext({
   isAuthenticated: false,
   user: {
-    username: "",
+    userName: "",
     email: "",
     phone: "",
-    LinkAvatar: "",
+    avatarUrl: "",
   },
 });
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(
+  
+  );
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const fetchUser = async () => {
     const token = localStorage.getItem("access_token");
@@ -23,17 +25,19 @@ export const AuthProvider = ({ children }) => {
     const res = await testApi(); // API trả về { message, user }
     console.log(">>>>>>>>>>User data:", res);
 
-    if (res?.user) {
-      setUser(res.user);
+    if (res) {
+      console.log("User data found in response:", res);
+      setUser(res);
+      console.log(">>>>>>>>>User data:>>>", user);
       setIsAuthenticated(true);
     } else {
       console.log(res)
       console.log("No user data found in response.");
-      // clearUser();
+      clearUser();
     }
   } catch (err) {
     console.error("Lỗi khi lấy user:", err);
-    // clearUser();
+    clearUser();
   }
 
   };

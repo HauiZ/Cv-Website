@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import useLoading from "./useLoading";
 import { useToast } from "../contexts/ToastContext";
 import { useAuthContext } from "../contexts/AuthContext";
-import { loginCandidateApi } from "../services/authApi";
+import { loginCandidateApi,createCandidatesApi } from "../services/authApi";
 
 export default function useAuth(navigationCallback = null) {
   const { showToast } = useToast();
@@ -41,11 +41,11 @@ export default function useAuth(navigationCallback = null) {
   );
 
   // SIGNUP
-  const signUp = useCallback(
+  const signUpCandidate = useCallback(
     async ({ userName, email, password, confirmPassword }) => {
       await withLoading(async () => {
         try {
-          await createUsersApi(userName, email, password, confirmPassword);
+          await createCandidatesApi(userName, email, password, confirmPassword);
           showToast("Đăng ký thành công! Vui lòng đăng nhập.", "success");
           if (navigationCallback) {
             navigationCallback("/login");
@@ -70,5 +70,5 @@ export default function useAuth(navigationCallback = null) {
     }
   }, [showToast, clearUser, navigationCallback]);
 
-  return { loginCandidate, signUp, logOut };
+  return { loginCandidate, signUpCandidate, logOut };
 }

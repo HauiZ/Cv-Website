@@ -24,12 +24,12 @@ function SignUpPersonal() {
   const { loading, withLoading } = useLoading();
   const { showToast } = useToast();
   // Pass the navigation function to useAuth
-  const { signUp } = useAuth((path) => navigate(path));
+  const { signUpCandidate } = useAuth((path) => navigate(path));
 
   const onSubmit = async (data) => {
     await withLoading(async () => {
       await new Promise((res) => setTimeout(res, 2000)); // fake delay
-      await signUp(data);
+      await signUpCandidate(data);
     });
   };
   

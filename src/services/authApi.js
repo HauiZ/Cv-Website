@@ -1,11 +1,11 @@
 import axios from "../utils/axios.customize";
 
 
-const createCandidatesApi = (username,email,password,confirmpassword)=>{
+const createCandidatesApi = (userName,email,password,confirmPassword)=>{
   const URL_API = "/users/registerCandidate";
 
   const data = {
-    username,email,password,confirmpassword
+    userName,email,password,confirmPassword
   }
   console.log("Backend URL:", import.meta.env.VITE_BACKEND_URL);
 

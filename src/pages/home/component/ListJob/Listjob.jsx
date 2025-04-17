@@ -31,11 +31,11 @@ const ListJobBox = () => {
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
     // Scroll to top when changing page (optional)
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 0);
   };
 
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center relative h-full">
       <div>
         <div className="my-3">
           <h1 className="text-3xl font-bold text-[#0C8E5E] ">
@@ -55,14 +55,15 @@ const ListJobBox = () => {
             <JobItem key={job.id} job={job} />
           ))}
         </div>
-
-        {totalPages > 1 && (
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
-          />
-        )}
+        <div className="absolute bottom-6 left-0 right-0">
+          {totalPages > 1 && (
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+            />
+          )}
+        </div>
       </div>
     </div>
   );

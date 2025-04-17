@@ -66,7 +66,7 @@ export default function useAuth(navigationCallback = null) {
     clearUser(); // ✅ gọi trực tiếp
     showToast("Đăng xuất thành công!", "success");
     if (navigationCallback) {
-      navigationCallback("/login");
+      navigationCallback("/");
     }
   }, [showToast, clearUser, navigationCallback]);
 

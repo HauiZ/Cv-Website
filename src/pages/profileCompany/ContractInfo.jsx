@@ -2,8 +2,8 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot, faMap } from "@fortawesome/free-solid-svg-icons";
 import GoogleMap from "../../components/GoogleMap";
-export default function ContractInfo() {
-  const address = "dong da hn hai phong binh duong";
+export default function ContractInfo({data}) {
+  const address = data?.companyAddress || "Chưa có thông tin địa chỉ";
   return (
     <div className="w-[22rem] h-fit mt-5 rounded-[1em] bg-white">
       {/* banner */}
@@ -35,7 +35,7 @@ export default function ContractInfo() {
             />
           </div>
           <div className="h-[18em] w-[18em] m-auto">
-            <GoogleMap placeName="abcd"/>
+            <GoogleMap placeName={address}/>
           </div>
         </div>
       </div>

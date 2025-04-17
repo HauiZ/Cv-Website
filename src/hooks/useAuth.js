@@ -1,20 +1,20 @@
 import { useCallback } from "react";
-import { createUsersApi, loginApi } from "../services/api";
 import useLoading from "./useLoading";
 import { useToast } from "../contexts/ToastContext";
 import { useAuthContext } from "../contexts/AuthContext";
+import { loginCandidateApi } from "../services/authApi";
 
 export default function useAuth(navigationCallback = null) {
   const { showToast } = useToast();
   const { withLoading } = useLoading();
-  const { isAuthenticated, fetchUser, clearUser } = useAuthContext(); // ✅ fix ở đây
+  const { isAuthenticated, fetchUser, clearUser } = useAuthContext(); 
 
   // LOGIN
-  const login = useCallback(
+  const loginCandidate = useCallback(
     async ({ email, password }) => {
       await withLoading(async () => {
         try {
-          const res = await loginApi(email, password);
+          const res = await loginCandidateApi(email, password);
           const token = res.data?.token;
           console.log("Login response:", res.data);
           if (token) {
@@ -70,5 +70,5 @@ export default function useAuth(navigationCallback = null) {
     }
   }, [showToast, clearUser, navigationCallback]);
 
-  return { login, signUp, logOut };
+  return { loginCandidate, signUp, logOut };
 }

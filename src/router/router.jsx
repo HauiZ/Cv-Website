@@ -12,6 +12,7 @@ import HomeLayout from "../layouts/HomeLayout";
 import Home from "../pages/home/Home";
 import ProfileCompany from "../pages/profileCompany/ProfileCompany";
 import Test from "../pages/Test";
+import AuthSuccess from "./AuthSuccess";
 
 const router = createBrowserRouter([
   ...adminRoutes,
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
     path: "/login",
     element: <LoginPersonal />,
     errorElement: <div>404 ERROR</div>,
+  },
+  {
+    path: "/authsuccess",
+    element: <AuthSuccess />
   },
   {
     path: "/",

@@ -1,3 +1,6 @@
+import axios from "../utils/axios.customize";
+
+
 const createCandidatesApi = (username,email,password,confirmpassword)=>{
   const URL_API = "/users/registerCandidate";
 

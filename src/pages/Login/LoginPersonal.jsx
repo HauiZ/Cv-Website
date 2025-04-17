@@ -24,12 +24,12 @@ function LoginPersonal() {
 
   const { loading, withLoading } = useLoading();
   // Pass the navigation function to useAuth
-  const { login } = useAuth((path) => navigate(path));  
+  const { loginCandidate } = useAuth((path) => navigate(path));  
 
   const onSubmit = async (data) => {
     await withLoading(async () => {
       await new Promise((res) => setTimeout(res, 2000)); // fake delay
-      await login(data);
+      await loginCandidate(data);
     });
   };
 

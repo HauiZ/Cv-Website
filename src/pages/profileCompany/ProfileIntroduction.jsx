@@ -1,7 +1,7 @@
 import React from "react";
 
-export default function ProfileIntroduction() {
-  const content = [];
+export default function ProfileIntroduction({data}) {
+  const content = data?.introduction || ["Công ty chưa có thông tin giới thiệu"];
   return (
     <div className="w-[33rem] h-[30rem]  mt-5 rounded-[1em] bg-white">
       {/* banner */}

@@ -1,6 +1,6 @@
 // src/contexts/AuthContext.js
 import { createContext, useContext, useEffect, useState } from "react";
-import { testApi } from "../services/api";
+import { fetchUserApi } from "../services/userApi";
 
 const AuthContext = createContext({
   isAuthenticated: false,
@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
   if (!token) return;
 
   try {
-    const res = await testApi(); // API trả về { message, user }
+    const res = await fetchUserApi(); // API trả về { message, user }
     console.log(">>>>>>>>>>User data:", res);
 
     if (res) {

@@ -4,28 +4,23 @@ import JobItem from "./JobItem";
 import Filter from "./Filter";
 import LocationFilter from "./LocationFilter";
 import Pagination from "./Pagination";
+import useCustomFetch from "../../../../hooks/useCustomFetch";
 
 const ListJobBox = () => {
-  const [jobs, setJobs] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalJobs, setTotalJobs] = useState(0);
   const jobsPerPage = 9;
-
-  useEffect(() => {
-    const loadJobs = async () => {
-      const data = await fetchJobs();
-      setTotalJobs(data.length);
-      setJobs(data);
-    };
-    loadJobs();
-  }, []);
-
+  
+  // Use the custom hook to fetch jobs
+  const { data: jobs, loading, error } = useCustomFetch(fetchJobs);
+  
+  // Calculate total jobs and pages
+  const totalJobs = jobs?.length || 0;
   const totalPages = Math.ceil(totalJobs / jobsPerPage);
 
   // Get current jobs for the page
   const indexOfLastJob = currentPage * jobsPerPage;
   const indexOfFirstJob = indexOfLastJob - jobsPerPage;
-  const currentJobs = jobs.slice(indexOfFirstJob, indexOfLastJob);
+  const currentJobs = jobs ? jobs.slice(indexOfFirstJob, indexOfLastJob) : [];
 
   // Change page
   const handlePageChange = (pageNumber) => {
@@ -50,11 +45,19 @@ const ListJobBox = () => {
             <LocationFilter />
           </div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 mt- w-fit">
-          {currentJobs.map((job, index) => (
-            <JobItem key={job.id} job={job} />
-          ))}
-        </div>
+        
+        {loading ? (
+          <div>Đang tải dữ liệu...</div>
+        ) : error ? (
+          <div>Có lỗi: {error}</div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 mt- w-fit">
+            {currentJobs.map((job) => (
+              <JobItem key={job.id} job={job} />
+            ))}
+          </div>
+        )}
+        
         <div className="absolute bottom-6 left-0 right-0">
           {totalPages > 1 && (
             <Pagination

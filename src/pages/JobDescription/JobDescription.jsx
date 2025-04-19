@@ -7,7 +7,14 @@ import JobIntroduction from "./JobIntroduction";
 import GeneralInformation from "./GeneralInformation";
 import DetailJob from "./DetailJob";
 import RelativeNews from "./RelativeNews";
+import useCustomFetch from "../../hooks/useCustomFetch";
+import { fetchRecruitmentNewsDetailApi } from "../../services/recruitmentNews";
+
 export default function JobDescription() {
+  const { data } = useCustomFetch(fetchRecruitmentNewsDetailApi, [4]);
+  const { general, introduce, detailRecruitment } = data || {};
+  // const logoImage = ?.logoUrl || defaultLogo;
+
   return (
     <div>
       {/* Search bar */}
@@ -27,19 +34,19 @@ export default function JobDescription() {
               <CompanyIntroduction />
             </div>
             <div>
-              <JobIntroduction/>
+              <JobIntroduction data={introduce}/>
             </div>
           </div>
           <div className="flex justify-between gap-x-5 mb-10">
             <div>
-              <GeneralInformation/>
+              <GeneralInformation data={general} />
             </div>
-            <div> 
-              <DetailJob/>
+            <div>
+              <DetailJob data={detailRecruitment}/>
             </div>
           </div>
           <div>
-            <RelativeNews/>
+            <RelativeNews />
           </div>
           <div></div>
         </div>

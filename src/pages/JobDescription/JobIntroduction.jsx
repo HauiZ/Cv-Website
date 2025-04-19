@@ -1,7 +1,13 @@
 import { useState } from "react";
-import { FaDollarSign, FaMapMarkerAlt, FaHourglassHalf, FaRegHeart, FaHeart } from "react-icons/fa";
+import {
+  FaDollarSign,
+  FaMapMarkerAlt,
+  FaHourglassHalf,
+  FaRegHeart,
+  FaHeart,
+} from "react-icons/fa";
 
-export default function JobIntroduction() {
+export default function JobIntroduction({data}) {
   const [isSaved, setIsSaved] = useState(false);
 
   const handleSaveClick = () => {
@@ -12,7 +18,7 @@ export default function JobIntroduction() {
 
   return (
     <div className="p-6 bg-white w-[39rem] h-fit">
-      <h2 className="text-lg font-semibold mb-4">Tên công việc</h2>
+      <h2 className="text-lg font-semibold mb-4">{data?.jobTitle || ""}</h2>
 
       <div className="flex justify-between items-start gap-x-10 text-sm mb-6">
         {/* Mức lương */}
@@ -21,7 +27,7 @@ export default function JobIntroduction() {
             <FaDollarSign />
           </div>
           <div className="text-gray-700 text-sm">Thu nhập</div>
-          <div className="font-semibold text-[15px] mt-1">15 - 25 triệu</div>
+          <div className="font-semibold text-[15px] mt-1">{data?.salaryRange || "Thương lượng"}</div>
         </div>
 
         {/* Địa điểm */}
@@ -30,7 +36,9 @@ export default function JobIntroduction() {
             <FaMapMarkerAlt />
           </div>
           <div className="text-gray-700 text-sm">Địa điểm</div>
-          <div className="font-semibold text-[15px] mt-1">Hưng Yên & 2 nơi khác</div>
+          <div className="font-semibold text-[15px] mt-1">
+            {data?.address || "Chưa có thông tin địa chỉ"}
+          </div>
         </div>
 
         {/* Kinh nghiệm */}
@@ -39,13 +47,13 @@ export default function JobIntroduction() {
             <FaHourglassHalf />
           </div>
           <div className="text-gray-700 text-sm">Kinh nghiệm</div>
-          <div className="font-semibold text-[15px] mt-1">1 năm</div>
+          <div className="font-semibold text-[15px] mt-1">{data?.experience || "Không yêu cầu kinh nghiệm"}</div>
         </div>
       </div>
 
       {/* Hạn nộp & nút */}
       <div className="bg-gray-100 text-sm px-5 py-2 rounded mb-4 w-fit">
-        Hạn nộp hồ sơ: xx/xx/xxxx
+        Hạn nộp hồ sơ: {data?.applicationDealine || "Chưa có thông tin"}
       </div>
 
       <div className="flex items-center justify-between gap-3">
@@ -56,7 +64,9 @@ export default function JobIntroduction() {
         <button
           onClick={handleSaveClick}
           className={`flex items-center gap-1 border ${
-            isSaved ? "bg-lime-100 border-lime-500 text-lime-600" : "border-lime-500 text-lime-500"
+            isSaved
+              ? "bg-lime-100 border-lime-500 text-lime-600"
+              : "border-lime-500 text-lime-500"
           } px-4 py-2 rounded-full hover:bg-lime-50 transition text-sm`}
         >
           {isSaved ? <FaHeart className="text-lime-600" /> : <FaRegHeart />}

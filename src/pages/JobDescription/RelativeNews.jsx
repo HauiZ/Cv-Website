@@ -13,7 +13,7 @@ export default function RelativeNews({ data, logo }) {
   );
 
   return (
-    <div className="mt-5 rounded-[1em] bg-white shadow-md">
+    <div className="mt-5 mb-10 rounded-[1em] bg-white shadow-md">
       {/* Header */}
       <div className="pt-4 px-5">
         <h1 className="text-base font-semibold">Việc làm liên quan</h1>

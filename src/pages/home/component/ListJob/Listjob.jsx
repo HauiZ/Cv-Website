@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchJobs } from "../../../../services/api";
+import { fetchAllNewsApi } from "../../../../services/recruitmentNews";
 import JobItem from "./JobItem";
 import Filter from "./Filter";
 import LocationFilter from "./LocationFilter";
@@ -11,7 +11,7 @@ const ListJobBox = () => {
   const jobsPerPage = 9;
   
   // Use the custom hook to fetch jobs
-  const { data: jobs, loading, error } = useCustomFetch(fetchJobs);
+  const { data: jobs, loading, error } = useCustomFetch(fetchAllNewsApi);
   
   // Calculate total jobs and pages
   const totalJobs = jobs?.length || 0;

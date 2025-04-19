@@ -6,7 +6,6 @@ import Input from "../../components/BttnInput";
 import BttnSignIn from "../../components/BttnSignIn";
 import useLoading from "../../hooks/useLoading";
 import Loader from "../../components/Loader";
-import { useToast } from "../../contexts/ToastContext";
 import { useNavigate } from "react-router-dom";  // Make sure to import from react-router-dom
 import { faLock } from "../../utils/fontAwsomeLib";
 import useAuth from "../../hooks/useAuth";
@@ -58,7 +57,7 @@ function LoginPersonal() {
 
             <div className="flex items-center justify-between mb-[2vh]">
               <BttnSignIn />
-              <a href="/ForgotPassword" className="text-green-500 text-sm hover:underline">Quên mật khẩu?</a>
+              <a href="/forgotPassword" className="text-green-500 text-sm hover:underline">Quên mật khẩu?</a>
             </div>
 
             <button
@@ -70,7 +69,7 @@ function LoginPersonal() {
 
             <p className="text-center my-[2vh] text-[#000000]">
               Bạn chưa có tài khoản?
-              <a href="/SignUp" className="text-green-600 hover:underline"> Đăng ký ngay</a>
+              <a href="/signUpPersonal" className="text-green-600 hover:underline"> Đăng ký ngay</a>
             </p>
           </form>
         </div>

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import useLoading from "./useLoading";
 import { useToast } from "../contexts/ToastContext";
 
 export default function useCustomFetch(fetchFunction, params = []) {
@@ -17,16 +16,17 @@ export default function useCustomFetch(fetchFunction, params = []) {
         const result = await fetchFunction(...params);
         if (isMounted) {
           setData(result);
-          
           setError(null);
-          showToast("Fetch done", "success");
+          // Removed the success toast to avoid spamming user with notifications
+          // for province/district data fetches
         }
       } catch (err) {
         if (isMounted) {
-          const msg = err?.response?.data?.message || "Đăng nhập thất bại!";
+          const msg = err?.response?.data?.message || "Data fetching failed!";
           showToast(msg, "error");
-          console.error("Login error:", msg);
+          console.error("Fetch error:", msg);
           setData(null);
+          setError(err);
         }
       } finally {
         if (isMounted) setLoading(false);
@@ -38,7 +38,7 @@ export default function useCustomFetch(fetchFunction, params = []) {
     return () => {
       isMounted = false;
     };
-  }, [fetchFunction, ...params]);
+  }, [fetchFunction, ...params, showToast]);
 
   return { data, loading, error };
 }

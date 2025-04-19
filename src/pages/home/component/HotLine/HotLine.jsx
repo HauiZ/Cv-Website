@@ -1,7 +1,7 @@
 import React from "react";
 import { FiPhoneCall } from "react-icons/fi";
 import { MdEmail } from "react-icons/md";
-import background_ColorGreen from "../../../../image/background_ColorGreen.png"
+import background_ColorGreen from "../../../../assets/image/background_ColorGreen.png";
 
 function Hotline() {
   return (

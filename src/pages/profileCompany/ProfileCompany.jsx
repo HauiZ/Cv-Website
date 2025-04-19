@@ -10,7 +10,7 @@ import useCustomFetch from "../../hooks/useCustomFetch";
 import fetchCompanyInfo from "../../services/recruiterApi"; // Import the fetch function
 
 export default function ProfileCompany() {
-  const { data, loading, error } = useCustomFetch(fetchCompanyInfo, [3]);
+  const { data } = useCustomFetch(fetchCompanyInfo, [3]);
   const { companyData, jobs } = data || {}; // Destructure data to get
   const logoImage = companyData?.logoUrl || defaultLogo;
   console.log(">>>>>>>>>>>>Company Data:", companyData);
@@ -28,7 +28,7 @@ export default function ProfileCompany() {
             <ContractInfo data={companyData}></ContractInfo>
           </div>
         </div>
-        <div>
+        <div className="w-[33rem]">
           <Recruitments data={jobs} logo={logoImage} />
         </div>
         <div className="w-full h-fit mb-15">

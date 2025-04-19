@@ -13,7 +13,7 @@ const createCandidatesApi = (userName,email,password,confirmPassword)=>{
 
 }
 const createRecruterApi = (username,email,password,confirmpassword)=>{
-  const URL_API = "/users/registerCandidate";
+  const URL_API = "/users/registerRecruiter";
 
   const data = {
     username,email,password,confirmpassword
@@ -34,7 +34,7 @@ const loginCandidateApi= (email,password)=>{
   return axios.post(URL_API, data);
 }
 const loginRecruiterApi= (email,password)=>{
-  const URL_API = "/auth/login/candidate";
+  const URL_API = "/auth/login/recruiter";
 
   const data = {
     email, password

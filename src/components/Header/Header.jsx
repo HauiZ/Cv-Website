@@ -6,10 +6,13 @@ const Header = () => {
   const navigate = useNavigate();
 
   const handleLoginClick = () => {
-    navigate("/login");
+    navigate("/loginPersonal");
   };
   const handleSignUpClick = () => {
-    navigate("/SignUp");
+    navigate("/signUpPersonal");
+  }
+  const handleFindJobClick = () => {
+    navigate("/loginBusiness");
   }
 
   return (
@@ -45,7 +48,7 @@ const Header = () => {
           <button className="button text-[white] bg-[#5DDA33] hover:bg-[white] hover:text-[#5DDA33] " onClick={handleSignUpClick}>
             Đăng ký
           </button>
-          <button className="button bg-[black] text-[white] hover:text-[#5DDA33] ">
+          <button className="button bg-[black] text-[white] hover:text-[#5DDA33] " onClick={handleFindJobClick}>
             Đăng tuyển & Tìm hồ sơ
           </button>
         </div>

@@ -6,9 +6,9 @@ import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Space, Dropdown } from "antd";
 import { DownOutlined, SettingOutlined } from "@ant-design/icons";
 import { CiLogout } from "react-icons/ci";
-import { useAuthContext } from "../../../../contexts/AuthContext";
+import { useAuthContext } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
-import useAuth from "../../../../hooks/useAuth";
+import useAuth from "../../hooks/useAuth";
 const Header1 = () => {
   const { user } = useAuthContext();
   const { logOut } = useAuth((path) => navigate(path));

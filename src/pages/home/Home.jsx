@@ -1,6 +1,4 @@
 // src/pages/home/Home.jsx
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";  // Make sure to import from react-router-dom
 import ListJobBox from "./component/ListJob/Listjob";
 import BrandList from "./component/BrandList/BrandList";
 import Topjob from "./component/Topjob/Topjob";
@@ -8,10 +6,9 @@ import Topbrand from "./component/Topjob/Topbrand";
 import Slider from "./component/Slider/Slider";
 import { FaAngleRight } from "react-icons/fa6";
 import Hotline from "./component/HotLine/HotLine";
-import Search from "./component/Search/Search";
-import { useAuthContext } from "../../contexts/AuthContext";
-import useAuth from "../../hooks/useAuth";
-import background_ColorGreen from "../../image/background_ColorGreen.png";
+import Search from "../../components/Search/Search";
+
+import background_ColorGreen from "../../assets/image/background_ColorGreen.png";
 
 const Mix = () => (
   <div className="flex flex-col justify-center items-center gap-y-1">

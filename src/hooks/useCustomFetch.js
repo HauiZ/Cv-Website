@@ -23,12 +23,13 @@ export default function useCustomFetch(fetchFunction, params = []) {
       } catch (err) {
         if (isMounted) {
           const msg = err?.response?.data?.message || "Data fetching failed!";
-          showToast(msg, "error");
+          // showToast(msg, "error");
           console.error("Fetch error:", msg);
           setData(null);
           setError(err);
         }
       } finally {
+        console.log("Loading finished", ...params);
         if (isMounted) setLoading(false);
       }
     };
@@ -38,7 +39,7 @@ export default function useCustomFetch(fetchFunction, params = []) {
     return () => {
       isMounted = false;
     };
-  }, [fetchFunction, ...params, showToast]);
+  }, [fetchFunction, ...params]);
 
   return { data, loading, error };
 }

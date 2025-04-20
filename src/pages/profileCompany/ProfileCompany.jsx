@@ -12,15 +12,14 @@ import fetchCompanyInfo from "../../services/recruiterApi"; // Import the fetch 
 export default function ProfileCompany() {
   const { data } = useCustomFetch(fetchCompanyInfo, [3]);
   const { companyData, jobs } = data || {}; // Destructure data to get
-  const logoImage = companyData?.logoUrl || defaultLogo;
   console.log(">>>>>>>>>>>>Company Data:", companyData);
   return (
     <div className="flex justify-center bg-[#F5F5F5]">
-      <div className="w-[80vw]">
+      <div className="w-[80vw] max-w-[60rem]">
         <div className="">
           <Banner data={companyData}></Banner>
         </div>
-        <div className="flex justify-between gap-x-5 ">
+        <div className="flex justify-center gap-x-5 ">
           <div>
             <ProfileIntroduction data={companyData}></ProfileIntroduction>
           </div>
@@ -29,7 +28,7 @@ export default function ProfileCompany() {
           </div>
         </div>
         <div className="w-[33rem]">
-          <Recruitments data={jobs} logo={logoImage} />
+          <Recruitments data={jobs}  />
         </div>
         <div className="w-full h-fit mb-15">
           <BrandList />

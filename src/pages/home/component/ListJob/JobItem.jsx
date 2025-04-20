@@ -1,7 +1,11 @@
 import React from "react";
 import LikeButton from "./LikeButton";
 
+import  formatSalaryRangeToVND  from "../../../../utils/formatSalaryRangeToVND.js";
 const JobItem = ({ job }) => {
+  const salaryRange = formatSalaryRangeToVND(`${job.salaryMin} - ${job.salaryMax}`
+  );
+  
   return (
     <div className="relative border border-gray-300 rounded-xl w-[300px] h-[130px] bg-white p-3 shadow-sm hover:shadow-[0_0_10px_rgba(12,142,94,0.5)] hover:border-[#0C8E5E] hover:border-2 transition-all duration-300 cursor-pointer group">
       <div className="flex">
@@ -18,10 +22,10 @@ const JobItem = ({ job }) => {
 
       <div className="flex mt-3 gap-3 text-[13px]">
         <span className="bg-[#EDEFF0] rounded-full px-3 py-1 hover:bg-gray-200 transition-colors duration-200">
-          {job.salaryMin} - {job.salaryMax}
+          {salaryRange || "Thương lượng"}
         </span>
         <span className="bg-[#EDEFF0] rounded-full px-3 py-1 hover:bg-gray-200 transition-colors duration-200">
-          {job?.location || "Hà Nội"}
+          {job?.companyAddress || "Hà Nội"}
         </span>
       </div>
 

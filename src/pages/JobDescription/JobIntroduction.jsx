@@ -1,4 +1,5 @@
 import { useState } from "react";
+import formatSalaryRangeToVND from "../../utils/formatSalaryRangeToVND";
 import {
   FaDollarSign,
   FaMapMarkerAlt,
@@ -9,13 +10,13 @@ import {
 
 export default function JobIntroduction({data}) {
   const [isSaved, setIsSaved] = useState(false);
+  const salaryRanges = formatSalaryRangeToVND(data?.salaryRange || "Thương lượng");
 
   const handleSaveClick = () => {
     setIsSaved(!isSaved);
     // Bạn có thể thêm API call hoặc toast ở đây nếu muốn
     console.log(isSaved ? "Đã hủy lưu tin" : "Đã lưu tin");
   };
-
   return (
     <div className="p-6 bg-white w-[39rem] h-fit">
       <h2 className="text-lg font-semibold mb-4">{data?.jobTitle || ""}</h2>
@@ -27,7 +28,7 @@ export default function JobIntroduction({data}) {
             <FaDollarSign />
           </div>
           <div className="text-gray-700 text-sm">Thu nhập</div>
-          <div className="font-semibold text-[15px] mt-1">{data?.salaryRange || "Thương lượng"}</div>
+          <div className="font-semibold text-[15px] mt-1">{ salaryRanges || "Thương lượng"}</div>
         </div>
 
         {/* Địa điểm */}
@@ -53,7 +54,7 @@ export default function JobIntroduction({data}) {
 
       {/* Hạn nộp & nút */}
       <div className="bg-gray-100 text-sm px-5 py-2 rounded mb-4 w-fit">
-        Hạn nộp hồ sơ: {data?.applicationDealine || "Chưa có thông tin"}
+        Hạn nộp hồ sơ: {data?.applicationDeadline || "Chưa có thông tin"}
       </div>
 
       <div className="flex items-center justify-between gap-3">

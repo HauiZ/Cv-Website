@@ -5,7 +5,7 @@ export default function DetailJob({ data }) {
   if (!data) return null;
 
   const {
-    introduction = ["Công ty chưa có thông tin giới thiệu"],
+    // introduction = ["Công ty chưa có thông tin giới thiệu"],
     jobRequirements,
     workDetail,
     benefits,
@@ -41,8 +41,8 @@ export default function DetailJob({ data }) {
       </div>
 
       {/* Nội dung */}
-      <div className="p-5 text-[0.95rem] space-y-5 leading-relaxed">
-        {renderSection("Giới thiệu", introduction)}
+      <div className="p-10 p-x-15 text-[0.95rem] space-y-5 leading-relaxed">
+        {/* {renderSection("Giới thiệu", introduction)} */}
         {renderSection("Yêu cầu công việc", jobRequirements)}
         {renderSection("Chi tiết công việc", workDetail)}
         {renderSection("Quyền lợi", benefits)}
@@ -52,7 +52,7 @@ export default function DetailJob({ data }) {
 
         <div className="space-y-2 pl-2">
           <div className="flex items-center space-x-2">
-            <div className="w-2 h-5 bg-green-500 rounded-sm"></div>
+            <div className="w-2 h-5 bg-green-500 "></div>
             <h2 className="text-[1.425rem] font-semibold text-[#212f3f]">Thông tin liên hệ</h2>
           </div>
           <p className="ml-7"><strong>Người liên hệ:</strong> {contactInfo || "Không có"}</p>

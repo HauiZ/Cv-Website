@@ -12,7 +12,15 @@ const fetchAllNewsApi = async () =>{
   const data = res.data
   return data; 
 }
+const fetchAllNewsFilterApi = async (params) =>{
+  console.log("params filter>>>>>>>>.", params)
+  const res = await axios.get("/recruitmentNews/filterRecruitmentNews", {params: params});
+  // console.log(res.data)
+  
+  const data = res.data
+  return data; 
+}
 
 
 
-export {fetchRecruitmentNewsDetailApi, fetchAllNewsApi};
+export {fetchRecruitmentNewsDetailApi, fetchAllNewsApi, fetchAllNewsFilterApi};

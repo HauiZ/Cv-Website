@@ -1,10 +1,12 @@
 import React from "react";
+import formatSalaryRangeToVND from "../../utils/formatSalaryRangeToVND";
 
-export default function News({ job, logo }) {
+export default function News({ job }) {
+  const salaryRange = formatSalaryRangeToVND(`${job.salaryMin} - ${job.salaryMax}`);
   return (
     <div className="flex gap-4 border p-3 rounded-lg shadow-sm hover:shadow-[0_0_10px_rgba(12,142,94,0.5)] hover:border-[#0C8E5E] hover:border-1 transition-all duration-300 cursor-pointer group">
       <img
-        src={logo}
+        src={job?.logoUrl || "/src/assets/image/logoNoBg.png"}
         alt="logo"
         className="w-[5rem] h-[5rem] object-contain"
       />
@@ -12,11 +14,11 @@ export default function News({ job, logo }) {
         <div className="flex justify-between font-bold text-sm group-hover:text-[#1b8e0c] transition-colors duration-300">
           <div>{job.jobTitle}</div>
           <div className="text-green-600">
-            {job.salaryMin} - {job.salaryMax}
+            {salaryRange || "Thương lượng"}
           </div>
         </div>
         <div className="flex justify-between text-sm text-black mt-1">
-          <div className="bg-gray-300 h-fit w-fit text-center p-1.5 rounded-[.5em] hover:bg-gray-200 transition-colors duration-200">{job?.location || "ha noi"}</div>
+          <div className="bg-gray-300 h-fit w-fit text-center p-1.5 rounded-[.5em] hover:bg-gray-200 transition-colors duration-200">{job?.companyAddress || "ha noi"}</div>
           <div className="bg-gray-300 h-fit w-fit text-center p-1.5 rounded-[.5em] hover:bg-gray-200 transition-colors duration-200 ">{job.datePosted}</div>
           <div>
             <button className=" px-3 py-1 bg-[#5DDA33] text-white rounded-full text-sm hover:opacity-90 hover:cursor-pointer">

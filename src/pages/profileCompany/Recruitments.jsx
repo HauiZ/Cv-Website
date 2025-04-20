@@ -4,7 +4,7 @@ import Pagination from "../home/component/ListJob/Pagination";
 
 const ITEMS_PER_PAGE = 5;
 
-export default function RecruitmentNews({ data,logo }) {
+export default function RecruitmentNews({ data }) {
   // Use destructuring to get data
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -29,7 +29,7 @@ export default function RecruitmentNews({ data,logo }) {
       <div className="p-5 h-[30rem] relative">
         {jobs.length > 0 ? (
           <>
-            <ListNews jobs={currentJobs} logo={logo} />
+            <ListNews jobs={currentJobs}  />
             <div className="absolute bottom-0 left-0 right-0 flex justify-center items-center py-4">
               {totalPages > 1 && (
                 <Pagination

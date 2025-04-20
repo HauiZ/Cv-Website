@@ -4,13 +4,11 @@ import ProfileIntroduction from "./ProfileIntroduction";
 import ContractInfo from "./ContractInfo";
 import Recruitments from "./Recruitments";
 import BrandList from "../home/component/BrandList/BrandList";
-import defaultLogo from "../../assets/image/icon_webCV.png"
-
 import useCustomFetch from "../../hooks/useCustomFetch";
-import fetchCompanyInfo from "../../services/recruiterApi"; // Import the fetch function
+import {fetchCompanyInfoApi} from "../../services/recruiterApi"; // Import the fetch function
 
 export default function ProfileCompany() {
-  const { data } = useCustomFetch(fetchCompanyInfo, [3]);
+  const { data } = useCustomFetch(fetchCompanyInfoApi, [3]);
   const { companyData, jobs } = data || {}; // Destructure data to get
   console.log(">>>>>>>>>>>>Company Data:", companyData);
   return (

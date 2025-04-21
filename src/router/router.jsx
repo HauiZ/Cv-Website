@@ -15,6 +15,7 @@ import Test from "../pages/Test";
 import AuthSuccess from "./AuthSuccess";
 import { authRoutes } from "./authRoutes";
 import JobDescription from "../pages/JobDescription/JobDescription";
+import CreateCvPage from "../pages/CreateCv/CreateCvPage";
 
 const router = createBrowserRouter([
   ...adminRoutes,
@@ -26,24 +27,20 @@ const router = createBrowserRouter([
   },
   {
     path: "/authsuccess",
-    element: <AuthSuccess />
+    element: <AuthSuccess />,
   },
   {
     path: "/",
     element: <HomeLayout />,
     children: [
       { path: "/", element: <Home /> },
-      { path: "/profilecompany", element: <ProfileCompany /> },
-      { path: "/Test1", element: <Test/> },
+      { path: "/profilecompany/:companyId", element: <ProfileCompany /> },
+      { path: "/test", element: <CreateCvPage /> },
     ],
   },
   {
     path: "/B",
     element: <LoginBusiness />,
-  },
-  {
-    path: "/S",
-    element: <SignUpBusiness />,
   },
   {
     path: "/Home",
@@ -58,11 +55,11 @@ const router = createBrowserRouter([
     element: <ForgotPassword />,
   },
   {
-    path: "/test",
+    path: "/",
     element: <HomeLayout />,
     children: [
       {
-        path: "/test",
+        path: "/job/:jobId",
         element: <JobDescription />,
       },
     ],

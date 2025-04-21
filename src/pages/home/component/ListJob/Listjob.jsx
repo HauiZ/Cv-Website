@@ -10,7 +10,7 @@ const formatSalaryRange = (value) => {
   if (value === "10up") {
     return {
       salaryMin: 10000000,
-      salaryMax: null, // có thể bỏ hoặc không gửi key này nếu backend không yêu cầu
+      salaryMax: 10000000000000, // có thể bỏ hoặc không gửi key này nếu backend không yêu cầu
     };
   }
 
@@ -28,7 +28,7 @@ const ListJobBox = () => {
   // State để giữ query filter
   const [filters, setFilters] = useState({});
 
-  // Custom hook fetch theo query
+  // Custom hook fetch theo query 
   const {
     data: jobs,
     loading,

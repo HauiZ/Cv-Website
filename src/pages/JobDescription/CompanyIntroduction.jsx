@@ -4,7 +4,7 @@ import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 import defaultLogo from "../../assets/image/logoNoBg.png";
 export default function CompanyIntroduction({data}) {
     const logoImage = data?.logoUrl || defaultLogo;
-
+    const path = `/companyprofile/${data?.id}`;
   return (
     <div>
       {/* content left */}
@@ -27,7 +27,7 @@ export default function CompanyIntroduction({data}) {
         </div>
         <div className="flex justify-center gap-x-2">
           <h1>
-            <a href="" className="text-green-500">
+            <a href={path} className="text-green-500">
               Xem trang công ty
             </a>
           </h1>

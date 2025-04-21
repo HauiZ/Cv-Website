@@ -2,12 +2,15 @@ import React from "react";
 import LikeButton from "./LikeButton";
 
 import  formatSalaryRangeToVND  from "../../../../utils/formatSalaryRangeToVND.js";
+import { useNavigate } from "react-router-dom";
 const JobItem = ({ job }) => {
   const salaryRange = formatSalaryRangeToVND(`${job.salaryMin} - ${job.salaryMax}`
   );
-  
+  const navigate = useNavigate();
   return (
-    <div className="relative border border-gray-300 rounded-xl w-[300px] h-[130px] bg-white p-3 shadow-sm hover:shadow-[0_0_10px_rgba(12,142,94,0.5)] hover:border-[#0C8E5E] hover:border-2 transition-all duration-300 cursor-pointer group">
+    <div className="relative border border-gray-300 rounded-xl w-[300px] h-[130px] bg-white p-3 shadow-sm hover:shadow-[0_0_10px_rgba(12,142,94,0.5)] hover:border-[#0C8E5E] hover:border-2 transition-all duration-300 cursor-pointer group " onClick={() => { 
+      navigate(`/job/${job.id}`);
+    }}>
       <div className="flex">
         <img
           src={job?.logoUrl || "/src/assets/image/logoNoBg.png"}

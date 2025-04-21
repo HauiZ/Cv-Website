@@ -6,9 +6,12 @@ import Recruitments from "./Recruitments";
 import BrandList from "../home/component/BrandList/BrandList";
 import useCustomFetch from "../../hooks/useCustomFetch";
 import {fetchCompanyInfoApi} from "../../services/recruiterApi"; // Import the fetch function
+import { useParams } from "react-router-dom";
 
 export default function ProfileCompany() {
-  const { data } = useCustomFetch(fetchCompanyInfoApi, [3]);
+  const params = useParams(); // Get the URL parameters
+  const { companyId } = params;
+  const { data } = useCustomFetch(fetchCompanyInfoApi, [companyId]); // Fetch company data using the custom hook
   const { companyData, jobs } = data || {}; // Destructure data to get
   console.log(">>>>>>>>>>>>Company Data:", companyData);
   return (

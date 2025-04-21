@@ -12,11 +12,13 @@ import {
   fetchRecruitmentNewsDetailApi,
   fetchAllNewsFilterApi,
 } from "../../services/recruitmentNewsApi";
+import { useParams } from "react-router-dom";
 
 export default function JobDescription() {
-
+  const params = useParams();
+  const { jobId } = params;
   const filterParams = useMemo(() => ({}), []);
-  const { data } = useCustomFetch(fetchRecruitmentNewsDetailApi, [4]);
+  const { data } = useCustomFetch(fetchRecruitmentNewsDetailApi, [jobId]);
   const { data: jobs } = useCustomFetch(fetchAllNewsFilterApi, [filterParams]);
   const { company, general, introduce, detailRecruitment } = data || {};
   return (

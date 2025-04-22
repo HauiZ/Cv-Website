@@ -26,7 +26,7 @@ export default function RecruitmentNews({ data }) {
       </div>
 
       {/* Content */}
-      <div className="p-5 h-[30rem] relative">
+      <div className="p-5 h-fit relative">
         {jobs.length > 0 ? (
           <>
             <ListNews jobs={currentJobs}  />

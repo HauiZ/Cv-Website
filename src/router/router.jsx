@@ -18,48 +18,55 @@ import Page404 from "../pages/Page404";
 import { adminRoutes } from "./adminRoutes";
 import { authRoutes } from "./authRoutes";
 
+// ✅ RequireAuth
+import RequireAuth from "../components/RequireAuth";
+
+// ✅ Các route cần đăng nhập trong HomeLayout
+const protectedRoutes = [
+  {
+    path: "/job/:jobId",
+    element: <JobDescription />,
+  },
+  {
+    path: "/companyprofile/:companyId",
+    element: <ProfileCompany />,
+  },
+  {
+    path: "/test",
+    element: <CreateCvPage />,
+  },
+];
+
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <AppLayout />, // Wrapper cho toàn bộ app (gồm loader + scroll)
+    element: <AppLayout />,
     children: [
       ...authRoutes,
       ...adminRoutes,
 
-      {
-        path: "/login",
-        element: <LoginPersonal />,
-      },
-      {
-        path: "/SignUp",
-        element: <SignUpPersonal />,
-      },
-      {
-        path: "/ForgotPassword",
-        element: <ForgotPassword />,
-      },
-      {
-        path: "/authsuccess",
-        element: <AuthSuccess />,
-      },
-      {
-        path: "/B",
-        element: <LoginBusiness />,
-      },
+      { path: "/login", element: <LoginPersonal /> },
+      { path: "/SignUp", element: <SignUpPersonal /> },
+      { path: "/ForgotPassword", element: <ForgotPassword /> },
+      { path: "/authsuccess", element: <AuthSuccess /> },
+      { path: "/B", element: <LoginBusiness /> },
+
       {
         path: "/",
         element: <HomeLayout />,
         children: [
+          // ✅ Cho phép truy cập Home không cần đăng nhập
           { path: "/", element: <Home /> },
-          { path: "/job/:jobId", element: <JobDescription /> },
-          { path: "/companyprofile/:companyId", element: <ProfileCompany /> },
-          { path: "/test", element: <CreateCvPage /> },
+
+          // ✅ Các route cần đăng nhập
+          ...protectedRoutes.map((route) => ({
+            ...route,
+            element: <RequireAuth>{route.element}</RequireAuth>,
+          })),
         ],
       },
-      {
-        path: "*",
-        element:<Page404/>,
-      },
+
+      { path: "*", element: <Page404 /> },
     ],
   },
 ]);

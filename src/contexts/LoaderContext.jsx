@@ -11,13 +11,12 @@ export const LoaderProvider = ({ children }) => {
 
   return (
     <LoaderContext.Provider value={{ showLoader, hideLoader }}>
-      {loading ? (
+      {loading && (
         <div style={overlayStyle}>
           <Loader />
         </div>
-      ) : (
-        children
       )}
+      {children}
     </LoaderContext.Provider>
   );
 };
@@ -29,7 +28,7 @@ const overlayStyle = {
   right: 0,
   bottom: 0,
   zIndex: 9999,
-  backgroundColor: "rgba(255, 255, 255, 0.6)",
+  backgroundColor: "rgba(255, 255, 255)",
   backdropFilter: "blur(4px)",
   display: "flex",
   alignItems: "center",

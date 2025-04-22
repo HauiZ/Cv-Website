@@ -6,10 +6,9 @@ import Input from "../../components/BttnInput";
 import BttnSignIn from "../../components/BttnSignIn";
 import useLoading from "../../hooks/useLoading";
 import Loader from "../../components/Loader";
-import { loginApi } from "../../utils/api";
-import { useToast } from "../../contexts/ToastContext";
-import { useNavigate } from "react-router";
-import {  faLock } from "../../utils/fontAwsomeLib";
+import { useNavigate } from "react-router-dom";  // Make sure to import from react-router-dom
+import { faLock } from "../../utils/fontAwsomeLib";
+import useAuth from "../../hooks/useAuth";
 
 function LoginPersonal() {
   const navigate = useNavigate();
@@ -22,30 +21,16 @@ function LoginPersonal() {
     resolver: yupResolver(loginSchema),
   });
 
-  const { loading, withLoading } = useLoading(); // fix: destructure properly
-
-  const { showToast } = useToast();
+  const { loading, withLoading } = useLoading();
+  // Pass the navigation function to useAuth
+  const { loginCandidate } = useAuth((path) => navigate(path));  
 
   const onSubmit = async (data) => {
-    const { email, password } = data;
     await withLoading(async () => {
       await new Promise((res) => setTimeout(res, 2000)); // fake delay
-
-      try {
-        const res = await loginApi(email, password);
-        showToast("Đăng nhập thành công!", "success");
-        localStorage.setItem("access_token", res.data.token)
-        console.log("API Response:", res);
-        navigate('/Home');
-      } catch (err) {
-        const errorMessage = err?.response?.data?.message || 'Có lỗi xảy ra!';
-        showToast(errorMessage, "error");
-        console.error(errorMessage)
-      }
+      await loginCandidate(data);
     });
   };
-
-
 
   return (
     <div className="flex flex-col relative">
@@ -72,7 +57,7 @@ function LoginPersonal() {
 
             <div className="flex items-center justify-between mb-[2vh]">
               <BttnSignIn />
-              <a href="/ForgotPassword" className="text-green-500 text-sm hover:underline">Quên mật khẩu?</a>
+              <a href="/forgotPassword" className="text-green-500 text-sm hover:underline">Quên mật khẩu?</a>
             </div>
 
             <button
@@ -84,7 +69,7 @@ function LoginPersonal() {
 
             <p className="text-center my-[2vh] text-[#000000]">
               Bạn chưa có tài khoản?
-              <a href="/SignUp" className="text-green-600 hover:underline"> Đăng ký ngay</a>
+              <a href="/signUpPersonal" className="text-green-600 hover:underline"> Đăng ký ngay</a>
             </p>
           </form>
         </div>

@@ -1,27 +1,72 @@
-import { createContext, useState } from "react";
-export const AuthContext = createContext({
+// src/contexts/AuthContext.js
+import { createContext, useContext, useEffect, useState } from "react";
+import { fetchUserApi } from "../services/userApi";
+
+const AuthContext = createContext({
   isAuthenticated: false,
   user: {
+    userName: "",
     email: "",
-    name: "",
+    phone: "",
+    avatarUrl: "",
+  },
+});
+
+export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(
+  
+  );
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const fetchUser = async () => {
+    const token = localStorage.getItem("access_token");
+  if (!token) return;
+
+  try {
+    const res = await fetchUserApi(); // API trả về { message, user }
+    console.log(">>>>>>>>>>User data:", res);
+
+    if (res) {
+      console.log("User data found in response:", res);
+      setUser(res);
+      console.log(">>>>>>>>>User data:>>>", user);
+      setIsAuthenticated(true);
+    } else {
+      console.log(res)
+      console.log("No user data found in response.");
+      clearUser();
+    }
+  } catch (err) {
+    console.error("Lỗi khi lấy user:", err);
+    clearUser();
   }
 
-})
+  };
 
-export function AuthWrapper(props) {
-  const [auth, setAuth] = useState({
-    isAuthenticated: false, 
-    user: {
-      email: "",
-      name: "",
-    }
-  });
-  // ...
+  // Simple logout without navigation - navigation will be handled by useAuth
+  const clearUser = () => {
+    localStorage.removeItem("access_token");
+    setIsAuthenticated(false);
+    setUser(null);
+  };
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
   return (
-    <AuthContext.Provider value={{
-      auth, setAuth
-    }}>
-      {props.children}
+    <AuthContext.Provider
+      value={{
+        user,
+        setUser,
+        fetchUser,
+        clearUser,
+        isAuthenticated,
+        setIsAuthenticated,
+      }}
+    >
+      {children}
     </AuthContext.Provider>
   );
-}
+};
+
+export const useAuthContext = () => useContext(AuthContext);

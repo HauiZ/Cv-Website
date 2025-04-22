@@ -1,8 +1,6 @@
-import axios from 'axios';
-
+import axios from "axios";
 
 // Set config defaults when creating the instance
-
 
 const instance = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_URL,
@@ -10,29 +8,32 @@ const instance = axios.create({
 
 // Alter defaults after instance has been created
 
-
-
 // Add a request interceptor
-instance.interceptors.request.use(function (config) {
+instance.interceptors.request.use(
+  function (config) {
     config.headers.Authorization = `Bearer ${localStorage.getItem("access_token")}`;
     // Do something before request is sent
     return config;
-  }, function (error) {
+  },
+  function (error) {
     // Do something with request error
     return Promise.reject(error);
-  });
+  }
+);
 
 // Add a response interceptor
-instance.interceptors.response.use(function (response) {
-    // Any status code that lie within the range of 2xx cause this function to trigger
-    // Do something with response data
+instance.interceptors.response.use(
+  function (response) {
     return response;
-  }, function (error) {
-    // Any status codes that falls outside the range of 2xx cause this function to trigger
-    // Do something with response error
+  },
+  function (error) {
+    if (error.response && error.response.status === 401) {
+      // Xóa token và gọi logOut nếu cần
+      localStorage.removeItem("access_token");
+      // Gọi hàm logOut từ context hoặc thực hiện điều hướng
+    }
     return Promise.reject(error);
-  });
-
-
+  }
+);
 
 export default instance;

@@ -1,20 +1,15 @@
 import { useState } from "react";
-import Sidebar from "./SideMenu";
-import Header from "./Header";
-import OverViewContent from "./OverViewContent";
-import RequestContent from "./RequestContent";
-import MainContent from "./MainContent";
+import MainContent from "../DashBoard/MainContent";
 import HeaderProduct from "./HeaderProduct";
 
 const AdminHome = () => {
   const [selectedPage, setSelectedPage] = useState("overview");
 
   return (
-    <div className="flex min-h-screen">
-      <Sidebar />
+    // <div className="">
       <div className="flex-1 flex flex-col">
         {/* Truyền setSelectedPage để Header dùng */}
-        <Header setSelectedPage={setSelectedPage} />
+        <HeaderProduct setSelectedPage={setSelectedPage} />
         {/* <HeaderProduct>
           
         </HeaderProduct> */}
@@ -22,7 +17,7 @@ const AdminHome = () => {
         <MainContent selectedPage={selectedPage} />
         </main>
       </div>
-    </div>
+    // </div>
   );
 };
 

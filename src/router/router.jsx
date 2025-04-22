@@ -1,66 +1,64 @@
-import SignUpPersonal from "../pages/SignUp/SignUpPersonal";
+import { createBrowserRouter } from "react-router-dom";
+import AppLayout from "../layouts/AppLayout";
+import HomeLayout from "../layouts/HomeLayout";
+
+// Pages
+import Home from "../pages/home/Home";
+import JobDescription from "../pages/JobDescription/JobDescription";
+import ProfileCompany from "../pages/profileCompany/ProfileCompany";
 import LoginPersonal from "../pages/Login/LoginPersonal";
 import LoginBusiness from "../pages/Login/LoginBusiness";
-import SignUpBusiness from "../pages/SignUp/SignUpBusiness";
+import SignUpPersonal from "../pages/SignUp/SignUpPersonal";
 import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
-import InputNewPassword from "../pages/ForgotPassword/InputNewPassword";
-import AdminHome from "../pages/Admin/DashBoard/AdminHome";
-import { createBrowserRouter } from "react-router-dom";
-import AdminLayout from "../layouts/adminLayout";
-import { adminRoutes } from "./adminRoutes";
-import HomeLayout from "../layouts/HomeLayout";
-import Home from "../pages/home/Home";
-import ProfileCompany from "../pages/profileCompany/ProfileCompany";
-import Test from "../pages/Test";
-import AuthSuccess from "./AuthSuccess";
-import { authRoutes } from "./authRoutes";
-import JobDescription from "../pages/JobDescription/JobDescription";
 import CreateCvPage from "../pages/CreateCv/CreateCvPage";
+import AuthSuccess from "./AuthSuccess";
+import Page404 from "../pages/Page404";
+
+// Route nhóm
+import { adminRoutes } from "./adminRoutes";
+import { authRoutes } from "./authRoutes";
 
 const router = createBrowserRouter([
-  ...adminRoutes,
-  ...authRoutes,
-  {
-    path: "/login",
-    element: <LoginPersonal />,
-    errorElement: <div>404 ERROR</div>,
-  },
-  {
-    path: "/authsuccess",
-    element: <AuthSuccess />,
-  },
   {
     path: "/",
-    element: <HomeLayout />,
+    element: <AppLayout />, // Wrapper cho toàn bộ app (gồm loader + scroll)
     children: [
-      { path: "/", element: <Home /> },
-      { path: "/profilecompany/:companyId", element: <ProfileCompany /> },
-      { path: "/test", element: <CreateCvPage /> },
-    ],
-  },
-  {
-    path: "/B",
-    element: <LoginBusiness />,
-  },
-  {
-    path: "/Home",
-    element: <Home />,
-  },
-  {
-    path: "/SignUp",
-    element: <SignUpPersonal />,
-  },
-  {
-    path: "/ForgotPassword",
-    element: <ForgotPassword />,
-  },
-  {
-    path: "/",
-    element: <HomeLayout />,
-    children: [
+      ...authRoutes,
+      ...adminRoutes,
+
       {
-        path: "/job/:jobId",
-        element: <JobDescription />,
+        path: "/login",
+        element: <LoginPersonal />,
+      },
+      {
+        path: "/SignUp",
+        element: <SignUpPersonal />,
+      },
+      {
+        path: "/ForgotPassword",
+        element: <ForgotPassword />,
+      },
+      {
+        path: "/authsuccess",
+        element: <AuthSuccess />,
+      },
+      {
+        path: "/B",
+        element: <LoginBusiness />,
+      },
+      {
+        path: "/",
+        element: <HomeLayout />,
+        children: [
+          { path: "/", element: <Home /> },
+          { path: "/job/:jobId", element: <JobDescription /> },
+          { path: "/companyprofile/:companyId", element: <ProfileCompany /> },
+          { path: "/test", element: <CreateCvPage /> },
+        ],
+      },
+      {
+        path: "*",
+        element:<Page404/>,
       },
     ],
   },

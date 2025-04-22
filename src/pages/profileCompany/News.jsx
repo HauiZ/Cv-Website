@@ -1,10 +1,19 @@
 import React from "react";
 import formatSalaryRangeToVND from "../../utils/formatSalaryRangeToVND";
+import { useNavigate } from "react-router-dom";
 
 export default function News({ job }) {
   const salaryRange = formatSalaryRangeToVND(`${job.salaryMin} - ${job.salaryMax}`);
+  const navigate = useNavigate();
+
   return (
-    <div className="flex gap-4 border p-3 rounded-lg shadow-sm hover:shadow-[0_0_10px_rgba(12,142,94,0.5)] hover:border-[#0C8E5E] hover:border-1 transition-all duration-300 cursor-pointer group">
+    <div className="flex gap-4 border p-3 rounded-lg shadow-sm hover:shadow-[0_0_10px_rgba(12,142,94,0.5)] hover:border-[#0C8E5E] hover:border-1 transition-all duration-300 cursor-pointer group" onClick={() => { 
+      navigate(`/job/${job.id}`);
+      // window.location.reload();
+      window.scrollTo(0, 0); 
+
+    }}>
+      
       <img
         src={job?.logoUrl || "/src/assets/image/logoNoBg.png"}
         alt="logo"

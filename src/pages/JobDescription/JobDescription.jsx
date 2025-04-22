@@ -40,12 +40,12 @@ export default function JobDescription() {
               <CompanyIntroduction data={company} />
             </div>
             <div>
-              <JobIntroduction data={introduce} />
+              <JobIntroduction data={introduce}  />
             </div>
           </div>
           <div className="flex justify-center gap-x-5 mb-10">
             <div>
-              <GeneralInformation data={general} />
+              <GeneralInformation data={general} degree={detailRecruitment?.degree || "Đại Học"}/>
             </div>
             <div>
               <DetailJob data={detailRecruitment} />

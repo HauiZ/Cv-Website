@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function GeneralInformation({ data }) {
+export default function GeneralInformation({ data, degree }) {
   const address = data?.companyAddress || "Chưa có thông tin địa chỉ";
   return (
     <div className="w-[18rem] h-fit  rounded-[1em] bg-white">
@@ -13,12 +13,32 @@ export default function GeneralInformation({ data }) {
           Thông tin Chung
         </h1>
       </div>
-      <div className=" content p-10 text-[0.95rem] space-y-3 leading-relaxed">
-        <h1>Cấp Bậc: {data?.jobLevel || "Nhân viên"} </h1>
-        <h1>Học vấn: {data?.degree || "Yêu cầu bằng đại học trở lên"}</h1>
-        <h1>Số lượng tuyển: {data?.candidateNumber || "1"}</h1>
-        <h1>Hình thức làm việc: {data?.workType || "Thương lượng"}</h1>
-        <h1>Giới tính: {data?.sex || "Nam/Nữ"}</h1>
+      <div className=" content p-5 text-[0.95rem] space-y-3 leading-relaxed">
+        <h1>
+          {" "}
+          <span className="font-semibold">Cấp Bậc: </span>
+          {data?.jobLevel || "Nhân viên"}{" "}
+        </h1>
+        <h1>
+          {" "}
+          <span className="font-semibold">Học vấn: </span>
+          { degree }
+        </h1>
+        <h1>
+          {" "}
+          <span className="font-semibold">Số lượng tuyển: </span>
+          {data?.candidateNumber || "1"}
+        </h1>
+        <h1>
+          {" "}
+          <span className="font-semibold">Hình thứclàm việc: </span>{" "}
+          {data?.workType || "Thương lượng"}
+        </h1>
+        <h1>
+          {" "}
+          <span className="font-semibold">Giới tính: </span>
+          {data?.sex || "Nam/Nữ"}
+        </h1>
       </div>
     </div>
   );

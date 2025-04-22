@@ -12,7 +12,7 @@ const BrandList = () => {
             alt=""
           />
         </div>
-        <div className="mt-10 ml-2">
+        <div className="flex justify-center mt-10 ml-2">
           <BrandListbox />
         </div>
       </div>

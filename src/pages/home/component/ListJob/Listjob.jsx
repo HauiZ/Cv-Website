@@ -97,7 +97,7 @@ const ListJobBox = () => {
         ) : error ? (
           <div>Có lỗi: {error}</div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 mt- w-fit">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 w-fit">
             {currentJobs.map((job) => (
               <JobItem key={job.id} job={job} />
             ))}

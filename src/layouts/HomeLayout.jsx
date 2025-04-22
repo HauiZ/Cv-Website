@@ -7,7 +7,7 @@ import Footer from "../components/Footer/Footer";
 import { useAuthContext } from "../contexts/AuthContext";
 
 export default function AdminLayout() {
-  const { isAuthenticated,user } = useAuthContext();
+  const { isAuthenticated, user } = useAuthContext();
 
   return (
     <div className="pt-[75px]">

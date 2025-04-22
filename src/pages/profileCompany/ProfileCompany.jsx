@@ -28,7 +28,7 @@ export default function ProfileCompany() {
             <ContractInfo data={companyData}></ContractInfo>
           </div>
         </div>
-        <div className="w-[33rem]">
+        <div className="w-[35rem]">
           <Recruitments data={jobs}  />
         </div>
         <div className="w-full h-fit mb-15">

@@ -38,7 +38,7 @@ const Topjobbox = () => {
           <a
             key={item.id}
             href="#"
-            className="flex flex-col items-center justify-between gap-y-2 rounded-lg w-[200px] h-[120px] p-2
+            className="flex flex-col items-center justify-between gap-y-2 rounded-lg w-[13rem] h-[9rem] p-2
                        bg-[#F5F5F5] hover:border hover:border-[#00B14F] hover:bg-white hover:shadow-2xl hover:shadow-[#00B14F]"
           >
             <div className="mt-2">{item.icon}</div>

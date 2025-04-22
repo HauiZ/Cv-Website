@@ -33,7 +33,7 @@ export default function JobDescription() {
         <Search />
       </div>
       {/* main content */}
-      <div className="flex justify-center bg-gray-300">
+      <div className="flex justify-center bg-[#F5F5F5]">
         <div className="w-[80vw]">
           <div className="flex justify-center gap-x-5 mt-10 mb-10">
             <div>

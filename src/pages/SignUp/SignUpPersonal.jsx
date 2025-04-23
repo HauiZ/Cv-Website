@@ -33,7 +33,6 @@ function SignUpPersonal() {
     });
   };
   
-  const password = watch("password");
 
   return (
     <div className="flex flex-col relative">
@@ -87,7 +86,7 @@ function SignUpPersonal() {
               </button>
               <p className="text-center my-4 text-[#000000]">
                 Bạn có tài khoản?
-                <a href="/loginPersonal" className="text-green-600 hover:underline">
+                <a href="/login/candidate" className="text-green-600 hover:underline">
                   {" "}
                   Đăng nhập ngay
                 </a>

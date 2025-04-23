@@ -67,7 +67,7 @@ function LoginBusiness() {
 
             <div className="flex items-center justify-between mb-[2vh]">
               <a
-                href="/ForgotPassword"
+                href="/forgotPassword/recruiter"
                 className="text-green-500 text-sm hover:underline"
               >
                 Quên mật khẩu?
@@ -83,7 +83,7 @@ function LoginBusiness() {
 
             <p className="text-center my-[2vh] text-[#000000]">
               Bạn chưa có tài khoản?
-              <a href="/signUpBusiness" className="text-green-600 hover:underline">
+              <a href="/signup/recruiter" className="text-green-600 hover:underline">
                 {" "}
                 Đăng ký ngay
               </a>

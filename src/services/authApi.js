@@ -60,9 +60,52 @@ const loginRecruiterApi = (email, password) => {
   return axios.post(URL_API, data);
 };
 
+const forgotPasswordCandidateApi = (email) => {
+  const URL_API = `/sendOTPCode/candidate`;
+
+  const data = {
+    email,
+  };
+  console.log("Backend URL:", import.meta.env.VITE_BACKEND_URL);
+
+  return axios.post(URL_API, data);
+};
+const forgotPasswordRecruiterApi = (email) => {
+  const URL_API = `/sendOTPCode/recruiter`;
+
+  const data = {
+    email,
+  };
+  console.log("Backend URL:", import.meta.env.VITE_BACKEND_URL);
+
+  return axios.post(URL_API, data);
+};
+
+const inputNewPasswordApi = (
+  email,
+  role,
+  otpCode,
+  newPassword,
+  confirmNewPassword,
+) => {
+  const URL_API = `/forgot-password/${role}`;
+
+  const data = {
+    email,
+    otpCode,
+    newPassword,
+    confirmNewPassword,
+  };
+  console.log("URL", URL_API);
+
+  return axios.patch(URL_API, data);
+};
 export {
   loginCandidateApi,
   loginRecruiterApi,
   createCandidatesApi,
   createRecruterApi,
+  forgotPasswordCandidateApi,
+  forgotPasswordRecruiterApi,
+  inputNewPasswordApi,
 };

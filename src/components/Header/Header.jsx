@@ -6,13 +6,13 @@ const Header = () => {
   const navigate = useNavigate();
 
   const handleLoginClick = () => {
-    navigate("/loginPersonal");
+    navigate("/login/candidate");
   };
   const handleSignUpClick = () => {
-    navigate("/signUpPersonal");
+    navigate("/signup/candidate");
   }
   const handleFindJobClick = () => {
-    navigate("/loginBusiness");
+    navigate("/login/recruiter");
   }
 
   return (

@@ -100,7 +100,7 @@ const Header1 = () => {
             <span className="text-[13px] text-[#A9A9A9]">
               Bạn là nhà tuyển dụng?
             </span>
-            <a href="/loginBusiness" className="hover:text-[#0C8E5E]">
+            <a href="/login/recruiter" className="hover:text-[#0C8E5E]">
               Đăng tuyển ngay {">>"}
             </a>
           </div>

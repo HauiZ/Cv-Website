@@ -6,10 +6,6 @@ import { set } from "react-hook-form";
 const AuthContext = createContext({
   isAuthenticated: false,
   user: {
-    userName: "",
-    email: "",
-    phone: "",
-    avatarUrl: "",
     loadingAuth: true,
   },
 });

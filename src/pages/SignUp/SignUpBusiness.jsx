@@ -1,8 +1,4 @@
-import {
-  faBuildingUser,
-  faPhone,
-  faLock,
-} from "../../utils/fontAwsomeLib";
+import { faBuildingUser, faPhone, faLock } from "../../utils/fontAwsomeLib";
 import LoginBannerPersonal from "../../components/LoginBannerPersonal";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -16,7 +12,7 @@ import useAuth from "../../hooks/useAuth";
 import Select from "react-select";
 import { useState } from "react";
 import useCustomFetch from "../../hooks/useCustomFetch";
-import { fetchProvinces, fetchDistrictsByProvinceCode } from "../../services/apiT";
+import { fetchAreaApi } from "../../services/userApi";
 
 function SignUpBusiness() {
   const navigate = useNavigate();
@@ -36,37 +32,53 @@ function SignUpBusiness() {
   const [selectedProvince, setSelectedProvince] = useState(null);
   const [selectedDistrict, setSelectedDistrict] = useState(null);
 
-  const { data: provincesOptions = [], loading: loadingProvinces } = useCustomFetch(fetchProvinces, []);
-  const { data: districtOptions = [], loading: loadingDistricts } = useCustomFetch(
-    fetchDistrictsByProvinceCode, 
-    [selectedProvince?.value || ""]
-  );
+  const { data } = useCustomFetch(fetchAreaApi);
+
+  const provincesOptions = data?.map((item) => ({
+    label: item.province,
+    value: item.province,
+  })) || [];
+
+  const districtOptions = selectedProvince
+    ? data
+        ?.find((item) => item.province === selectedProvince.value)
+        ?.districts.map((district) => ({
+          label: district,
+          value: district,
+        })) || []
+    : [];
 
   const onSubmit = async (formData) => {
     if (!selectedProvince) {
-      showToast("Please select a province", "error");
+      showToast("Vui lòng chọn tỉnh/thành phố", "error");
       return;
     }
 
     if (!selectedDistrict) {
-      showToast("Please select a district", "error");
+      showToast("Vui lòng chọn quận/huyện", "error");
       return;
     }
 
     const completeData = {
-      ...formData,
-      province: selectedProvince?.label || "",
-      district: selectedDistrict?.label || "",
+      email: formData.email,
+      password: formData.password,
+      confirmPassword: formData.confirmPassword,
+      businessName: formData.businessName,
+      phone: formData.phone,
+      district: selectedDistrict.label,
+      province: selectedProvince.label,
+      domain: "doamain"
     };
 
     await withLoading(async () => {
+      console.log("Form Data:", formData);
+      console.log("Complete Data:", completeData);
       try {
-        await new Promise((res) => setTimeout(res, 2000)); // fake delay
         await signUpRecruiter(completeData);
-        showToast("Registration successful!", "success");
+        // Thành công đã được handle trong useAuth
       } catch (error) {
-        console.error("Registration failed:", error);
-        showToast("Registration failed. Please try again.", "error");
+        console.error("Registration error:", error);
+        showToast("Đăng ký thất bại. Vui lòng thử lại.", "error");
       }
     });
   };
@@ -88,17 +100,47 @@ function SignUpBusiness() {
               onSubmit={handleSubmit(onSubmit)}
               className="bg-white p-6 lg:rounded lg:shadow-md flex flex-col justify-center w-full max-w-[500px] mx-auto"
             >
-              <Input title="Email" type="email" {...register("email")} errors={errors} />
-              <Input title="Password" type="password" icon={faLock} {...register("password")} errors={errors} />
-              <Input title="Confirm Password" type="password" icon={faLock} {...register("confirmPassword")} errors={errors} />
-
-              <Input title="Business Name" type="text" icon={faBuildingUser} {...register("businessName")} errors={errors} />
-              <Input title="Phone Number" type="tel" icon={faPhone} {...register("phoneNumber")} errors={errors} />
+              <Input
+                title="Email"
+                type="email"
+                {...register("email")}
+                errors={errors}
+              />
+              <Input
+                title="Password"
+                type="password"
+                icon={faLock}
+                {...register("password")}
+                errors={errors}
+              />
+              <Input
+                title="Confirm Password"
+                type="password"
+                icon={faLock}
+                {...register("confirmPassword")}
+                errors={errors}
+              />
+              <Input
+                title="Business Name"
+                type="text"
+                icon={faBuildingUser}
+                {...register("businessName")}
+                errors={errors}
+              />
+              <Input
+                title="Phone Number"
+                type="tel"
+                icon={faPhone}
+                {...register("phone")}
+                errors={errors}
+              />
 
               {/* Province & District Dropdown */}
               <div className="flex gap-4 mb-4">
                 <div className="w-1/2">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Tỉnh/Thành phố</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Tỉnh/Thành phố
+                  </label>
                   <Select
                     options={provincesOptions}
                     value={selectedProvince}
@@ -106,30 +148,34 @@ function SignUpBusiness() {
                       setSelectedProvince(option);
                       setSelectedDistrict(null);
                     }}
-                    isLoading={loadingProvinces}
                     placeholder="Chọn tỉnh/thành"
                     className="basic-select"
                     classNamePrefix="select"
                   />
                   {!selectedProvince && (
-                    <p className="text-red-500 text-sm mt-1">Please select a province</p>
+                    <p className="text-red-500 text-sm mt-1">
+                      Vui lòng chọn tỉnh/thành phố
+                    </p>
                   )}
                 </div>
 
                 <div className="w-1/2">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Quận/Huyện</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Quận/Huyện
+                  </label>
                   <Select
                     options={districtOptions}
                     value={selectedDistrict}
                     onChange={setSelectedDistrict}
                     isDisabled={!selectedProvince}
-                    isLoading={loadingDistricts}
                     placeholder="Chọn quận/huyện"
                     className="basic-select"
                     classNamePrefix="select"
                   />
                   {selectedProvince && !selectedDistrict && (
-                    <p className="text-red-500 text-sm mt-1">Please select a district</p>
+                    <p className="text-red-500 text-sm mt-1">
+                      Vui lòng chọn quận/huyện
+                    </p>
                   )}
                 </div>
               </div>
@@ -143,7 +189,10 @@ function SignUpBusiness() {
 
               <p className="text-center my-4 text-[#000000]">
                 Bạn có tài khoản?
-                <a href="/LoginBusiness" className="text-green-600 hover:underline"> Đăng nhập ngay</a>
+                <a href="/LoginBusiness" className="text-green-600 hover:underline">
+                  {" "}
+                  Đăng nhập ngay
+                </a>
               </p>
             </form>
           </div>

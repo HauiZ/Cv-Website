@@ -19,7 +19,7 @@ const passwordSchema = yup
 // Login Personal & Business (Same Schema)
 export const loginSchema = yup.object().shape({
   email: emailSchema,
-  password: testShema,
+  password: passwordSchema,
   // test: testShema,
 });
 
@@ -36,7 +36,6 @@ export const signUpPersonalSchema = yup.object().shape({
 
 // Signup Business (Different rules)
 export const signUpBusinessSchema = yup.object().shape({
-  userName: yup.string().required("Please enter user name"),
   email: emailSchema,
   password: passwordSchema.min(8, "Business password must be at least 8 characters"),
   confirmPassword: yup
@@ -44,7 +43,7 @@ export const signUpBusinessSchema = yup.object().shape({
     .oneOf([yup.ref("password"), null], "Passwords do not match")
     .required("Please confirm your password"),
   businessName: yup.string().required("Please enter business name"),
-  phoneNumber: yup
+  phone: yup
     .string()
     .matches(/^[0-9]{10}$/, "Invalid phone number")
     .required("Please enter phone number"),

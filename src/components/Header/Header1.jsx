@@ -15,7 +15,7 @@ const Header1 = () => {
   const navigate = useNavigate();
 
   const avatar = user?.LinkAvatar || user?.linkLogo;
-  const displayName = user?.userName || "Chưa đăng nhập";
+  const displayName = user?.userName || user?.businessName || "User";
   const email = user?.email || "";
 
   const items = [
@@ -100,7 +100,7 @@ const Header1 = () => {
             <span className="text-[13px] text-[#A9A9A9]">
               Bạn là nhà tuyển dụng?
             </span>
-            <a href="#" className="hover:text-[#0C8E5E]">
+            <a href="/loginBusiness" className="hover:text-[#0C8E5E]">
               Đăng tuyển ngay {">>"}
             </a>
           </div>

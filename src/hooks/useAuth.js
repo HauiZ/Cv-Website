@@ -71,10 +71,10 @@ export default function useAuth(navigationCallback = null) {
 
   // SIGNUP
   const signUpCandidate = useCallback(
-    async ({ userName, email, password, confirmPassword, phone, provice,district,businessName }) => {
+    async ({ userName, email, password, confirmPassword }) => {
       await withLoading(async () => {
         try {
-          await createCandidatesApi(userName, email, password, confirmPassword, phone, provice,district,businessName);
+          await createCandidatesApi(userName, email, password, confirmPassword);
           showToast("Đăng ký thành công! Vui lòng đăng nhập.", "success");
           if (navigationCallback) {
             navigationCallback("/login");
@@ -89,13 +89,13 @@ export default function useAuth(navigationCallback = null) {
     [showToast, withLoading, navigationCallback]
   );
   const signUpRecruiter = useCallback(
-    async ({ userName, email, password, confirmPassword, phone, provice,district,businessName }) => {
+    async ({ email, password, confirmPassword,businessName, phone, province,district, }) => {
       await withLoading(async () => {
         try {
-          await createRecruterApi(userName, email, password, confirmPassword, phone, provice,district,businessName);
+          await createRecruterApi( email, password, confirmPassword,businessName, phone, province,district);
           showToast("Đăng ký thành công! Vui lòng đăng nhập.", "success");
           if (navigationCallback) {
-            navigationCallback("/login");
+            navigationCallback("/loginBusiness");
           }
         } catch (err) {
           const msg = err?.response?.data?.message || "Đăng ký thất bại!";
@@ -117,5 +117,5 @@ export default function useAuth(navigationCallback = null) {
     }
   }, [showToast, clearUser, navigationCallback]);
 
-  return { loginCandidate,loginRecruiter, signUpCandidate, logOut };
+  return { loginCandidate,loginRecruiter, signUpCandidate, signUpRecruiter,logOut };
 }

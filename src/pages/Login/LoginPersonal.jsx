@@ -57,7 +57,7 @@ function LoginPersonal() {
 
             <div className="flex items-center justify-between mb-[2vh]">
               <BttnSignIn />
-              <a href="/forgotPassword" className="text-green-500 text-sm hover:underline">Quên mật khẩu?</a>
+              <a href="/forgotPassword/candidate" className="text-green-500 text-sm hover:underline">Quên mật khẩu?</a>
             </div>
 
             <button
@@ -69,7 +69,7 @@ function LoginPersonal() {
 
             <p className="text-center my-[2vh] text-[#000000]">
               Bạn chưa có tài khoản?
-              <a href="/signUpPersonal" className="text-green-600 hover:underline"> Đăng ký ngay</a>
+              <a href="/signup/candidate" className="text-green-600 hover:underline"> Đăng ký ngay</a>
             </p>
           </form>
         </div>

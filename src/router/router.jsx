@@ -45,11 +45,7 @@ const router = createBrowserRouter([
       ...authRoutes,
       ...adminRoutes,
 
-      { path: "/login", element: <LoginPersonal /> },
-      { path: "/SignUp", element: <SignUpPersonal /> },
-      { path: "/ForgotPassword", element: <ForgotPassword /> },
       { path: "/authsuccess", element: <AuthSuccess /> },
-      { path: "/B", element: <LoginBusiness /> },
 
       {
         path: "/",

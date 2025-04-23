@@ -189,7 +189,7 @@ function SignUpBusiness() {
 
               <p className="text-center my-4 text-[#000000]">
                 Bạn có tài khoản?
-                <a href="/LoginBusiness" className="text-green-600 hover:underline">
+                <a href="/login/candidate" className="text-green-600 hover:underline">
                   {" "}
                   Đăng nhập ngay
                 </a>

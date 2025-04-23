@@ -3,7 +3,7 @@ import React from "react";
 export default function ProfileIntroduction({data}) {
   const content = data?.introduction || ["Công ty chưa có thông tin giới thiệu"];
   return (
-    <div className="w-[33rem] h-[30rem]  mt-5 rounded-[1em] bg-white">
+    <div className="w-[33rem] h-fit  mt-5 rounded-[1em] bg-white">
       {/* banner */}
       <div className="w-full h-15 rounded-t-[1em] bg-gradient-to-r from-[#213E42] to-[#5DCC7C] flex items-center p-5">
         <h1

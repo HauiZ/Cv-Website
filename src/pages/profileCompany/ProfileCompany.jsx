@@ -20,7 +20,7 @@ export default function ProfileCompany() {
         <div className="">
           <Banner data={companyData}></Banner>
         </div>
-        <div className="flex justify-center gap-x-5 ">
+        <div className="flex justify-center gap-x-15 ">
           <div>
             <ProfileIntroduction data={companyData}></ProfileIntroduction>
           </div>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 const LocationFilter = ({ onLocationChange }) => {
-  const area = ["TP. Hồ Chí Minh", "Hà Nội", "Miền Nam", "Miền Bắc"];
+  const area = ["TP Hồ Chí Minh", "Hà Nội", "Đà Nẵng", "Cần Thơ"]; // danh sách địa điểm
   const [selected, setSelected] = useState(null); // giữ location được chọn
 
   const handleClick = (loc) => {

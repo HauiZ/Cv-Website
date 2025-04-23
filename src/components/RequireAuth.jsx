@@ -5,8 +5,7 @@ const RequireAuth = ({ children }) => {
   const location = useLocation();
   const { isAuthenticated, loadingAuth } = useAuthContext();
 
-  // ⏳ Đợi auth xác thực xong mới render
-  if (loadingAuth) return null; // hoặc spinner tùy bạn
+  if (loadingAuth) return null; 
 
   return isAuthenticated ? (
     children

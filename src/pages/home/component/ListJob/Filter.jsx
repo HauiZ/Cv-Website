@@ -3,15 +3,15 @@ import { Cascader } from 'antd';
 import { IoFilterSharp } from "react-icons/io5";
 
 const options = [
-  {
-    value: 'area',
-    label: 'Địa điểm',
-    children: [
-      { value: 'north', label: 'Miền Bắc' },
-      { value: 'central', label: 'Miền Trung' },
-      { value: 'southern', label: 'Miền Nam' },
-    ],
-  },
+  // {
+  //   value: 'area',
+  //   label: 'Địa điểm',
+  //   children: [
+  //     { value: 'TP Hồ Chí Minh', label: 'TP Hồ Chí Minh' },
+  //     { value: 'Hà Nội', label: 'Hà Nội' },
+  //     { value: 'Đà Nẵng', label: 'Đà Nẵng' },
+  //   ],
+  // },
   {
     value: 'salary',
     label: 'Mức lương',

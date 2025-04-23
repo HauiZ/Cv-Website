@@ -51,7 +51,7 @@ function Home() {
       <div className="w-full h-[630px] bg-[#F5F5F5]">
         <ListJobBox />
       </div>
-      <div className="w-full h-[1010px]">
+      <div className="w-full h-[70rem]">
         <BrandList />
         <Topjob />
         <Topbrand />

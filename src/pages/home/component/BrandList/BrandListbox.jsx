@@ -1,10 +1,12 @@
 import React from "react";
 import { BiSolidShoppingBag } from "react-icons/bi";
 import useCustomFetch from "../../../../hooks/useCustomFetch";
-import  {fetchAllCompanyApi}  from "../../../../services/recruiterApi"; 
+import  {fetchAllCompanyApi}  from "../../../../services/recruiterApi";
+import { useNavigate } from "react-router-dom"; 
 const defaultLogo = "/src/image/logo_viettel.png";
 
 const BrandListbox = () => {
+    const navigate = useNavigate();
     const {
         data: companies,
         loading,
@@ -20,6 +22,8 @@ const BrandListbox = () => {
                 <div
                     key={company.id}
                     className="flex gap-x-5 border-1 border-[#00B14F] rounded-2xl w-[16rem] h-[7rem] relative shadow-1xl hover:shadow-[0_0_10px_rgba(12,142,94,0.5)] hover:border-[#0C8E5E] hover:border-2 transition-all duration-300 cursor-pointer group"
+                    onClick={() => navigate(`/companyprofile/${company.id}`)}
+
                 >
                     <div className="flex mt-2 ml-2">
                         <img

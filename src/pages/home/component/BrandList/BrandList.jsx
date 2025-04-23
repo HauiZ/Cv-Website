@@ -4,7 +4,7 @@ import background from "../../../../assets/image/Thuonghieulon.png"
 const BrandList = () => {
   return (
     <div className="flex justify-center mt-10">
-      <div className="w-[980px] h-[600px] rounded-2xl shadow-2xl">
+      <div className="w-[980px] h-fit rounded-2xl shadow-2xl py-5">
         <div>
           <img
             src={background}

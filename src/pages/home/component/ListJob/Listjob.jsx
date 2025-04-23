@@ -28,7 +28,7 @@ const ListJobBox = () => {
   // State để giữ query filter
   const [filters, setFilters] = useState({});
 
-  // Custom hook fetch theo query 
+  // Custom hook fetch theo query
   const {
     data: jobs,
     loading,
@@ -47,13 +47,11 @@ const ListJobBox = () => {
     if (key === "salary") {
       const { salaryMin, salaryMax } = formatSalaryRange(val);
       setFilters((prev) => ({
-        ...prev,
         salaryMin,
         ...(salaryMax !== null ? { salaryMax } : {}),
       }));
     } else {
       setFilters((prev) => ({
-        ...prev,
         [key]: val,
       }));
     }
@@ -76,19 +74,21 @@ const ListJobBox = () => {
   const currentJobs = jobs ? jobs.slice(indexOfFirstJob, indexOfLastJob) : [];
 
   return (
-    <div className="flex justify-center relative h-full">
-      <div>
-        <div className="my-3">
-          <h1 className="text-3xl font-bold text-[#0C8E5E]">
-            Danh sách việc làm
-          </h1>
-        </div>
-        <div className="flex gap-x-10 mb-5 justify-between">
-          <div>
-            <Filter onFilterChange={handleFilterChange} />
+    <div className="flex justify-center h-full relative">
+      <div >
+        <div className="relative min-w-[59rem]">
+          <div className="my-3">
+            <h1 className="text-3xl font-bold text-[#0C8E5E]">
+              Danh sách việc làm
+            </h1>
           </div>
-          <div className="">
-            <LocationFilter onLocationChange={handleLocationFilter} />
+          <div className="flex gap-x-10 mb-5">
+            <div>
+              <Filter onFilterChange={handleFilterChange} />
+            </div>
+            <div className="absolute right-0">
+              <LocationFilter onLocationChange={handleLocationFilter} />
+            </div>
           </div>
         </div>
 

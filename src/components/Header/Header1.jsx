@@ -78,18 +78,20 @@ const Header1 = () => {
         <div className="flex w-[8vw] h-[75px] justify-between items-center ml-5 ">
           <img
             src="/src/image/logo.png"
-            className="object-contain"
+            className="object-contain hover:cursor-pointer"
             alt="Logo"
+            onClick={() => navigate("/")}
+
           />
         </div>
         <div className="flex gap-x-20 px-6 py-2 mt-4 mb-4">
-          <a href="#" className="menu">
+          <a href="/" className="menu">
             Việc làm
           </a>
-          <a href="#" className="menu">
+          <a href="/" className="menu">
             Hồ sơ & CV
           </a>
-          <a href="#" className="menu">
+          <a href="/" className="menu">
             Công cụ
           </a>
         </div>

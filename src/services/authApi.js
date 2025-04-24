@@ -1,5 +1,5 @@
 import axios from "../utils/axios.customize";
-
+// SIGN UP
 const createCandidatesApi = (userName, email, password, confirmPassword) => {
   const URL_API = "/users/registerCandidate";
 
@@ -37,8 +37,20 @@ const createRecruterApi = (
 
   return axios.post(URL_API, data);
 };
+// SIGN IN
 const loginCandidateApi = (email, password) => {
   const URL_API = "/auth/login/candidate";
+
+  const data = {
+    email,
+    password,
+  };
+  console.log("Backend URL:", import.meta.env.VITE_BACKEND_URL);
+
+  return axios.post(URL_API, data);
+};
+const loginAdminApi = (email, password) => {
+  const URL_API = "/auth/login/admin";
 
   const data = {
     email,
@@ -59,7 +71,7 @@ const loginRecruiterApi = (email, password) => {
 
   return axios.post(URL_API, data);
 };
-
+// forgot password
 const forgotPasswordCandidateApi = (email) => {
   const URL_API = `/sendOTPCode/candidate`;
 
@@ -86,7 +98,7 @@ const inputNewPasswordApi = (
   role,
   otpCode,
   newPassword,
-  confirmNewPassword,
+  confirmNewPassword
 ) => {
   const URL_API = `/forgot-password/${role}`;
 
@@ -100,12 +112,27 @@ const inputNewPasswordApi = (
 
   return axios.patch(URL_API, data);
 };
+
+// LOGOUT
+const logoutApi = () => {
+  console.log("Logout API called");
+  const URL_API = "/auth/logout";
+
+  return axios.post(URL_API,{
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+}
 export {
   loginCandidateApi,
   loginRecruiterApi,
+  loginAdminApi,
   createCandidatesApi,
   createRecruterApi,
   forgotPasswordCandidateApi,
   forgotPasswordRecruiterApi,
   inputNewPasswordApi,
+  logoutApi,
 };

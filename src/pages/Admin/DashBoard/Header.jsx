@@ -30,7 +30,7 @@ const Header = ({ setSelectedPage }) => {
           <input
             type="text"
             placeholder="Search"
-            className="pl-10 pr-3 py-1 bg-[#c5c7cb] [#7c7878] rounded border focus:outline-none text-black transition-all duration-200 hover:ring-2 hover:ring-blue-300 hover:bg-white"
+            className="pl-10 pr-3 py-1 bg-[#c5c7cb] [#7c7878] rounded border focus:outline-none text-black transition-all duration-200 hover:ring-2 hover:ring-blue-300 hover:bg-white focus:bg-white"
           />
           <FontAwesomeIcon icon={faSearch} className="absolute left-3 top-2 text-gray-500" />
         </div>

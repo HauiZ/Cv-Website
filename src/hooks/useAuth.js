@@ -3,6 +3,8 @@ import useLoading from "./useLoading";
 import { useToast } from "../contexts/ToastContext";
 import { useAuthContext } from "../contexts/AuthContext";
 import {
+  logoutApi,
+  loginAdminApi,
   loginCandidateApi,
   createCandidatesApi,
   loginRecruiterApi,
@@ -18,6 +20,31 @@ export default function useAuth(navigationCallback = null) {
   const { isAuthenticated, fetchUser, clearUser } = useAuthContext();
 
   // LOGIN
+  const loginAdmin = useCallback(
+    async ({ email, password }) => {
+      await withLoading(async () => {
+        try {
+          const res = await loginAdminApi(email, password);
+          const token = res.data?.token;
+          console.log("Login response:", res.data);
+          if (token) {
+            localStorage.setItem("access_token", token);
+            showToast("Đăng nhập thành công!", "success");
+            if (navigationCallback) {
+              navigationCallback("/admin");
+            }
+          } else {
+            showToast("Token không hợp lệ!", "error");
+          }
+        } catch (err) {
+          const msg = err?.response?.data?.message || "Đăng nhập thất bại!";
+          showToast(msg, "error");
+          console.error("Login error:", msg);
+        }
+      });
+    },
+    [showToast, withLoading, fetchUser, navigationCallback]
+  );
   const loginCandidate = useCallback(
     async ({ email, password }) => {
       await withLoading(async () => {
@@ -184,18 +211,28 @@ export default function useAuth(navigationCallback = null) {
     [showToast, withLoading, navigationCallback]
   );
   // LOGOUT
-  const logOut = useCallback(() => {
-    localStorage.removeItem("access_token");
-    clearUser(); // ✅ gọi trực tiếp
-    showToast("Đăng xuất thành công!", "success");
-    if (navigationCallback) {
-      navigationCallback("/");
-    }
-  }, [showToast, clearUser, navigationCallback]);
-
+  const logOut = useCallback(async () => {
+    await withLoading(async () => {
+      try {
+        await logoutApi();
+        localStorage.removeItem("access_token");
+        clearUser(); // ✅ clear user from context
+        showToast("Đăng xuất thành công!", "success");
+        if (navigationCallback) {
+          navigationCallback("/");
+        }
+      } catch (err) {
+        const msg = err?.response?.data?.message || "Đăng xuất thất bại!";
+        showToast(msg, "error");
+        console.error("Logout error:", msg);
+      }
+    });
+  }, [withLoading, logoutApi, clearUser, showToast, navigationCallback]);
+  
   return {
     loginCandidate,
     loginRecruiter,
+    loginAdmin,
     signUpCandidate,
     signUpRecruiter,
     forgotPasswordCandidate,

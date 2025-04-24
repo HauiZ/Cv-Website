@@ -5,7 +5,6 @@ import Insights from './pages/Insights';
 import TinTuyenDung from './pages/TinTuyenDung';
 import JobPostingForm from './pages/JobPostingForm';
 import CVDeXuat from './pages/CVDeXuat';
-import QuanLyCV from './pages/QuanLyCV';
 import BaoCaoTuyenDung from './pages/BaoCaoTuyenDung';
 import CaiDatTaiKhoan from './pages/CaiDatTaiKhoan';
 import { candidates as initialCandidates } from './data/candidates';

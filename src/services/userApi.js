@@ -12,4 +12,14 @@ const fetchAreaApi = async () => {
   const data = res.data
   return data; // chỉ lấy phần user
 };
-export { fetchUserApi, fetchAreaApi };
+
+const applyJobApi = async (jobId, file) => {
+  const formData = new FormData();
+  formData.append("file", file);
+  console.log("formData>>>>>>:", formData);
+  console.log("formdata>>", formData.get("file"));
+  const res = await axios.post(`/users/applyJob/${jobId}`, formData
+  );
+  return res.data;
+}
+export { fetchUserApi, fetchAreaApi, applyJobApi };

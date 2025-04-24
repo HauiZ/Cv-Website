@@ -40,7 +40,7 @@ export default function JobDescription() {
               <CompanyIntroduction data={company} />
             </div>
             <div>
-              <JobIntroduction data={introduce}  />
+              <JobIntroduction data={introduce} jobId= {jobId}  />
             </div>
           </div>
           <div className="flex justify-center gap-x-5 mb-10">

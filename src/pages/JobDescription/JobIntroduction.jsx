@@ -7,8 +7,10 @@ import {
   FaRegHeart,
   FaHeart,
 } from "react-icons/fa";
+import ApplyPopUp from "./ApplyPopUp";
 
-export default function JobIntroduction({data}) {
+export default function JobIntroduction({data, jobId}) {
+  const [isApplyOpen, setIsApplyOpen] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   const salaryRanges = formatSalaryRangeToVND(data?.salaryRange || "Thương lượng");
 
@@ -58,7 +60,7 @@ export default function JobIntroduction({data}) {
       </div>
 
       <div className="flex items-center justify-between gap-3">
-        <button className="bg-lime-500 text-white font-semibold py-2 w-[25rem] px-6 rounded-full hover:bg-lime-600 transition">
+        <button className="bg-lime-500 text-white font-semibold py-2 w-[25rem] px-6 rounded-full hover:bg-lime-600 transition" onClick={() => setIsApplyOpen(true)}>
           Ứng tuyển ngay
         </button>
 
@@ -74,6 +76,7 @@ export default function JobIntroduction({data}) {
           {isSaved ? "Đã lưu" : "Lưu tin"}
         </button>
       </div>
+      <ApplyPopUp isOpen={isApplyOpen} onClose={() => setIsApplyOpen(false)} jobId={jobId}/>
     </div>
   );
 }

@@ -79,7 +79,7 @@ export default function useAuth(navigationCallback = null) {
           await createCandidatesApi(userName, email, password, confirmPassword);
           showToast("Đăng ký thành công! Vui lòng đăng nhập.", "success");
           if (navigationCallback) {
-            navigationCallback("/login");
+            navigationCallback("/login/candidate");
           }
         } catch (err) {
           const msg = err?.response?.data?.message || "Đăng ký thất bại!";
@@ -113,7 +113,7 @@ export default function useAuth(navigationCallback = null) {
           );
           showToast("Đăng ký thành công! Vui lòng đăng nhập.", "success");
           if (navigationCallback) {
-            navigationCallback("/loginBusiness");
+            navigationCallback("/login/recruiter");
           }
         } catch (err) {
           const msg = err?.response?.data?.message || "Đăng ký thất bại!";

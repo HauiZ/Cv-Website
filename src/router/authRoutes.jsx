@@ -11,7 +11,7 @@ const SignUpBusiness = lazy(() => import("../pages/SignUp/SignUpBusiness"));
 export const authRoutes = [
   { path: "/login/candidate", element: <LoginPersonal /> },
   { path: "/login/recruiter", element: <LoginBusiness /> },
-  { path: "/signup/candiate", element: <SignUpPersonal /> },
+  { path: "/signup/candidate", element: <SignUpPersonal /> },
   { path: "/signup/recruiter", element: <SignUpBusiness /> },
   { path: "/forgotPassword/:role", element: <ForgotPassword />},
   { path: "/InputNewPassword/:role", element: <InputNewPassword />},

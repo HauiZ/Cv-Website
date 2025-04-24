@@ -17,10 +17,15 @@ import { useParams } from "react-router-dom";
 export default function JobDescription() {
   const params = useParams();
   const { jobId } = params;
-  const filterParams = useMemo(() => ({}), []);
   const { data } = useCustomFetch(fetchRecruitmentNewsDetailApi, [jobId]);
-  const { data: jobs } = useCustomFetch(fetchAllNewsFilterApi, [filterParams]);
   const { company, general, introduce, detailRecruitment } = data || {};
+  const filterParams = useMemo(
+    () => ({
+      profession: detailRecruitment?.profession || "",
+    }),
+    [detailRecruitment]
+  );
+  const { data: jobs } = useCustomFetch(fetchAllNewsFilterApi, [filterParams]);
   return (
     <div>
       {/* Search bar */}
@@ -40,19 +45,22 @@ export default function JobDescription() {
               <CompanyIntroduction data={company} />
             </div>
             <div>
-              <JobIntroduction data={introduce} jobId= {jobId}  />
+              <JobIntroduction data={introduce} jobId={jobId} />
             </div>
           </div>
           <div className="flex justify-center gap-x-5 mb-10">
             <div>
-              <GeneralInformation data={general} degree={detailRecruitment?.degree || "Đại Học"}/>
+              <GeneralInformation
+                data={general}
+                degree={detailRecruitment?.degree || "Đại Học"}
+              />
             </div>
             <div>
               <DetailJob data={detailRecruitment} />
             </div>
           </div>
           <div className="max-w-[59rem] mx-auto">
-            <RelativeNews data={jobs}/>
+            <RelativeNews data={jobs} />
           </div>
           <div></div>
         </div>

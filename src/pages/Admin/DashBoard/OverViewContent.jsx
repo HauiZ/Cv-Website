@@ -9,25 +9,25 @@ import React from "react";
 
 const stats = [
   {
-    title: "Người dùng",
+    title: "Users",
     count: 120,
     icon: faUsers,
     color: "bg-blue-100 text-blue-600"
   },
   {
-    title: "Tổng công việc",
+    title: "Candidates",
     count: 75,
     icon: faTasks,
     color: "bg-yellow-100 text-yellow-600"
   },
   {
-    title: "Đã hoàn thành",
+    title: "Recuiters",
     count: 50,
     icon: faCheckCircle,
     color: "bg-green-100 text-green-600"
   },
   {
-    title: "Đang xử lý",
+    title: "Recruitment News",
     count: 25,
     icon: faSpinner,
     color: "bg-purple-100 text-purple-600"

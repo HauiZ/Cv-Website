@@ -26,7 +26,7 @@ export default function InputNewPassword() {
   });
 
   const [otp, setOtp] = useState("");
-  const [timeLeft, setTimeLeft] = useState(5000);
+  const [timeLeft, setTimeLeft] = useState(5*60);
 
   useEffect(() => {
     if (timeLeft <= 0) return;

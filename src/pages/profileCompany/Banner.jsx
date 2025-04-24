@@ -1,5 +1,5 @@
 import React from "react";
-import background from "../../assets/image/background_ColorGreen.png";
+import background from "../../assets/image/bg_company.png";
 import defaultLogo from "../../assets/image/icon_webCV.png"
 
 export default function Banner({ data }) {

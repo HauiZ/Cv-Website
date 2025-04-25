@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { MinusOutlined, PlusOutlined, QuestionOutlined } from '@ant-design/icons';
 import { Avatar, Badge, Button, Space, Switch } from 'antd';
 import { IoNotifications } from "react-icons/io5";
-const App = () => {
+const Notification = () => {
     const [count, setCount] = useState(5);
     const [show, setShow] = useState(true);
     const increase = () => {
@@ -35,4 +35,4 @@ const App = () => {
 
     );
 };
-export default App;
+export default Notification;

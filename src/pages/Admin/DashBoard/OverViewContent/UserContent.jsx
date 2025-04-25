@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import TableContent from "./TableContent";
-import { mockData } from "./Data";
 
-const UserContent = () => {
+const UserContent = ({data}) => {
   const [usersData, setUsersData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   
@@ -10,16 +9,10 @@ const UserContent = () => {
     // Simulate loading
     setIsLoading(true);
     setTimeout(() => {
-      setUsersData(mockData.users);
+      setUsersData(data);
       setIsLoading(false);
     }, 300); // Short delay for animation effect
   }, []);
-
-  const handleDelete = (id) => {
-    alert("Xóa user: " + id);
-    // For now, just filter the deleted item from the local state
-    setUsersData(usersData.filter(user => user.id !== id));
-  };
 
   if (isLoading) {
     return (
@@ -37,7 +30,7 @@ const UserContent = () => {
           Add New User
         </button>
       </div>
-      <TableContent data={usersData} onDelete={handleDelete} />
+      <TableContent data={data}  />
     </div>
   );
 };

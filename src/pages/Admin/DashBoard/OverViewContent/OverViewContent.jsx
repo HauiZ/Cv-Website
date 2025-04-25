@@ -10,10 +10,9 @@ import UserContent from "./UserContent";
 import CandidateContent from "./CandidateContent";
 import RecruiterContent from "./RecruiterContent";
 import NewsContent from "./NewsContent";
-import { mockData } from "./Data";
 import './animation.css';
 import useCustomFetch from "../../../../hooks/useCustomFetch";
-import { fetchDataDashBoardApi } from "../../../../services/adminApi";
+import { fetchDataDashBoardApi, fetchUserApi } from "../../../../services/adminApi";
 
 const stats = [
   {
@@ -30,7 +29,7 @@ const stats = [
     color: "bg-yellow-100 text-yellow-600",
     hoverColor: "hover:bg-yellow-200",
     selectedClass: "ring-yellow-400",
-    key: "candidates",
+    key: "news",
   },
   {
     title: "Recruiters",
@@ -38,7 +37,7 @@ const stats = [
     color: "bg-green-100 text-green-600",
     hoverColor: "hover:bg-green-200",
     selectedClass: "ring-green-400",
-    key: "recruiters",
+    key: "news",
   },
   {
     title: "Recruitment News",
@@ -51,8 +50,9 @@ const stats = [
 ];
 
 const OverViewContent = () => {
-  const { data } = useCustomFetch(fetchDataDashBoardApi);
-  const [activeKey, setActiveKey] = useState("users");
+  const { data } = useCustomFetch(fetchDataDashBoardApi); 
+  const { data: users } = useCustomFetch(fetchUserApi)
+  const [activeKey, setActiveKey] = useState("");
   const [counts, setCounts] = useState({
     users: 0,
     candidates: 0,
@@ -92,7 +92,7 @@ const OverViewContent = () => {
   const renderContent = () => {
     switch (currentContent) {
       case "users":
-        return <UserContent />;
+        return <UserContent data={users?.users || []} />;
       case "candidates":
         return <CandidateContent />;
       case "recruiters":

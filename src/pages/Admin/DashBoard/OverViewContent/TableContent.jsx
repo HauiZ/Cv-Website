@@ -1,6 +1,7 @@
 import React from "react";
 
-const TableContent = ({ data, onDelete }) => {
+const TableContent = ({ data }) => {
+  console.log("data>>>>:",data)
   return (
     <div className="overflow-x-auto rounded-lg shadow-md bg-white">
       <table className="w-full text-sm text-left">
@@ -23,16 +24,16 @@ const TableContent = ({ data, onDelete }) => {
               <td className="px-4 py-3">{item.id}</td>
               <td className="px-4 py-3">
                 <img
-                  src={item.logo}
+                  src={item.imageUrl}
                   alt="logo"
                   className="w-10 h-10 object-cover rounded-full border shadow-sm"
                 />
               </td>
               <td className="px-4 py-3">{item.email}</td>
-              <td className="px-4 py-3">{item.joinedAt}</td>
+              <td className="px-4 py-3">{item.role}</td>
               <td className="px-4 py-3">
                 <button
-                  onClick={() => onDelete(item.id)}
+                  
                   className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition-colors duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-300"
                 >
                   Xóa

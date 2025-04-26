@@ -27,6 +27,7 @@ const TableContent = ({ data, onUserDeleted }) => {
             <th className="px-4 py-3 border-b">ID</th>
             <th className="px-4 py-3 border-b">Logo</th>
             <th className="px-4 py-3 border-b">Email</th>
+            <th className="px-4 py-3 border-b">Role</th>
             <th className="px-4 py-3 border-b">Ngày tham gia</th>
             <th className="px-4 py-3 border-b">Hành động</th>
           </tr>
@@ -47,6 +48,7 @@ const TableContent = ({ data, onUserDeleted }) => {
                 />
               </td>
               <td className="px-4 py-3">{item.email}</td>
+              <td className="px-4 py-3">{item.role}</td>
               <td className="px-4 py-3">{item.createAt}</td>
               <td className="px-4 py-3">
                 <button

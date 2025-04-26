@@ -16,32 +16,50 @@ const RequestDetailModal = ({ request, onClose, onApprove, onReject }) => {
         </button>
         <h2 className="text-lg font-semibold mb-4">Request Details</h2>
         <div className="text-sm text-gray-700 space-y-1 mb-6">
-          <p><strong>Id:</strong> <span className="text-gray-500">{request.id}</span></p>
-          <p><strong>Sender:</strong> <span className="text-gray-500">{request.sender}</span></p>
-          <p><strong>Type:</strong> <span className="text-gray-500">{request.type}</span></p>
-          <p><strong>Date:</strong> <span className="text-gray-500">{request.date}</span></p>
-          <p><strong>Status:</strong> <span className="text-gray-500">{request.status}</span></p>
+          <p>
+            <strong>Id:</strong>{" "}
+            <span className="text-gray-500">{request.id}</span>
+          </p>
+          <p>
+            <strong>Sender:</strong>{" "}
+            <span className="text-gray-500">{request.sender}</span>
+          </p>
+          <p>
+            <strong>Type:</strong>{" "}
+            <span className="text-gray-500">{request.type}</span>
+          </p>
+          <p>
+            <strong>Date:</strong>{" "}
+            <span className="text-gray-500">{request.date}</span>
+          </p>
+          <p>
+            <strong>Status:</strong>{" "}
+            <span className="text-gray-500">{request.status}</span>
+          </p>
         </div>
-        <div className="flex justify-center gap-4">
+
+        <div className="flex justify-center items-center gap-4">
           {isPending && (
-            <>
-              <button
-                onClick={() => onApprove(request.id)}
-                className="w-10 h-10 bg-green-500 hover:bg-green-600 text-white rounded-full text-lg transition"
-              >
-                ✓
-              </button>
-              <button
-                onClick={() => onReject(request.id)}
-                className="w-10 h-10 bg-red-500 hover:bg-red-600 text-white rounded-full text-lg transition"
-              >
-                ✕
-              </button>
-            </>
+            <button
+              onClick={() => onApprove(request.id)}
+              className="w-10 h-10 bg-green-500 hover:bg-green-600 text-white rounded-full text-lg transition"
+            >
+              ✓
+            </button>
           )}
+
           <button className="px-4 py-1 border rounded hover:bg-gray-200 text-sm">
             detail
           </button>
+
+          {isPending && (
+            <button
+              onClick={() => onReject(request.id)}
+              className="w-10 h-10 bg-red-500 hover:bg-red-600 text-white rounded-full text-lg transition"
+            >
+              ✕
+            </button>
+          )}
         </div>
       </div>
     </div>

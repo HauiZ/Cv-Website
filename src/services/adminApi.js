@@ -15,5 +15,13 @@ const deleteUserApi = async (id) =>{
   const res = await axios.delete(`/admin/deleteUser/${id}`);
   return res.data; 
 }
-
-export {fetchUserApi, fetchDataDashBoardApi, deleteUserApi};
+const getRequestApi = async () =>{
+  const res = await axios.get("/admin/getRequest");
+  const data = res.data
+  return data; 
+}
+const approveRequestApi = async (id,data) =>{
+  return axios.patch(`admin/approveRecruitment/${id}`,data);
+  
+}
+export {fetchUserApi, fetchDataDashBoardApi, deleteUserApi, getRequestApi, approveRequestApi};

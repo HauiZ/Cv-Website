@@ -9,6 +9,7 @@ import {
   fetchUserApi,
 } from "../../../../services/adminApi";
 import OverViewChart from "./OverViewChart";
+import { set } from "react-hook-form";
 
 const stats = [
   {
@@ -30,8 +31,9 @@ const stats = [
 ];
 
 const OverViewContent = () => {
-  const { data, refetch: refetchDashboard } = useCustomFetch(fetchDataDashBoardApi);
-  
+  const { data, refetch: refetchDashboard } = useCustomFetch(
+    fetchDataDashBoardApi
+  );
   const [activeKey, setActiveKey] = useState("overview");
   const [currentContent, setCurrentContent] = useState("overview");
   const [contentVisible, setContentVisible] = useState(true);

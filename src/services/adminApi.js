@@ -1,7 +1,7 @@
 import axios from "../utils/axios.customize";
 
 const fetchDataDashBoardApi = async () =>{
-  const res = await axios.get("/admin/getDataDashBorad");
+  const res = await axios.get("/admin/getDataDashBoard");
   const data = res.data
   return data; 
 }
@@ -11,6 +11,9 @@ const fetchUserApi = async () =>{
   const data = res.data
   return data; 
 }
+const deleteUserApi = async (id) =>{
+  const res = await axios.delete(`/admin/deleteUser/${id}`);
+  return res.data; 
+}
 
-
-export {fetchUserApi, fetchDataDashBoardApi};
+export {fetchUserApi, fetchDataDashBoardApi, deleteUserApi};

@@ -1,20 +1,32 @@
 import React, { useState, useEffect } from "react";
 import TableContent from "./TableContent";
+import { fetchUserApi } from "../../../../services/adminApi";
+import useCustomFetch from "../../../../hooks/useCustomFetch";
 
-const UserContent = ({data}) => {
+const UserContent = ({ onDataUpdate }) => {
+  const {
+    data: fetchedData,
+    loading,
+    error,
+    refetch,
+  } = useCustomFetch(fetchUserApi);
   const [usersData, setUsersData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  
-  useEffect(() => {
-    // Simulate loading
-    setIsLoading(true);
-    setTimeout(() => {
-      setUsersData(data);
-      setIsLoading(false);
-    }, 300); // Short delay for animation effect
-  }, []);
 
-  if (isLoading) {
+  useEffect(() => {
+    if (fetchedData) {
+      setUsersData(fetchedData.users || []);
+    }
+  }, [fetchedData]);
+
+  // Handle user deletion and data refresh
+  const handleUserDeleted = () => {
+    refetch();
+    if (onDataUpdate) {
+      onDataUpdate();
+    }
+  };
+
+  if (loading) {
     return (
       <div className="flex justify-center items-center py-20">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
@@ -30,7 +42,7 @@ const UserContent = ({data}) => {
           Add New User
         </button>
       </div>
-      <TableContent data={data}  />
+      <TableContent data={usersData} onUserDeleted={handleUserDeleted} />
     </div>
   );
 };

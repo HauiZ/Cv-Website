@@ -35,10 +35,13 @@ export default function CvCard({ onAddToCategory }) {
   };
 
   const handleNameChange = (e) => {
-    setName(e.target.value);
+    setName(e.target.value); // Cứ cho phép nhập thoải mái
   };
 
   const handleNameBlur = () => {
+    if (!name.trim()) {
+      setName("Tên mẫu CV"); // Nếu bỏ trống thì reset về default
+    }
     setIsEditing(false);
   };
 
@@ -82,7 +85,6 @@ export default function CvCard({ onAddToCategory }) {
             <FontAwesomeIcon icon={faPlus} />
           </button>
         </div>
-
         {/* Tên CV */}
         {isEditing ? (
           <input

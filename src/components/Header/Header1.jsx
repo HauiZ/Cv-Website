@@ -1,7 +1,7 @@
 // src/components/Header.jsx
 import React from "react";
 import "./Header.css";
-import App from "./Notification";
+import Notification from "./Notification";
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Space, Dropdown } from "antd";
 import { DownOutlined, SettingOutlined } from "@ant-design/icons";
@@ -105,7 +105,7 @@ const Header1 = () => {
             </a>
           </div>
           <span className="text-2xl text-[#A9A9A9]">{"|"}</span>
-          <App />
+          <Notification />
           <UserDropdown />
         </div>
       </div>

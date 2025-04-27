@@ -1,4 +1,4 @@
-import OverViewContent from "./OverViewContent";
+import OverViewContent from "./OverViewContent/OverViewContent";
 import RequestContent from "./RequestContent";
 
 const MainContent = ({ selectedPage }) => {

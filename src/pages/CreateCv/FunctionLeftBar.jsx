@@ -10,7 +10,7 @@ const TABS = [
   { id: "suggest", label: "Gợi ý viết CV", icon: <FaLightbulb /> },
 ];
 
-export default function FunctionLeftBar() {
+export default function FunctionLeftBar({ onColorChange }) {
   const [activeTab, setActiveTab] = useState("suggest");
 
   const renderTabContent = () => {
@@ -18,7 +18,7 @@ export default function FunctionLeftBar() {
       case "design":
         return <DesignColor />;
       case "theme":
-        return <ColorTheme />;
+        return <ColorTheme onColorChange={onColorChange}/>;
       case "suggest":
         return <CvSuggestion />;
       default:

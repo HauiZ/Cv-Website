@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useToast } from "../contexts/ToastContext";
 
 export default function useCustomFetch(fetchFunction, params = []) {
@@ -6,6 +6,11 @@ export default function useCustomFetch(fetchFunction, params = []) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
+
+  const refetch = useCallback(() => {
+    setRefreshTrigger(prev => prev + 1);
+  }, []);
 
   useEffect(() => {
     let isMounted = true;
@@ -23,7 +28,7 @@ export default function useCustomFetch(fetchFunction, params = []) {
       } catch (err) {
         if (isMounted) {
           const msg = err?.response?.data?.message || "Data fetching failed!";
-          // showToast(msg, "error");
+          showToast(msg, "error");
           console.error("Fetch error:", msg);
           setData(null);
           setError(err);
@@ -39,7 +44,7 @@ export default function useCustomFetch(fetchFunction, params = []) {
     return () => {
       isMounted = false;
     };
-  }, [fetchFunction, ...params]);
+  }, [fetchFunction, ...params, refreshTrigger]);
 
-  return { data, loading, error };
+  return { data, loading, error, refetch };
 }

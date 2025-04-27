@@ -30,7 +30,7 @@ const SideMenu = () => {
 
   return (
     <aside
-      className={`bg-white shadow h-screen ${
+      className={`bg-white shadow h-screen sticky top-0 ${
         isCollapsed ? "w-20" : "w-60"
       } p-4 flex flex-col justify-between border-r-2 border-[#AFBCC9] transition-all duration-500`}
     >
@@ -65,18 +65,18 @@ const SideMenu = () => {
             </NavLink>
           );
         })}
+        <div className="flex justify-center mt-50">
+          <img
+            src={logo}
+            alt="Logo"
+            className={`${
+              isCollapsed ? "w-10 h-10" : "w-30 h-30"
+            } rounded-full object-contain shadow-md mb-2 transition-all duration-500`}
+          />
+        </div>
       </div>
 
       {/* Logo + Logout */}
-      <div className="flex justify-center ">
-        <img
-          src={logo}
-          alt="Logo"
-          className={`${
-            isCollapsed ? "w-10 h-10" : "w-[10vw] h-[10vw]"
-          } rounded-full object-contain shadow-md mb-2 transition-all duration-500`}
-        />
-      </div>
       <div className="flex items-center space-x-3 text-red-500 hover:text-red-700 cursor-pointer px-3 py-2 rounded-md hover:bg-gray-100 transition">
         <FontAwesomeIcon icon={faSignOutAlt} className="text-xl" />
         {!isCollapsed && <span>Log out</span>}

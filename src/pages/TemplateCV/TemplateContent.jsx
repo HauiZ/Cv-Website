@@ -3,10 +3,13 @@ import TemplateCv from "../Admin/Products/TemplateCv";
 import useCustomFetch from "../../hooks/useCustomFetch";
 import { fetchTemplateUserApi } from "../../services/CvApi";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-
+import { useNavigate } from "react-router-dom";
 export default function TemplateContent() {
   const { data } = useCustomFetch(fetchTemplateUserApi);
   const [currentPage, setCurrentPage] = useState(0);
+
+  const navigate = useNavigate();
+
   const pageSize = 6; // Số lượng mỗi trang
 
   const totalPages = data ? Math.ceil(data.length / pageSize) : 0;
@@ -36,7 +39,7 @@ export default function TemplateContent() {
         </button>
 
         {/* Nội dung template */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-5 gap-y-10 w-fit transition-opacity duration-500 ease-in-out opacity-100">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-5 gap-y-10 w-fit transition-opacity duration-500 ease-in-out opacity-100" onClick={()=>{navigate('/createCV')}}s>
           {paginatedData?.map((cv) => (
             <TemplateCv key={cv.id} data={cv} />
           ))}

@@ -1,24 +1,26 @@
 import { useState } from "react";
-import MainContent from "../DashBoard/MainContent";
 import HeaderProduct from "./HeaderProduct";
 import CvLayout from "./CvLayout";
+import useCustomFetch from "../../../hooks/useCustomFetch";
+import { fetchTemplateAdminApi } from "../../../services/CvApi";
 
 const AdminHome = () => {
   const [selectedPage, setSelectedPage] = useState("overview");
+  const { data, refetch } = useCustomFetch(fetchTemplateAdminApi);
 
   return (
     // <div className="">
-      <div className="flex-1 flex flex-col">
-        {/* Truyền setSelectedPage để Header dùng */}
-        <HeaderProduct setSelectedPage={setSelectedPage} />
-        {/* <HeaderProduct>
+    <div className="flex-1 flex flex-col">
+      {/* Truyền setSelectedPage để Header dùng */}
+      <HeaderProduct setSelectedPage={setSelectedPage} refetch = {refetch} />
+      {/* <HeaderProduct>
           
         </HeaderProduct> */}
-        <main className="flex justify-center mt-20">
-          <CvLayout></CvLayout>
+      <main className="flex justify-center my-20">
+        <CvLayout data={data || []}></CvLayout>
         {/* <MainContent selectedPage={selectedPage} /> */}
-        </main>
-      </div>
+      </main>
+    </div>
     // </div>
   );
 };

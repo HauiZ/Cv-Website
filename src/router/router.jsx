@@ -17,6 +17,8 @@ import ChangePassPage from "../pages/InfomationPage/ChangePassPage";
 import ChangeProfilePage from "../pages/InfomationPage/ChangeProfilePage";
 import SearchPage from "../pages/Search/SearchPage";
 
+import TemplateCV from "../pages/TemplateCV/TemplateCV";
+
 // Route nhóm
 import { adminRoutes } from "./adminRoutes";
 import { authRoutes } from "./authRoutes";
@@ -49,6 +51,10 @@ const protectedRoutes = [
   {
     path: "/search",
     element: <SearchPage />
+  },
+  {
+    path: "/truongtest",
+    element: <TemplateCV/>
   }
 ];
 

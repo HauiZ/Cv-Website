@@ -3,7 +3,7 @@ import { faBell, faSearch } from "@fortawesome/free-solid-svg-icons";
 import React, { useState } from "react";
 import CreateCvFrame from "./CreateCvFrame";
 
-const Header = ({ setSelectedPage }) => {
+const Header = ({ setSelectedPage, refetch }) => {
   const [selectedRequest, setSelectedRequest] = useState(null);
   return (
     <>
@@ -30,7 +30,8 @@ const Header = ({ setSelectedPage }) => {
       { selectedRequest &&(
         
         <CreateCvFrame request={selectedRequest}
-        onClose={() => setSelectedRequest(null)}/>
+        onClose={() => setSelectedRequest(null)}
+        refetch ={refetch}/>
       )
     }
     </>

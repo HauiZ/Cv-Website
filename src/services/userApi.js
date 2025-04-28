@@ -16,8 +16,8 @@ const fetchAreaApi = async () => {
 const applyJobApi = async (jobId, file) => {
   const formData = new FormData();
   formData.append("file", file);
-  console.log("formData>>>>>>:", formData);
-  console.log("formdata>>", formData.get("file"));
+  // console.log("formData>>>>>>:", formData);
+  // console.log("formdata>>", formData.get("file"));
   const res = await axios.post(`/users/applyJob/${jobId}`, formData
   );
   return res.data;

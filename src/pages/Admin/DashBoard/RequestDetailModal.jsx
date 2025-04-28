@@ -26,11 +26,11 @@ const RequestDetailModal = ({ request, onClose, onApprove, onReject }) => {
           </p>
           <p>
             <strong>Type:</strong>{" "}
-            <span className="text-gray-500">{request.type}</span>
+            <span className="text-gray-500">{request.typeOf}</span>
           </p>
           <p>
             <strong>Date:</strong>{" "}
-            <span className="text-gray-500">{request.date}</span>
+            <span className="text-gray-500">{request.createAt}</span>
           </p>
           <p>
             <strong>Status:</strong>{" "}

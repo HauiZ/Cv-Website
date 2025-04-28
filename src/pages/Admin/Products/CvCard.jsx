@@ -1,27 +1,31 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage } from "@fortawesome/free-regular-svg-icons";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faTimes } from "@fortawesome/free-solid-svg-icons";
 
 export default function CvCard({ onAddToCategory }) {
   const [imageUrl, setImageUrl] = useState(null);
   const [name, setName] = useState("Tên mẫu CV");
   const [isEditing, setIsEditing] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(null); // For file validation
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [tags, setTags] = useState([]);
+  const [editingTagIndex, setEditingTagIndex] = useState(null);
+  const [editingTagValue, setEditingTagValue] = useState("");
 
   const fileInputRef = useRef();
+  const inputRef = useRef();
+  const tagInputRef = useRef();
 
   const handleImageClick = () => {
-    fileInputRef.current.click(); // Trigger input file
+    fileInputRef.current.click();
   };
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      // Check if the file is an image
       if (!file.type.startsWith("image/")) {
         setErrorMessage("Please upload a valid image file.");
-        setImageUrl(null); // Reset image preview if invalid file
+        setImageUrl(null);
       } else {
         setErrorMessage(null);
         const url = URL.createObjectURL(file);
@@ -32,18 +36,106 @@ export default function CvCard({ onAddToCategory }) {
 
   const handleNameClick = () => {
     setIsEditing(true);
+    setTimeout(() => {
+      if (inputRef.current) {
+        inputRef.current.focus();
+      }
+    }, 0);
   };
 
   const handleNameChange = (e) => {
-    setName(e.target.value); // Cứ cho phép nhập thoải mái
+    setName(e.target.value);
   };
 
   const handleNameBlur = () => {
     if (!name.trim()) {
-      setName("Tên mẫu CV"); // Nếu bỏ trống thì reset về default
+      setName("Tên mẫu CV");
     }
     setIsEditing(false);
   };
+
+  const handleNameKeyDown = (e) => {
+    if (e.key === "Enter") {
+      if (!name.trim()) {
+        setName("Tên mẫu CV");
+      }
+      setIsEditing(false);
+      e.target.blur();
+    }
+  };
+
+  const handleAddTag = () => {
+    const newTag = "Danh mục mới";
+    setTags([...tags, newTag]);
+    setEditingTagIndex(tags.length);
+    setEditingTagValue(newTag);
+
+    setTimeout(() => {
+      if (tagInputRef.current) {
+        tagInputRef.current.focus();
+        tagInputRef.current.select(); // Select the text for easy editing
+      }
+    }, 10);
+  };
+
+  const handleEditTag = (index) => {
+    setEditingTagIndex(index);
+    setEditingTagValue(tags[index]);
+
+    setTimeout(() => {
+      if (tagInputRef.current) {
+        tagInputRef.current.focus();
+      }
+    }, 10);
+  };
+
+  const handleTagChange = (e) => {
+    setEditingTagValue(e.target.value);
+  };
+
+  const handleTagBlur = () => {
+    if (editingTagIndex !== null) {
+      // Update the tag if not empty, otherwise remove it
+      if (editingTagValue.trim()) {
+        const newTags = [...tags];
+        newTags[editingTagIndex] = editingTagValue.trim();
+        setTags(newTags);
+      } else {
+        handleRemoveTag(editingTagIndex);
+      }
+      setEditingTagIndex(null);
+    }
+  };
+
+  const handleTagKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleTagBlur();
+    }
+  };
+
+  const handleRemoveTag = (index) => {
+    const newTags = [...tags];
+    newTags.splice(index, 1);
+    setTags(newTags);
+
+    if (editingTagIndex === index) {
+      setEditingTagIndex(null);
+    }
+  };
+
+  const handleAddToCategory = () => {
+    // If the callback exists, add the tags and current info to category
+    if (onAddToCategory) {
+      tags.forEach((tag) => {
+        onAddToCategory(tag, { name, imageUrl });
+      });
+    }
+  };
+
+  // Call handleAddToCategory every time tags change
+  useEffect(() => {
+    handleAddToCategory();
+  }, [tags]); // Call whenever tags are updated
 
   return (
     <div className="w-[200px] rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 bg-white">
@@ -77,22 +169,58 @@ export default function CvCard({ onAddToCategory }) {
 
       {/* Content */}
       <div className="p-3 flex flex-col gap-2 bg-white">
-        <div className="flex justify-end">
+        {/* Tags area */}
+        <div className="flex flex-wrap gap-1 min-h-8">
+          {tags.map((tag, index) => (
+            editingTagIndex === index ? (
+              <div key={index} className="h-6 border border-blue-400 rounded px-1 flex items-center bg-blue-50">
+                <input
+                  ref={tagInputRef}
+                  type="text"
+                  value={editingTagValue}
+                  onChange={handleTagChange}
+                  onBlur={handleTagBlur}
+                  onKeyDown={handleTagKeyDown}
+                  className="outline-none bg-transparent text-xs w-16"
+                />
+              </div>
+            ) : (
+              <div 
+                key={index} 
+                className="h-6 border border-gray-300 rounded px-1 flex items-center gap-1 bg-gray-50 cursor-pointer"
+                onClick={() => handleEditTag(index)}
+              >
+                <span className="text-xs">{tag}</span>
+                <button 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleRemoveTag(index);
+                  }}
+                  className="text-gray-500 hover:text-red-500 text-xs"
+                >
+                  <FontAwesomeIcon icon={faTimes} />
+                </button>
+              </div>
+            )
+          ))}
           <button
-            className="h-7 w-7 rounded-full bg-black text-white text-sm flex items-center justify-center hover:bg-gray-800 transition-colors"
-            onClick={onAddToCategory}
+            className="h-6 w-6 rounded-full bg-black text-white text-xs flex items-center justify-center hover:bg-gray-800 transition-colors"
+            onClick={handleAddTag}
+            title="Thêm danh mục"
           >
             <FontAwesomeIcon icon={faPlus} />
           </button>
         </div>
+        
         {/* Tên CV */}
         {isEditing ? (
           <input
+            ref={inputRef}
             className="text-base font-semibold border border-gray-300 rounded px-1 py-0.5"
             value={name}
             onChange={handleNameChange}
             onBlur={handleNameBlur}
-            autoFocus
+            onKeyDown={handleNameKeyDown}
           />
         ) : (
           <div

@@ -13,7 +13,7 @@ import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
 import CreateCvPage from "../pages/CreateCv/CreateCvPage";
 import AuthSuccess from "./AuthSuccess";
 import Page404 from "../pages/Page404";
-
+import TemplateCV from "../pages/TemplateCV/TemplateCV";
 // Route nhóm
 import { adminRoutes } from "./adminRoutes";
 import { authRoutes } from "./authRoutes";
@@ -35,6 +35,10 @@ const protectedRoutes = [
     path: "/test",
     element: <CreateCvPage />,
   },
+  {
+    path: "/truongtest",
+    element: <TemplateCV/>
+  }
 ];
 
 const router = createBrowserRouter([

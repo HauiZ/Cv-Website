@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary-color: #00875a;
+  --secondary-color: #f0f0f0;
+  --text-color: #333;
+  --border-color: #e0e0e0;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: var(--text-color);
+  background-color: #f8f8f8;
+}
+
+.btn-primary {
+  @apply bg-[#00875a] text-white px-4 py-2 rounded-md hover:bg-[#006d48] transition-colors;
+}
+
+.btn-secondary {
+  @apply bg-gray-200 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-300 transition-colors;
+}
+
+.btn-apply {
+  @apply bg-[#00c07f] text-white px-4 py-2 rounded-md hover:bg-[#00a86f] transition-colors;
+}
+
+.container {
+  @apply mx-auto px-4;
+}
+
+.job-card {
+  @apply bg-white border border-gray-200 rounded-md p-4 mb-3 hover:shadow-md transition-shadow;
+}
+
+.filter-container {
+  @apply bg-white border border-gray-200 rounded-md p-4 mb-4;
+}
+
+.filter-heading {
+  @apply font-semibold mb-2;
+}
+
+.checkbox-label {
+  @apply flex items-center gap-2 mb-1 text-sm;
+}
+
+.radio-label {
+  @apply flex items-center gap-2 mb-1 text-sm;
+}
+
+.search-input {
+  @apply border border-gray-300 rounded-md p-2 w-full focus:outline-none focus:border-[#00875a];
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  @apply text-[#00875a] focus:ring-[#00875a];
+}

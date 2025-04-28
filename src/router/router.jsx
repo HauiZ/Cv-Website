@@ -13,7 +13,12 @@ import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
 import CreateCvPage from "../pages/CreateCv/CreateCvPage";
 import AuthSuccess from "./AuthSuccess";
 import Page404 from "../pages/Page404";
+import ChangePassPage from "../pages/InfomationPage/ChangePassPage";
+import ChangeProfilePage from "../pages/InfomationPage/ChangeProfilePage";
+import SearchPage from "../pages/Search/SearchPage";
+
 import TemplateCV from "../pages/TemplateCV/TemplateCV";
+
 // Route nhóm
 import { adminRoutes } from "./adminRoutes";
 import { authRoutes } from "./authRoutes";
@@ -34,6 +39,18 @@ const protectedRoutes = [
   {
     path: "/test",
     element: <CreateCvPage />,
+  },
+  {
+    path: "/change-Password",
+    element: <ChangePassPage />
+  },
+  {
+    path: "/profile",
+    element: <ChangeProfilePage />
+  },
+  {
+    path: "/search",
+    element: <SearchPage />
   },
   {
     path: "/truongtest",

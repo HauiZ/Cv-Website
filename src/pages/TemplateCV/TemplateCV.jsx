@@ -1,8 +1,10 @@
 import React from "react";
 import TemplateContent from "./TemplateContent";
+import { useNavigate } from "react-router-dom";
 export default function TemplateCV() {
+  const navigate = useNavigate();
   return (
-    <div>
+    <div onClick={()=>{navigate('/createCV')}}>
       {/* banner */}
       <div className="w-screen">
         <img

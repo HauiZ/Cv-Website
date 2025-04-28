@@ -11,7 +11,7 @@ import {
   createRecruterApi,
   forgotPasswordCandidateApi,
   forgotPasswordRecruiterApi,
-  inputNewPasswordApi
+  inputNewPasswordApi,
 } from "../services/authApi";
 
 export default function useAuth(navigationCallback = null) {

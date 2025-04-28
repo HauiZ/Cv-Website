@@ -9,12 +9,15 @@ import { CiLogout } from "react-icons/ci";
 import { useAuthContext } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
+import { ImProfile } from "react-icons/im";
+import { TbLockPassword } from "react-icons/tb";
+
 const Header1 = () => {
   const { user } = useAuthContext();
   const { logOut } = useAuth((path) => navigate(path));
   const navigate = useNavigate();
 
-  const avatar = user?.LinkAvatar || user?.linkLogo;
+  const avatar = user?.avatarUrl || user?.linkLogo;
   const displayName = user?.userName || user?.businessName || "User";
   const email = user?.email || "";
 
@@ -29,19 +32,21 @@ const Header1 = () => {
     },
     {
       key: "2",
-      label: <a href="#">Profile</a>,
-      extra: "⌘P",
+      label: <a href="/profile">Thông tin cá nhân</a>,
+      icon: <ImProfile />,
+      extra: "⌘",
     },
     {
       key: "3",
-      label: "My CV",
-      extra: "⌘M",
+      label: <a href="/change-Password">Đổi mật khẩu</a>,
+      icon: <TbLockPassword />,
+      extra: "⌘",
     },
     {
       key: "4",
-      label: "Settings",
+      label: <a href="/">Cài đặt</a>,
       icon: <SettingOutlined />,
-      extra: "⌘S",
+      extra: "⌘",
     },
     {
       key: "5",
@@ -52,11 +57,11 @@ const Header1 = () => {
             navigate("/");
           }}
         >
-          logout
+          Đăng xuất
         </button>
       ),
       icon: <CiLogout />,
-      extra: "⌘L",
+      extra: "⌘",
     },
   ];
 

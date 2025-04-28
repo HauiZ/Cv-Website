@@ -13,6 +13,9 @@ import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
 import CreateCvPage from "../pages/CreateCv/CreateCvPage";
 import AuthSuccess from "./AuthSuccess";
 import Page404 from "../pages/Page404";
+import ChangePassPage from "../pages/InfomationPage/ChangePassPage";
+import ChangeProfilePage from "../pages/InfomationPage/ChangeProfilePage";
+import SearchPage from "../pages/Search/SearchPage";
 
 // Route nhóm
 import { adminRoutes } from "./adminRoutes";
@@ -35,6 +38,18 @@ const protectedRoutes = [
     path: "/test",
     element: <CreateCvPage />,
   },
+  {
+    path: "/change-Password",
+    element: <ChangePassPage />
+  },
+  {
+    path: "/profile",
+    element: <ChangeProfilePage />
+  },
+  {
+    path: "/search",
+    element: <SearchPage />
+  }
 ];
 
 const router = createBrowserRouter([

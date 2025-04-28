@@ -1,20 +1,41 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, {
+  forwardRef,
+  useImperativeHandle,
+  useState,
+  useRef,
+  useEffect,
+} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage } from "@fortawesome/free-regular-svg-icons";
 import { faPlus, faTimes } from "@fortawesome/free-solid-svg-icons";
 
-export default function CvCard({ onAddToCategory }) {
-  const [imageUrl, setImageUrl] = useState(null);
+const CvCard = forwardRef((props, ref) => {
+  const { onAddToCategory, imageUrl: initialImageUrl } = props;
+  const [imageUrl, setImageUrl] = useState(initialImageUrl || null);
+  const [imageFile, setImageFile] = useState(null);
   const [name, setName] = useState("Tên mẫu CV");
+  const [tags, setTags] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
-  const [tags, setTags] = useState([]);
   const [editingTagIndex, setEditingTagIndex] = useState(null);
   const [editingTagValue, setEditingTagValue] = useState("");
 
   const fileInputRef = useRef();
   const inputRef = useRef();
   const tagInputRef = useRef();
+
+  useEffect(() => {
+    if (initialImageUrl) {
+      setImageUrl(initialImageUrl);
+    }
+  }, [initialImageUrl]);
+
+  useImperativeHandle(ref, () => ({
+    getName: () => name,
+    getTags: () => tags,
+    getImageUrl: () => imageUrl, // Return the URL string
+    getImageFile: () => imageFile, // Return the File object itself
+  }));
 
   const handleImageClick = () => {
     fileInputRef.current.click();
@@ -26,10 +47,12 @@ export default function CvCard({ onAddToCategory }) {
       if (!file.type.startsWith("image/")) {
         setErrorMessage("Please upload a valid image file.");
         setImageUrl(null);
+        setImageFile(null);
       } else {
         setErrorMessage(null);
         const url = URL.createObjectURL(file);
         setImageUrl(url);
+        setImageFile(file); // Store the actual file object
       }
     }
   };
@@ -171,9 +194,12 @@ export default function CvCard({ onAddToCategory }) {
       <div className="p-3 flex flex-col gap-2 bg-white">
         {/* Tags area */}
         <div className="flex flex-wrap gap-1 min-h-8">
-          {tags.map((tag, index) => (
+          {tags.map((tag, index) =>
             editingTagIndex === index ? (
-              <div key={index} className="h-6 border border-blue-400 rounded px-1 flex items-center bg-blue-50">
+              <div
+                key={index}
+                className="h-6 border border-blue-400 rounded px-1 flex items-center bg-blue-50"
+              >
                 <input
                   ref={tagInputRef}
                   type="text"
@@ -185,13 +211,13 @@ export default function CvCard({ onAddToCategory }) {
                 />
               </div>
             ) : (
-              <div 
-                key={index} 
+              <div
+                key={index}
                 className="h-6 border border-gray-300 rounded px-1 flex items-center gap-1 bg-gray-50 cursor-pointer"
                 onClick={() => handleEditTag(index)}
               >
                 <span className="text-xs">{tag}</span>
-                <button 
+                <button
                   onClick={(e) => {
                     e.stopPropagation();
                     handleRemoveTag(index);
@@ -202,7 +228,7 @@ export default function CvCard({ onAddToCategory }) {
                 </button>
               </div>
             )
-          ))}
+          )}
           <button
             className="h-6 w-6 rounded-full bg-black text-white text-xs flex items-center justify-center hover:bg-gray-800 transition-colors"
             onClick={handleAddTag}
@@ -211,7 +237,7 @@ export default function CvCard({ onAddToCategory }) {
             <FontAwesomeIcon icon={faPlus} />
           </button>
         </div>
-        
+
         {/* Tên CV */}
         {isEditing ? (
           <input
@@ -233,4 +259,6 @@ export default function CvCard({ onAddToCategory }) {
       </div>
     </div>
   );
-}
+});
+
+export default CvCard;

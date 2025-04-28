@@ -12,14 +12,38 @@ function getDirectImageUrl(driveUrl) {
 }
 
 export default function CvCard({ data }) {
-  console.log("dataCV>>>>>>>", data?.fileUrl || "");
   const { id, name, propoties, url, fileUrl } = data || {};
-
-  const tags = propoties?.split(",").map((tag) => tag.trim()) || [];
+  
+  // Parse the propoties properly, handling different formats
+  let tags = [];
+  try {
+    // First check if it's already a proper array
+    if (Array.isArray(propoties)) {
+      tags = propoties;
+    } 
+    // Check if it's a JSON string (starts with '[' and ends with ']')
+    else if (typeof propoties === 'string' && propoties.trim().startsWith('[') && propoties.trim().endsWith(']')) {
+      tags = JSON.parse(propoties);
+    } 
+    // Fallback to comma-separated string
+    else if (typeof propoties === 'string') {
+      tags = propoties.split(',').map(tag => tag.trim());
+    }
+  } catch (error) {
+    console.error("Error parsing propoties:", error);
+    // Fallback in case of parsing error
+    if (typeof propoties === 'string') {
+      tags = propoties.split(',').map(tag => tag.trim());
+    }
+  }
+  
+  // Filter out any empty tags
+  tags = tags.filter(tag => tag && tag.trim() !== '');
+  
   const visibleTags = tags.slice(0, 2);
   const hiddenTagsCount = tags.length - visibleTags.length;
 
-  const imageUrl = getDirectImageUrl(fileUrl);
+  const imageUrl = fileUrl || "";
 
   return (
     <div className="w-[23rem] rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 bg-white">

@@ -37,7 +37,7 @@ const protectedRoutes = [
     element: <ProfileCompany />,
   },
   {
-    path: "/test",
+    path: "/createCV",
     element: <CreateCvPage />,
   },
   {
@@ -53,7 +53,7 @@ const protectedRoutes = [
     element: <SearchPage />
   },
   {
-    path: "/truongtest",
+    path: "/templateCV",
     element: <TemplateCV/>
   }
 ];

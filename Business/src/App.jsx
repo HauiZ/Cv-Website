@@ -1,17 +1,22 @@
-import { useState, useMemo  } from 'react';
-import Sidebar from './components/Sidebar';
-import BangTin from './pages/BangTin';
-import Insights from './pages/Insights';
-import TinTuyenDung from './pages/TinTuyenDung';
-import JobPostingForm from './pages/JobPostingForm';
-import CVDeXuat from './pages/CVDeXuat';
-import BaoCaoTuyenDung from './pages/BaoCaoTuyenDung';
-import CaiDatTaiKhoan from './pages/CaiDatTaiKhoan';
+import { useState, useMemo, useEffect } from 'react';
+import Sidebar from './views/QuanLyCV/Sidebar';
+import BangTin from './views/BangTin';
+import Insights from './views/Insights';
+import TinTuyenDung from './views/TinTuyenDung';
+import JobPostingForm from './views/Dangtin/JobPostingForm';
+import CVDeXuat from './views/CVDeXuat';
+import BaoCaoTuyenDung from './views/BaoCaoTuyenDung';
+import CaiDatTaiKhoan from './views/CaiDatTaiKhoan';
+import QuanLyThongTin from './views/QuanLyThongTin';
+import Mail from './views/Mail';
 import { candidates as initialCandidates } from './data/candidates';
-import { CandidateCard } from './components/CandidateCard';
-import { StatusFilter } from './components/StatusFilter';
-import { Pagination } from './components/Pagination';
-import { PaginationInfo } from './components/PaginationInfo';
+import { CandidateCard } from './views/QuanLyCV/CandidateCard';
+import { StatusFilter } from './views/QuanLyCV/StatusFilter';
+import { Pagination } from './views/QuanLyCV/Pagination';
+import { PaginationInfo } from './views/QuanLyCV/PaginationInfo';
+import { MailButton } from './views/QuanLyCV/MailButton';
+import { AlertCircle, XCircle, Mail as MailIcon, RefreshCw, Filter } from 'lucide-react';
+import ApiTester from './service/ApiTester';
 
 const statusOptions = [
   { value: 'all', label: 'Hiển thị tất cả CV' },
@@ -22,11 +27,35 @@ const statusOptions = [
 
 const ITEMS_PER_PAGE = 5;
 
-
 function App() {
   // Tab navigation state
-  const [activeTab, setActiveTab] = useState('dang-tin');
-  
+  const [activeTab, setActiveTab] = useState('bang-tin'); // Mặc định bắt đầu với Bảng tin
+  const [settingsTab, setSettingsTab] = useState('profile');
+  const [emailSent, setEmailSent] = useState(false);
+  const [emailAlert, setEmailAlert] = useState({ show: false, message: '', type: '' });
+  const [showApiTester, setShowApiTester] = useState(false);
+
+  // Listen for the settings tab changes from the sidebar
+  useEffect(() => {
+    const handleSettingsTabChange = () => {
+      if (window && window.settingsTab) {
+        setSettingsTab(window.settingsTab);
+      }
+    };
+
+    // Set up listener
+    window.addEventListener('storage', handleSettingsTabChange);
+
+    // Check if it's already set
+    if (window && window.settingsTab) {
+      setSettingsTab(window.settingsTab);
+    }
+
+    return () => {
+      window.removeEventListener('storage', handleSettingsTabChange);
+    };
+  }, []);
+
   // Candidate management state
   const [candidates, setCandidates] = useState(initialCandidates);
   const [statusFilter, setStatusFilter] = useState('all');
@@ -49,10 +78,26 @@ function App() {
     );
   };
 
-  const handleSendMail = (id) => {
-    // Here you would add logic to send an email
-    console.log(`Sending mail to candidate ${id}`);
-    alert(`Mail would be sent to candidate ${id}`);
+  const handleSendMail = (id, emailData) => {
+    // Find the candidate that the email was sent to
+    const candidate = candidates.find((c) => c.id === id);
+
+    if (candidate) {
+      // Show notification that email was sent
+      setEmailAlert({
+        show: true,
+        message: `Email đã được gửi thành công tới ${candidate.name}`,
+        type: 'success'
+      });
+
+      // Hide the notification after 5 seconds
+      setTimeout(() => {
+        setEmailAlert({ show: false, message: '', type: '' });
+      }, 5000);
+
+      console.log('Email sent:', emailData);
+      setEmailSent(true);
+    }
   };
 
   const handleStatusChange = (value) => {
@@ -81,11 +126,30 @@ function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  // Toggle API tester visibility
+  const toggleApiTester = () => {
+    setShowApiTester(prev => !prev);
+  };
+
   // Function to render content based on active tab
   const renderContent = () => {
     switch (activeTab) {
       case 'bang-tin':
-        return <BangTin />;
+        return (
+          <div>
+            <BangTin />
+            <div className="mt-4">
+              <button
+                onClick={toggleApiTester}
+                className="mb-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
+              >
+                {showApiTester ? 'Ẩn công cụ kiểm tra API' : 'Hiển thị công cụ kiểm tra API'}
+              </button>
+
+              {showApiTester && <ApiTester />}
+            </div>
+          </div>
+        );
       case 'insights':
         return <Insights />;
       case 'tin-tuyen-dung':
@@ -94,19 +158,51 @@ function App() {
         return <JobPostingForm />;
       case 'cv-de-xuat':
         return <CVDeXuat />;
+      case 'quan-ly-thong-tin':
+        return <QuanLyThongTin />;
+      case 'cai-dat':
+        return <CaiDatTaiKhoan activeSettingsTab={settingsTab} />;
+      case 'mail':
+        return <Mail />;
       case 'quan-ly-cv':
         return (
           <div className="container mx-auto py-8 px-4 max-w-5xl">
+            {emailAlert.show && (
+              <div className={`mb-4 p-3 rounded-md flex items-center ${
+                emailAlert.type === 'success' ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'
+              }`}>
+                {emailAlert.type === 'success' ? (
+                  <MailIcon className="mr-2 h-5 w-5" />
+                ) : (
+                  <AlertCircle className="mr-2 h-5 w-5" />
+                )}
+                <p>{emailAlert.message}</p>
+                <button
+                  onClick={() => setEmailAlert({ show: false, message: '', type: '' })}
+                  className="ml-auto text-gray-500 hover:text-gray-700"
+                >
+                  <XCircle size={16} />
+                </button>
+              </div>
+            )}
+
             <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-100">
-              <div className="flex items-center justify-between mb-6">
-                <div className="text-lg font-medium">
-                  Tìm thấy <span className="font-bold">{filteredCandidates.length}</span> CV
+              <div className="flex items-center justify-between mb-6 flex-wrap gap-4">
+                <div className="text-lg font-medium flex items-center">
+                  <Filter size={18} className="mr-2 text-gray-500" />
+                  Tìm thấy <span className="font-bold ml-1">{filteredCandidates.length}</span> CV
                 </div>
-                <StatusFilter
-                  options={statusOptions}
-                  selectedValue={statusFilter}
-                  onSelect={handleStatusChange}
-                />
+                <div className="flex items-center gap-3">
+                  <StatusFilter
+                    options={statusOptions}
+                    selectedValue={statusFilter}
+                    onSelect={handleStatusChange}
+                  />
+                  <MailButton
+                    showManagement={true}
+                    variant="secondary"
+                  />
+                </div>
               </div>
 
               <div className="space-y-4">
@@ -134,7 +230,6 @@ function App() {
                   itemsPerPage={ITEMS_PER_PAGE}
                 />
 
-                {/* Only show pagination if there are multiple pages */}
                 {totalPages > 1 && (
                   <Pagination
                     currentPage={currentPage}
@@ -148,8 +243,6 @@ function App() {
         );
       case 'bao-cao':
         return <BaoCaoTuyenDung />;
-      case 'cai-dat':
-        return <CaiDatTaiKhoan />;
       default:
         return <BangTin />;
     }
@@ -162,11 +255,9 @@ function App() {
         <div className="w-[200px] bg-white shadow">
           <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
         </div>
-  
+
         {/* Content */}
-        <div className="flex-1 p-6 overflow-auto">
-          {renderContent()}
-        </div>
+        <div className="flex-1 p-6 overflow-auto">{renderContent()}</div>
       </div>
     </div>
   );

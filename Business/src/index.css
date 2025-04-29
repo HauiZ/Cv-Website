@@ -79,6 +79,45 @@ body {
   top: 0;
 }
 
+/* Sidebar styling */
+.sidebar .active-nav-item {
+  background-color: #f0f9ff;
+  border-left: 3px solid #4dc247;
+  color: #4dc247;
+}
+
+.sidebar .active-nav-item .text-gray-500 {
+  color: #4dc247;
+}
+
+/* Dropdown menu animation */
+.sidebar-dropdown-menu {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out;
+}
+
+.sidebar-dropdown-menu.open {
+  max-height: 500px; /* Arbitrary value that's larger than the menu height */
+}
+
+.sidebar-dropdown-item {
+  transition: all 0.2s ease;
+  margin-left: 1rem;
+  padding-left: 1.5rem;
+  border-left: 1px solid #e5e7eb;
+}
+
+.sidebar-dropdown-item:hover {
+  border-left: 1px solid #4dc247;
+}
+
+.sidebar-dropdown-item.active {
+  color: #4dc247;
+  border-left: 2px solid #4dc247;
+  background-color: #f0f9ff;
+}
+
 .content {
   margin-left: 200px;
   padding: 20px;
@@ -91,57 +130,81 @@ body {
   font-weight: 600;
 }
 
+/* Form Section Styling */
 .form-section {
-  background-color: white;
-  border-radius: 5px;
+  position: relative;
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  margin-bottom: 1.5rem;
   padding: 20px;
-  margin-bottom: 20px;
 }
 
-.section-title {
-  color: #4dc247;
-  font-size: 16px;
-  font-weight: 500;
+.form-section-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #374151;
   margin-bottom: 20px;
   border-left: 3px solid #4dc247;
   padding-left: 10px;
 }
 
-.form-group {
-  margin-bottom: 15px;
-}
-
+/* Form Styling */
 .form-label {
   display: block;
-  margin-bottom: 5px;
-  font-weight: 400;
-  font-size: 14px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.5rem;
 }
 
-.form-label .required {
-  color: red;
-  margin-left: 3px;
+.required-field::after {
+  content: "*";
+  color: #ef4444;
+  margin-left: 0.25rem;
 }
 
 .form-input {
   width: 100%;
-  padding: 8px 12px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 14px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  border-radius: 0.375rem;
+  border: 1px solid #d1d5db;
+  background-color: #fff;
+  color: #111827;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #4dc247;
+  box-shadow: 0 0 0 2px rgba(77, 194, 71, 0.2);
+}
+
+.form-input:disabled {
+  background-color: #f3f4f6;
+  cursor: not-allowed;
 }
 
 .form-select {
   width: 100%;
-  padding: 8px 12px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 14px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  border-radius: 0.375rem;
+  border: 1px solid #d1d5db;
+  background-color: #fff;
+  color: #111827;
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 0.5rem center;
   background-repeat: no-repeat;
-  background-position: right 8px center;
-  background-size: 16px;
+  background-size: 1.5em 1.5em;
+  padding-right: 2.5rem;
+}
+
+.form-select:focus {
+  outline: none;
+  border-color: #4dc247;
+  box-shadow: 0 0 0 2px rgba(77, 194, 71, 0.2);
 }
 
 .btn {
@@ -199,4 +262,120 @@ body {
   display: flex;
   align-items: center;
   gap: 5px;
+}
+
+/* Thêm CSS cho trình soạn thảo tùy chỉnh */
+[contenteditable=true]:empty:before {
+  content: attr(placeholder);
+  color: #aaa;
+  font-style: italic;
+}
+
+[contenteditable=true]:focus {
+  outline: none;
+}
+
+.custom-editor-toolbar {
+  display: flex;
+  align-items: center;
+  background: #f7f7f7;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 8px;
+}
+
+.editor-btn {
+  background: transparent;
+  border: none;
+  color: #555;
+  padding: 4px 8px;
+  margin: 0 2px;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.editor-btn:hover {
+  background: #e0e0e0;
+}
+
+.editor-btn.active {
+  background: #ddf0dd;
+  color: #4dc247;
+}
+
+blockquote {
+  border-left: 3px solid #ddd;
+  padding-left: 10px;
+  color: #666;
+  margin: 10px 0;
+}
+
+/* Custom styling for lists in the editor */
+.min-h-\[200px\] ul, .min-h-\[200px\] ol {
+  margin-left: 20px;
+}
+
+.min-h-\[200px\] ul {
+  list-style-type: disc;
+}
+
+.min-h-\[200px\] ol {
+  list-style-type: decimal;
+}
+
+/* CSS cho trình soạn thảo tùy chỉnh */
+[contenteditable=true] {
+  min-height: 200px;
+}
+
+[contenteditable=true]:focus {
+  outline: none;
+}
+
+[contenteditable=true] h1 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin: 1rem 0;
+}
+
+[contenteditable=true] h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0.8rem 0;
+}
+
+[contenteditable=true] h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 0.6rem 0;
+}
+
+[contenteditable=true] p {
+  margin: 0.5rem 0;
+}
+
+[contenteditable=true] ul {
+  list-style-type: disc;
+  margin-left: 1.5rem;
+}
+
+[contenteditable=true] ol {
+  list-style-type: decimal;
+  margin-left: 1.5rem;
+}
+
+[contenteditable=true] blockquote {
+  border-left: 3px solid #ddd;
+  margin-left: 1rem;
+  padding-left: 1rem;
+  color: #666;
+}
+
+[contenteditable=true] a {
+  color: #0070f3;
+  text-decoration: underline;
+}
+
+[contenteditable=true] img {
+  max-width: 100%;
+  height: auto;
 }

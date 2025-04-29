@@ -15,9 +15,12 @@ const RequestContent = () => {
   const { data, refetch } = useCustomFetch(getRequestApi);
   const [requestData, setRequestData] = useState([]);
   const [selectedRequest, setSelectedRequest] = useState(null);
-  const [filter, setFilter] = useState("all");
   
-  // Thêm state cho phân trang
+  // Bộ lọc
+  const [statusFilter, setStatusFilter] = useState("all");
+  const [typeFilter, setTypeFilter] = useState("all");
+  
+  // Phân trang
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10); // Số lượng mục trên mỗi trang
 
@@ -34,7 +37,6 @@ const RequestContent = () => {
       setSelectedRequest(null);
     } catch (err) {
       console.error("Approve failed:", err);
-      // Nếu muốn có thể show thêm toast lỗi ở đây, nhưng trong hook của bạn đã showToast lỗi rồi
     }
   };
 
@@ -48,10 +50,44 @@ const RequestContent = () => {
     }
   };
 
-  // Lọc dữ liệu theo trạng thái nếu cần
-  const filteredData = filter === "all" 
-    ? requestData 
-    : requestData.filter(item => item.status.toLowerCase() === filter);
+  // Lấy danh sách các loại request có trong data
+  const getUniqueTypes = () => {
+    if (!requestData || requestData.length === 0) return [];
+    return [...new Set(requestData.map(item => item.typeOf))];
+  };
+
+  // Xử lý thay đổi bộ lọc trạng thái
+  const handleStatusFilterChange = (e) => {
+    setStatusFilter(e.target.value);
+    setCurrentPage(1); // Reset về trang 1 khi thay đổi bộ lọc
+  };
+
+  // Xử lý thay đổi bộ lọc loại
+  const handleTypeFilterChange = (e) => {
+    setTypeFilter(e.target.value);
+    setCurrentPage(1); // Reset về trang 1 khi thay đổi bộ lọc
+  };
+
+  // Reset lại các bộ lọc
+  const handleResetFilters = () => {
+    setStatusFilter("all");
+    setTypeFilter("all");
+    setCurrentPage(1);
+  };
+
+  // Lọc dữ liệu theo các bộ lọc đã chọn
+  const filteredData = requestData.filter(item => {
+    // Lọc theo trạng thái
+    const statusMatch = statusFilter === "all" || 
+      item.status.toLowerCase() === statusFilter.toLowerCase();
+    
+    // Lọc theo loại
+    const typeMatch = typeFilter === "all" || 
+      item.typeOf === typeFilter;
+    
+    // Trả về true nếu tất cả các điều kiện đều khớp
+    return statusMatch && typeMatch;
+  });
 
   // Tính toán phân trang
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -66,26 +102,44 @@ const RequestContent = () => {
     setCurrentPage(pageNumber);
   };
 
-  // Xử lý thay đổi bộ lọc
-  const handleFilterChange = (e) => {
-    setFilter(e.target.value);
-    setCurrentPage(1); // Reset về trang 1 khi thay đổi bộ lọc
-  };
-
   return (
     <div className="bg-white p-4 rounded shadow-md">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-lg font-semibold">List of request</h2>
-        <select 
-          className="px-2 py-1 focus:outline-none border rounded"
-          value={filter}
-          onChange={handleFilterChange}
-        >
-          <option value="all">All</option>
-          <option value="approved">Approved</option>
-          <option value="pending">Pending</option>
-          <option value="rejected">Rejected</option>
-        </select>
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4">
+        <h2 className="text-lg font-semibold mb-2 sm:mb-0">List of request</h2>
+        
+        <div className="flex flex-wrap gap-2">
+          {/* Bộ lọc theo trạng thái */}
+          <select 
+            className="px-2 py-1 focus:outline-none border rounded"
+            value={statusFilter}
+            onChange={handleStatusFilterChange}
+          >
+            <option value="all">All Status</option>
+            <option value="approved">Approved</option>
+            <option value="pending">Pending</option>
+            <option value="rejected">Rejected</option>
+          </select>
+          
+          {/* Bộ lọc theo loại */}
+          <select 
+            className="px-2 py-1 focus:outline-none border rounded"
+            value={typeFilter}
+            onChange={handleTypeFilterChange}
+          >
+            <option value="all">All Types</option>
+            {getUniqueTypes().map(type => (
+              <option key={type} value={type}>{type}</option>
+            ))}
+          </select>
+          
+          {/* Nút reset bộ lọc */}
+          <button 
+            className="px-2 py-1 bg-gray-200 hover:bg-gray-300 rounded"
+            onClick={handleResetFilters}
+          >
+            Reset Filters
+          </button>
+        </div>
       </div>
 
       <div className="overflow-x-auto rounded-lg shadow-md">
@@ -100,31 +154,44 @@ const RequestContent = () => {
             </tr>
           </thead>
           <tbody className="stagger-animate">
-            {currentItems.map((item, index) => (
-              <tr
-                key={item.id}
-                className="cursor-pointer hover:bg-gray-50 border-b transition-transform duration-300 animate-slideIn"
-                style={{ animationDelay: `${index * 50}ms` }}
-                onClick={() => setSelectedRequest(item)}
-              >
-                <td className="px-3 py-2">{item.id}</td>
-                <td className="px-3 py-2">{item.sender}</td>
-                <td className="px-3 py-2">{item.createAt}</td>
-                <td className="px-3 py-2">{item.typeOf}</td>
-                <td className="px-3 py-2">
-                  <span
-                    className={`px-2 py-1 rounded text-xs ${statusColors[item.status]}`}
-                  >
-                    {item.status}
-                  </span>
+            {currentItems.length > 0 ? (
+              currentItems.map((item, index) => (
+                <tr
+                  key={item.id}
+                  className="cursor-pointer hover:bg-gray-50 border-b transition-transform duration-300 animate-slideIn"
+                  style={{ animationDelay: `${index * 50}ms` }}
+                  onClick={() => setSelectedRequest(item)}
+                >
+                  <td className="px-3 py-2">{item.id}</td>
+                  <td className="px-3 py-2">{item.sender}</td>
+                  <td className="px-3 py-2">{item.createAt}</td>
+                  <td className="px-3 py-2">{item.typeOf}</td>
+                  <td className="px-3 py-2">
+                    <span
+                      className={`px-2 py-1 rounded text-xs ${statusColors[item.status]}`}
+                    >
+                      {item.status}
+                    </span>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="5" className="px-3 py-4 text-center">
+                  No requests matching your filters
                 </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>
 
-      {/* Thêm component phân trang */}
+      {/* Thông tin về kết quả lọc */}
+      <div className="text-sm text-gray-500 mt-2">
+        Showing {currentItems.length} of {filteredData.length} requests
+      </div>
+
+      {/* Component phân trang */}
       {totalPages > 0 && (
         <Pagination 
           currentPage={currentPage} 

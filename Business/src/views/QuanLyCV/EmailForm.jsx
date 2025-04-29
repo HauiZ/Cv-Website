@@ -1,8 +1,20 @@
 import { useState, useEffect } from 'react';
 import { Send, X, Check, AlertCircle } from 'lucide-react';
-import mailService, { EMAIL_TEMPLATES } from '../../service/mailService';
+// Sử dụng useMailService hook thay vì import trực tiếp service
+import { useMailService } from '../../hooks';
 
 export const EmailForm = ({ candidate, onSend, onCancel }) => {
+  // Sử dụng hook thay vì service
+  const {
+    EMAIL_TEMPLATES,
+    sendEmail,
+    sendTemplateEmail,
+    loading,
+    error,
+    success,
+    isValidEmail
+  } = useMailService();
+
   // Determine template based on candidate status
   const getDefaultTemplateId = () => {
     return candidate.status === 'approved'
@@ -20,18 +32,16 @@ export const EmailForm = ({ candidate, onSend, onCancel }) => {
   });
 
   const [availableTemplates, setAvailableTemplates] = useState([]);
-  const [errors, setErrors] = useState({});
-  const [isSending, setIsSending] = useState(false);
+  const [formErrors, setFormErrors] = useState({});
   const [status, setStatus] = useState({ type: '', message: '' });
 
   // Load templates and prepare initial message
   useEffect(() => {
     // Get all available templates
-    const templates = mailService.getAvailableTemplates();
-    const templateOptions = Object.entries(templates).map(([key, value]) => ({
+    const templateOptions = Object.entries(EMAIL_TEMPLATES).map(([key, value]) => ({
       id: value,
       name: key.replace(/_/g, ' ').toLowerCase()
-        .replace(/\b\w/g, char => char.toUpperCase())
+        .replace(/\\b\\w/g, char => char.toUpperCase())
     }));
 
     setAvailableTemplates(templateOptions);
@@ -41,6 +51,19 @@ export const EmailForm = ({ candidate, onSend, onCancel }) => {
       prepareTemplateMessage(formData.templateId);
     }
   }, []);
+
+  // Update status based on hook states
+  useEffect(() => {
+    if (loading) {
+      setStatus({ type: 'loading', message: 'Đang gửi email...' });
+    } else if (success) {
+      setStatus({ type: 'success', message: 'Email đã được gửi thành công!' });
+      // Notify parent component
+      onSend(formData);
+    } else if (error) {
+      setStatus({ type: 'error', message: error });
+    }
+  }, [loading, error, success]);
 
   const prepareTemplateMessage = (templateId) => {
     let templateData = {
@@ -60,22 +83,20 @@ export const EmailForm = ({ candidate, onSend, onCancel }) => {
       };
     }
 
-    // Use the mail service to process template without sending
     try {
-      const template = mailService.EMAIL_TEMPLATES[Object.keys(mailService.EMAIL_TEMPLATES)
-        .find(key => mailService.EMAIL_TEMPLATES[key] === templateId)];
+      const template = Object.keys(EMAIL_TEMPLATES)
+        .find(key => EMAIL_TEMPLATES[key] === templateId);
 
-      // Check if this is a known template from our service
+      // Check if this is a known template
       if (template) {
         // Just prepare the template content without sending
         const processTemplate = (template, data) => {
-          return template.replace(/\{\{(\w+)\}\}/g, (match, key) => {
+          return template.replace(/\\{\\{(\\w+)\\}\\}/g, (match, key) => {
             return data[key] !== undefined ? data[key] : match;
           });
         };
 
         // Set subject and message based on template
-        // This would ideally be a helper function from the mail service
         const templateConfig = {
           [EMAIL_TEMPLATES.APPLICATION_ACCEPTED]: {
             subject: "Thông báo kết quả ứng tuyển - {{position}}",
@@ -146,11 +167,8 @@ Phòng Nhân sự`,
     prepareTemplateMessage(templateId);
   };
 
-  // Email validation regex
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
   const extractEmail = (fullAddress) => {
-    const match = fullAddress.match(/<([^>]+)>/) || fullAddress.match(/([^\s@]+@[^\s@]+\.[^\s@]+)/);
+    const match = fullAddress.match(/<([^>]+)>/) || fullAddress.match(/([^\\s@]+@[^\\s@]+\\.[^\\s@]+)/);
     return match ? match[1] : fullAddress;
   };
 
@@ -163,7 +181,7 @@ Phòng Nhân sự`,
     if (!formData.to.trim()) {
       newErrors.to = 'Vui lòng nhập địa chỉ email';
       isValid = false;
-    } else if (!emailRegex.test(email)) {
+    } else if (!isValidEmail(email)) {
       newErrors.to = 'Địa chỉ email không hợp lệ';
       isValid = false;
     }
@@ -183,7 +201,7 @@ Phòng Nhân sự`,
       isValid = false;
     }
 
-    setErrors(newErrors);
+    setFormErrors(newErrors);
     return isValid;
   };
 
@@ -195,9 +213,9 @@ Phòng Nhân sự`,
     });
 
     // Clear error when user types
-    if (errors[name]) {
-      setErrors({
-        ...errors,
+    if (formErrors[name]) {
+      setFormErrors({
+        ...formErrors,
         [name]: undefined,
       });
     }
@@ -212,8 +230,7 @@ Phòng Nhân sự`,
     e.preventDefault();
 
     if (validateForm()) {
-      setIsSending(true);
-      setStatus({ type: '', message: '' });
+      setStatus({ type: 'loading', message: 'Đang gửi email...' });
 
       try {
         // Send email using template if a template is selected
@@ -228,136 +245,100 @@ Phòng Nhân sự`,
             contactPhone: '028.1234.5678',
           };
 
-          const result = await mailService.sendTemplatedMail({
+          // Sử dụng hook sendTemplateEmail thay vì gọi service trực tiếp
+          await sendTemplateEmail({
             to: extractEmail(formData.to),
             templateId: formData.templateId,
             templateData,
             isHtml: formData.isHtml
           });
-
-          if (result.success) {
-            setStatus({
-              type: 'success',
-              message: 'Email đã được gửi thành công!'
-            });
-            onSend(formData);
-          } else {
-            setStatus({
-              type: 'error',
-              message: result.message || 'Gửi email thất bại. Vui lòng thử lại.'
-            });
-          }
         } else {
-          // Send custom email
-          const result = await mailService.sendMail({
+          // Sử dụng hook sendEmail thay vì gọi service trực tiếp
+          await sendEmail({
             to: extractEmail(formData.to),
             subject: formData.subject,
             body: formData.message,
             isHtml: formData.isHtml
           });
-
-          if (result.success) {
-            setStatus({
-              type: 'success',
-              message: 'Email đã được gửi thành công!'
-            });
-            onSend(formData);
-          } else {
-            setStatus({
-              type: 'error',
-              message: result.message || 'Gửi email thất bại. Vui lòng thử lại.'
-            });
-          }
         }
-      } catch (error) {
+      } catch (err) {
+        console.error("Error sending email:", err);
         setStatus({
           type: 'error',
-          message: error?.message || 'Đã xảy ra lỗi khi gửi email.'
+          message: err.message || 'Gửi email thất bại. Vui lòng thử lại.'
         });
-      } finally {
-        setIsSending(false);
       }
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div>
-        <label htmlFor="to" className="block text-sm font-medium text-gray-700 mb-1">
-          Người nhận
-        </label>
-        <input
-          type="text"
-          id="to"
-          name="to"
-          value={formData.to}
-          onChange={handleChange}
-          className={`w-full px-3 py-2 border rounded-md ${
-            errors.to ? 'border-red-500' : 'border-gray-300'
-          } focus:outline-none focus:ring-1 focus:ring-green-500`}
-        />
-        {errors.to && <p className="mt-1 text-sm text-red-500">{errors.to}</p>}
+    <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-md p-6 max-w-2xl">
+      <h3 className="text-lg font-medium text-gray-900 mb-4">Gửi email đến {candidate.name}</h3>
+
+      <div className="space-y-4">
+        <div>
+          <label htmlFor="to" className="block text-sm font-medium text-gray-700">Người nhận</label>
+          <input
+            type="text"
+            id="to"
+            name="to"
+            value={formData.to}
+            onChange={handleChange}
+            className={`mt-1 block w-full shadow-sm sm:text-sm rounded-md ${
+              formErrors.to ? 'border-red-300 focus:ring-red-500 focus:border-red-500' : 'border-gray-300 focus:ring-blue-500 focus:border-blue-500'
+            }`}
+          />
+          {formErrors.to && <p className="mt-1 text-sm text-red-600">{formErrors.to}</p>}
+        </div>
+
+        <div>
+          <label htmlFor="templateId" className="block text-sm font-medium text-gray-700">Mẫu email</label>
+          <select
+            id="templateId"
+            name="templateId"
+            value={formData.templateId}
+            onChange={handleTemplateChange}
+            className="mt-1 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+          >
+            {availableTemplates.map(template => (
+              <option key={template.id} value={template.id}>{template.name}</option>
+            ))}
+            <option value="custom">Tùy chỉnh</option>
+          </select>
+        </div>
+
+        <div>
+          <label htmlFor="subject" className="block text-sm font-medium text-gray-700">Tiêu đề</label>
+          <input
+            type="text"
+            id="subject"
+            name="subject"
+            value={formData.subject}
+            onChange={handleChange}
+            className={`mt-1 block w-full shadow-sm sm:text-sm rounded-md ${
+              formErrors.subject ? 'border-red-300 focus:ring-red-500 focus:border-red-500' : 'border-gray-300 focus:ring-blue-500 focus:border-blue-500'
+            }`}
+          />
+          {formErrors.subject && <p className="mt-1 text-sm text-red-600">{formErrors.subject}</p>}
+        </div>
+
+        <div>
+          <label htmlFor="message" className="block text-sm font-medium text-gray-700">Nội dung</label>
+          <textarea
+            id="message"
+            name="message"
+            rows={8}
+            value={formData.message}
+            onChange={handleChange}
+            className={`mt-1 block w-full shadow-sm sm:text-sm rounded-md ${
+              formErrors.message ? 'border-red-300 focus:ring-red-500 focus:border-red-500' : 'border-gray-300 focus:ring-blue-500 focus:border-blue-500'
+            }`}
+          />
+          {formErrors.message && <p className="mt-1 text-sm text-red-600">{formErrors.message}</p>}
+        </div>
       </div>
 
-      <div>
-        <label htmlFor="templateId" className="block text-sm font-medium text-gray-700 mb-1">
-          Mẫu email
-        </label>
-        <select
-          id="templateId"
-          name="templateId"
-          value={formData.templateId}
-          onChange={handleTemplateChange}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-green-500"
-        >
-          {availableTemplates.map(template => (
-            <option key={template.id} value={template.id}>
-              {template.name}
-            </option>
-          ))}
-          <option value="custom">Tùy chỉnh</option>
-        </select>
-      </div>
-
-      <div>
-        <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">
-          Tiêu đề
-        </label>
-        <input
-          type="text"
-          id="subject"
-          name="subject"
-          value={formData.subject}
-          onChange={handleChange}
-          className={`w-full px-3 py-2 border rounded-md ${
-            errors.subject ? 'border-red-500' : 'border-gray-300'
-          } focus:outline-none focus:ring-1 focus:ring-green-500`}
-        />
-        {errors.subject && (
-          <p className="mt-1 text-sm text-red-500">{errors.subject}</p>
-        )}
-      </div>
-
-      <div>
-        <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
-          Nội dung
-        </label>
-        <textarea
-          id="message"
-          name="message"
-          rows={8}
-          value={formData.message}
-          onChange={handleChange}
-          className={`w-full px-3 py-2 border rounded-md ${
-            errors.message ? 'border-red-500' : 'border-gray-300'
-          } focus:outline-none focus:ring-1 focus:ring-green-500`}
-        />
-        {errors.message && (
-          <p className="mt-1 text-sm text-red-500">{errors.message}</p>
-        )}
-      </div>
-
-      <div className="flex items-center">
+      <div className="flex items-center mt-4">
         <input
           type="checkbox"
           id="isHtml"
@@ -372,14 +353,18 @@ Phòng Nhân sự`,
       </div>
 
       {status.type && (
-        <div className={`p-3 rounded-md ${
-          status.type === 'success' ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'
+        <div className={`p-3 mt-4 rounded-md ${
+          status.type === 'success' ? 'bg-green-50 text-green-700' :
+          status.type === 'error' ? 'bg-red-50 text-red-700' :
+          'bg-blue-50 text-blue-700'
         }`}>
           <div className="flex items-center">
             {status.type === 'success' ? (
               <Check size={16} className="mr-2" />
-            ) : (
+            ) : status.type === 'error' ? (
               <AlertCircle size={16} className="mr-2" />
+            ) : (
+              <span className="mr-2">⏳</span>
             )}
             <p className="text-sm">{status.message}</p>
           </div>
@@ -391,22 +376,20 @@ Phòng Nhân sự`,
           type="button"
           onClick={onCancel}
           className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 flex items-center"
-          disabled={isSending}
+          disabled={loading}
         >
-          <X size={16} className="mr-1" />
-          Hủy
+          <X size={16} className="mr-1" /> Hủy
         </button>
         <button
           type="submit"
-          className={`px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 flex items-center ${
-            isSending ? 'opacity-70 cursor-not-allowed' : ''
-          }`}
-          disabled={isSending}
+          className="px-4 py-2 bg-green-600 border border-transparent rounded-md text-white hover:bg-green-700 flex items-center"
+          disabled={loading}
         >
-          <Send size={16} className="mr-1" />
-          {isSending ? 'Đang gửi...' : 'Gửi email'}
+          <Send size={16} className="mr-1" /> {loading ? 'Đang gửi...' : 'Gửi email'}
         </button>
       </div>
     </form>
   );
 };
+
+export default EmailForm;

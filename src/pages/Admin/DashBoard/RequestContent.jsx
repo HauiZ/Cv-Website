@@ -3,6 +3,7 @@ import RequestDetailModal from "./RequestDetailModal";
 import { getRequestApi, approveRequestApi } from "../../../services/adminApi";
 import useCustomFetch from "../../../hooks/useCustomFetch";
 import useCustomMutation from "../../../hooks/useCustomMutation";
+import Pagination from "../../home/component/ListJob/Pagination";
 
 const statusColors = {
   PENDING: "bg-yellow-300 text-black",
@@ -14,6 +15,11 @@ const RequestContent = () => {
   const { data, refetch } = useCustomFetch(getRequestApi);
   const [requestData, setRequestData] = useState([]);
   const [selectedRequest, setSelectedRequest] = useState(null);
+  const [filter, setFilter] = useState("all");
+  
+  // Thêm state cho phân trang
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10); // Số lượng mục trên mỗi trang
 
   const { mutate: approvedRequest } = useCustomMutation(approveRequestApi);
 
@@ -23,7 +29,7 @@ const RequestContent = () => {
 
   const handleApprove = async (id) => {
     try {
-      await approvedRequest( id, {status: "APPROVED" });
+      await approvedRequest(id, { status: "APPROVED" });
       await refetch();
       setSelectedRequest(null);
     } catch (err) {
@@ -31,22 +37,50 @@ const RequestContent = () => {
       // Nếu muốn có thể show thêm toast lỗi ở đây, nhưng trong hook của bạn đã showToast lỗi rồi
     }
   };
-  
+
   const handleReject = async (id) => {
     try {
-      await approvedRequest( id, {status: "REJECTED" });
+      await approvedRequest(id, { status: "REJECTED" });
       await refetch();
       setSelectedRequest(null);
     } catch (err) {
       console.error("Reject failed:", err);
     }
   };
+
+  // Lọc dữ liệu theo trạng thái nếu cần
+  const filteredData = filter === "all" 
+    ? requestData 
+    : requestData.filter(item => item.status.toLowerCase() === filter);
+
+  // Tính toán phân trang
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
   
+  // Tính tổng số trang
+  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+  
+  // Xử lý thay đổi trang
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  // Xử lý thay đổi bộ lọc
+  const handleFilterChange = (e) => {
+    setFilter(e.target.value);
+    setCurrentPage(1); // Reset về trang 1 khi thay đổi bộ lọc
+  };
+
   return (
     <div className="bg-white p-4 rounded shadow-md">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-lg font-semibold">List of request</h2>
-        <select className="px-2 py-1  focus:outline-none">
+        <select 
+          className="px-2 py-1 focus:outline-none border rounded"
+          value={filter}
+          onChange={handleFilterChange}
+        >
           <option value="all">All</option>
           <option value="approved">Approved</option>
           <option value="pending">Pending</option>
@@ -66,7 +100,7 @@ const RequestContent = () => {
             </tr>
           </thead>
           <tbody className="stagger-animate">
-            {requestData?.map((item, index) => (
+            {currentItems.map((item, index) => (
               <tr
                 key={item.id}
                 className="cursor-pointer hover:bg-gray-50 border-b transition-transform duration-300 animate-slideIn"
@@ -90,9 +124,18 @@ const RequestContent = () => {
         </table>
       </div>
 
+      {/* Thêm component phân trang */}
+      {totalPages > 0 && (
+        <Pagination 
+          currentPage={currentPage} 
+          totalPages={totalPages} 
+          onPageChange={handlePageChange} 
+        />
+      )}
+
       <RequestDetailModal
         request={selectedRequest}
-        status= {selectedRequest?.status}
+        status={selectedRequest?.status}
         onClose={() => setSelectedRequest(null)}
         onApprove={handleApprove}
         onReject={handleReject}

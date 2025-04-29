@@ -6,17 +6,12 @@ import HomeLayout from "../layouts/HomeLayout";
 import Home from "../pages/home/Home";
 import JobDescription from "../pages/JobDescription/JobDescription";
 import ProfileCompany from "../pages/profileCompany/ProfileCompany";
-import LoginPersonal from "../pages/Login/LoginPersonal";
-import LoginBusiness from "../pages/Login/LoginBusiness";
-import SignUpPersonal from "../pages/SignUp/SignUpPersonal";
-import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
 import CreateCvPage from "../pages/CreateCv/CreateCvPage";
 import AuthSuccess from "./AuthSuccess";
 import Page404 from "../pages/Page404";
 import ChangePassPage from "../pages/InfomationPage/ChangePassPage";
 import ChangeProfilePage from "../pages/InfomationPage/ChangeProfilePage";
 import SearchPage from "../pages/Search/SearchPage";
-
 import TemplateCV from "../pages/TemplateCV/TemplateCV";
 
 // Route nhóm

@@ -8,7 +8,8 @@ import {
 import React, { useState } from "react";
 import logo from "../../assets/image/logoNoBg.png";
 import { NavLink, useLocation } from "react-router-dom";
-
+import useAuth from "../../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 const menuItems = [
   {
     to: "/admin",
@@ -25,9 +26,14 @@ const menuItems = [
 const SideMenu = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const location = useLocation();
+  const { logOut } = useAuth((path) => navigate(path));
+  const navigate = useNavigate();
 
   const toggleSidebar = () => setIsCollapsed((prev) => !prev);
 
+  const onclose = () => {
+    logOut();
+  };
   return (
     <aside
       className={`bg-white shadow h-screen sticky top-0 ${
@@ -77,7 +83,10 @@ const SideMenu = () => {
       </div>
 
       {/* Logo + Logout */}
-      <div className="flex items-center space-x-3 text-red-500 hover:text-red-700 cursor-pointer px-3 py-2 rounded-md hover:bg-gray-100 transition">
+      <div
+        className="flex items-center space-x-3 text-red-500 hover:text-red-700 cursor-pointer px-3 py-2 rounded-md hover:bg-gray-100 transition"
+        onClick={onclose}
+      >
         <FontAwesomeIcon icon={faSignOutAlt} className="text-xl" />
         {!isCollapsed && <span>Log out</span>}
       </div>

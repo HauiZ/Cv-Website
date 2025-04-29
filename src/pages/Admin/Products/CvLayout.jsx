@@ -1,11 +1,8 @@
 import React, { useState } from "react";
 import TemplateCv from "./TemplateCv";
-// import useCustomFetch from "../../../hooks/useCustomFetch";
-// import { fetchTemplateAdminApi } from "../../../services/CvApi";
-import Pagination from "../../home/component/ListJob/Pagination"; // ✅ sửa lại import Pagination đúng đường dẫn
-
+import Pagination from "../../home/component/ListJob/Pagination"; 
+import "../DashBoard/OverViewContent/animation.css";
 export default function CvLayout({data} ) {
-  // const { data, refetch } = useCustomFetch(fetchTemplateAdminApi);
   const [currentPage, setCurrentPage] = useState(1); // Trang hiện tại
   const pageSize = 6; // Số lượng mỗi trang
 
@@ -20,7 +17,7 @@ export default function CvLayout({data} ) {
 
   return (
     <div className="flex flex-col items-center">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-5 gap-y-10 w-fit">
+      <div className="animate-scaleIn grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-5 gap-y-10 w-fit">
         {paginatedData?.map((cv) => (
           <TemplateCv key={cv.id} data={cv} />
         ))}

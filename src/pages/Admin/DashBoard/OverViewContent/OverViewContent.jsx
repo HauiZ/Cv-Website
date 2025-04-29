@@ -6,10 +6,8 @@ import "./animation.css";
 import useCustomFetch from "../../../../hooks/useCustomFetch";
 import {
   fetchDataDashBoardApi,
-  fetchUserApi,
 } from "../../../../services/adminApi";
 import OverViewChart from "./OverViewChart";
-import { set } from "react-hook-form";
 
 const stats = [
   {

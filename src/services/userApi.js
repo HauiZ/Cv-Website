@@ -44,4 +44,14 @@ const changeProfileCandidate = async ({ name, phone }) => {
   const data = { name, phone };
   return await axios.patch(URL_API, data);
 }
-export { fetchUserApi, fetchAreaApi, applyJobApi, changeAvatar, changePassword, changeProfileCandidate };
+const getNotificationApi = async() =>{
+  const URL_API = "users/getNotification"
+  const res = await axios(URL_API);
+  return res.data;
+}
+const getInfoApplicationApi = async() =>{
+  const URL_API = "users/getInfoApplication"
+  const res = await axios(URL_API);
+  return res.data;
+}
+export { fetchUserApi, fetchAreaApi, applyJobApi, changeAvatar, changePassword, changeProfileCandidate, getNotificationApi, getInfoApplicationApi };

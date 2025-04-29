@@ -44,7 +44,7 @@ const Header1 = () => {
     },
     {
       key: "4",
-      label: <a href="/">Cài đặt</a>,
+      label: <a href="/candidate-application">Quản lý đơn ứng tuyển</a>,
       icon: <SettingOutlined />,
       extra: "⌘",
     },

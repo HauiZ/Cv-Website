@@ -8,7 +8,8 @@ import JobDescription from "../pages/JobDescription/JobDescription";
 import ProfileCompany from "../pages/profileCompany/ProfileCompany";
 import CreateCvPage from "../pages/CreateCv/CreateCvPage";
 import AuthSuccess from "./AuthSuccess";
-import Page404 from "../pages/Page404";
+import Page404 from "../pages/ErrorPages/Page404";
+import Page500 from "../pages/ErrorPages/Page500"
 import ChangePassPage from "../pages/InfomationPage/ChangePassPage";
 import ChangeProfilePage from "../pages/InfomationPage/ChangeProfilePage";
 import SearchPage from "../pages/Search/SearchPage";
@@ -37,26 +38,27 @@ const protectedRoutes = [
   },
   {
     path: "/change-Password",
-    element: <ChangePassPage />
+    element: <ChangePassPage />,
   },
   {
     path: "/profile",
-    element: <ChangeProfilePage />
+    element: <ChangeProfilePage />,
   },
   {
     path: "/search",
-    element: <SearchPage />
+    element: <SearchPage />,
   },
   {
     path: "/templateCV",
-    element: <TemplateCV/>
-  }
+    element: <TemplateCV />,
+  },
 ];
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <AppLayout />,
+    errorElement: <Page500/>,
     children: [
       ...authRoutes,
       ...adminRoutes,

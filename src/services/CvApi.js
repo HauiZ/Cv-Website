@@ -12,11 +12,15 @@ const fetchTemplateUserApi = async () => {
   const data = res.data
   return data; 
 }
-const createTemplateCVApi = (formData) => {
-  return instance.post("/admin/uploadCvTemplate", formData, {
+const createTemplateCVApi = async (formData) => {
+  return await instance.post("/admin/uploadCvTemplate", formData, {
     headers: {
       "Content-Type": "multipart/form-data",
     },
   });
 };
-export {fetchTemplateAdminApi,fetchTemplateUserApi, createTemplateCVApi}
+const deleteTemplateCVApi = async (idTemplate) =>{
+  const res = await axios.delete(`/admin/deleteTemplate/${idTemplate}`);
+  return res.data;
+}
+export {fetchTemplateAdminApi,fetchTemplateUserApi, createTemplateCVApi, deleteTemplateCVApi}

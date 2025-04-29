@@ -1,6 +1,8 @@
 import { useCallback } from "react";
 import useLoading from "./useLoading";
 import { useToast } from "../contexts/ToastContext";
+import { useLocation } from "react-router-dom";
+
 import { useAuthContext } from "../contexts/AuthContext";
 import {
   logoutApi,
@@ -17,8 +19,8 @@ import {
 export default function useAuth(navigationCallback = null) {
   const { showToast } = useToast();
   const { withLoading } = useLoading();
-  const { isAuthenticated, fetchUser, clearUser } = useAuthContext();
-
+  const { fetchUser, clearUser, setIsAuthenticated , setLoadingAuth } = useAuthContext();
+  const location = useLocation();
   // LOGIN
   const loginAdmin = useCallback(
     async ({ email, password }) => {
@@ -29,6 +31,7 @@ export default function useAuth(navigationCallback = null) {
           console.log("Login response:", res.data);
           if (token) {
             localStorage.setItem("access_token", token);
+            await fetchUser();
             showToast("Đăng nhập thành công!", "success");
             if (navigationCallback) {
               navigationCallback("/admin");
@@ -43,7 +46,7 @@ export default function useAuth(navigationCallback = null) {
         }
       });
     },
-    [showToast, withLoading, fetchUser, navigationCallback]
+    [showToast, withLoading, navigationCallback]
   );
   const loginCandidate = useCallback(
     async ({ email, password }) => {
@@ -192,17 +195,22 @@ export default function useAuth(navigationCallback = null) {
   );
 
   const inputNewPassword = useCallback(
-    async ({ email,role, otpCode, newPassword, confirmNewPassword }) => {
+    async ({ email, role, otpCode, newPassword, confirmNewPassword }) => {
       await withLoading(async () => {
         try {
-          await inputNewPasswordApi(email, role, otpCode, newPassword, confirmNewPassword);
+          await inputNewPasswordApi(
+            email,
+            role,
+            otpCode,
+            newPassword,
+            confirmNewPassword
+          );
           showToast("Đổi mật khẩu thành công!", "success");
           if (navigationCallback) {
             navigationCallback(`/login/${role}`);
           }
         } catch (err) {
-          const msg =
-            err?.response?.data?.message || "Đổi mật khẩu thất bại!";
+          const msg = err?.response?.data?.message || "Đổi mật khẩu thất bại!";
           showToast(msg, "error");
           console.error("Forgot password error:", msg);
         }
@@ -218,8 +226,14 @@ export default function useAuth(navigationCallback = null) {
         localStorage.removeItem("access_token");
         clearUser(); // ✅ clear user from context
         showToast("Đăng xuất thành công!", "success");
+        const getLoginPath = (pathname) => {
+          if (pathname.startsWith("/admin")) return "/login/admin";
+          if (pathname.startsWith("/recruiter")) return "/login/recruiter";
+          return "/";
+        };
+        const path = getLoginPath(location.pathname);
         if (navigationCallback) {
-          navigationCallback("/");
+          navigationCallback(path);
         }
       } catch (err) {
         const msg = err?.response?.data?.message || "Đăng xuất thất bại!";
@@ -228,7 +242,7 @@ export default function useAuth(navigationCallback = null) {
       }
     });
   }, [withLoading, logoutApi, clearUser, showToast, navigationCallback]);
-  
+
   return {
     loginCandidate,
     loginRecruiter,

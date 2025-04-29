@@ -49,4 +49,9 @@ const getNotificationApi = async() =>{
   const res = await axios(URL_API);
   return res.data;
 }
-export { fetchUserApi, fetchAreaApi, applyJobApi, changeAvatar, changePassword, changeProfileCandidate, getNotificationApi };
+const getInfoApplicationApi = async() =>{
+  const URL_API = "users/getInfoApplication"
+  const res = await axios(URL_API);
+  return res.data;
+}
+export { fetchUserApi, fetchAreaApi, applyJobApi, changeAvatar, changePassword, changeProfileCandidate, getNotificationApi, getInfoApplicationApi };

@@ -9,7 +9,7 @@ import ProfileCompany from "../pages/profileCompany/ProfileCompany";
 import CreateCvPage from "../pages/CreateCv/CreateCvPage";
 import AuthSuccess from "./AuthSuccess";
 import Page404 from "../pages/ErrorPages/Page404";
-import Page500 from "../pages/ErrorPages/Page500"
+import Page500 from "../pages/ErrorPages/Page500";
 import ChangePassPage from "../pages/InfomationPage/ChangePassPage";
 import ChangeProfilePage from "../pages/InfomationPage/ChangeProfilePage";
 import SearchPage from "../pages/Search/SearchPage";
@@ -21,6 +21,7 @@ import { authRoutes } from "./authRoutes";
 
 // ✅ RequireAuth
 import RequireAuth from "../components/RequireAuth";
+import ApplicationManerment from "../pages/ApplcationManerment/ApplicationManerment";
 
 // ✅ Các route cần đăng nhập trong HomeLayout
 const protectedRoutes = [
@@ -52,19 +53,19 @@ const protectedRoutes = [
     path: "/templateCV",
     element: <TemplateCV />,
   },
+  { path: "/candidate-application", element: <ApplicationManerment /> },
 ];
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <AppLayout />,
-    errorElement: <Page500/>,
+    errorElement: <Page500 />,
     children: [
       ...authRoutes,
       ...adminRoutes,
 
       { path: "/authsuccess", element: <AuthSuccess /> },
-
       {
         path: "/",
         element: <HomeLayout />,

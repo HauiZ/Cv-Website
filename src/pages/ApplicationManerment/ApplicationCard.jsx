@@ -24,10 +24,10 @@ export default function ApplicationCard({ application }) {
   const news = application?.recruitmentNews
   const navigate = useNavigate();
   const handleDetailClick = () => {
-    navigate(`/job/${application?.recruitmentNewsId || "error"}`);
+    navigate(`/job/${news?.id || "/error/out"}`);
   };
   const handCVDisplayClick = () => {
-    const url = application?.CvFile?.urlView;
+    const url = application?.cvUrl;
     const match = url.match(/\/d\/([^/]+)\//);
     const fileId = match ? match[1] : null;
     const width = 800;

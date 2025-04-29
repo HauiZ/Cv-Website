@@ -21,7 +21,7 @@ import { authRoutes } from "./authRoutes";
 
 // ✅ RequireAuth
 import RequireAuth from "../components/RequireAuth";
-import ApplicationManerment from "../pages/ApplcationManerment/ApplicationManerment";
+import ApplicationManerment from "../pages/ApplicationManerment/ApplicationManerment";
 
 // ✅ Các route cần đăng nhập trong HomeLayout
 const protectedRoutes = [

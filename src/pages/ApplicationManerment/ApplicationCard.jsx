@@ -21,6 +21,7 @@ const statusMap = {
 };
 
 export default function ApplicationCard({ application }) {
+  const news = application?.recruitmentNews
   const navigate = useNavigate();
   const handleDetailClick = () => {
     navigate(`/job/${application?.recruitmentNewsId || "error"}`);
@@ -53,19 +54,19 @@ export default function ApplicationCard({ application }) {
       {/* Thông tin công việc */}
       <div className="flex items-center gap-4">
         <img
-          src={application?.companyLogo || ""}
+          src={news?.logoUrl || ""}
           alt="Company Logo"
           className="w-12 h-12 rounded-md object-cover"
         />
         <div>
           <h3 className="text-lg font-semibold">
-            {application?.jobTitle || "Ten cong ty"}
+            {news?.jobTitle || "Ten cong ty"}
           </h3>
           <div className="flex items-center gap-2 text-sm text-gray-600">
             <FaBuilding />
-            <span>{application?.companyName || "Tên ct"}</span>
+            <span>{news?.companyName || "Tên ct"}</span>
             <span className="mx-2">•</span>
-            <span>{application?.location || "abc"}</span>
+            <span>{news?.companyAddress || "abc"}</span>
           </div>
           <div className="flex items-center gap-2 text-sm text-gray-500 mt-1">
             <FaCalendarAlt />

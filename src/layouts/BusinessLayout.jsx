@@ -5,11 +5,12 @@ import Header from "../components/Header/Header";
 import Header1 from "../components/Header/Header1";
 import Footer from "../components/Footer/Footer";
 import { useAuthContext } from "../contexts/AuthContext";
+import BusinessHeader from "../components/Header/BusinessHeader";
 
 export default function BusinessLayout() {
   return (
     <div className="pt-[75px]">
-      <Header></Header>
+      <BusinessHeader></BusinessHeader>
       <div>
         <Outlet />
       </div>

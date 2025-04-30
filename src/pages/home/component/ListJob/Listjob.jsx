@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { fetchAllNewsFilterApi } from "../../../../services/recruitmentNewsApi";
 import JobItem from "./JobItem";
 import Filter from "./Filter";
@@ -24,8 +24,6 @@ const formatSalaryRange = (value) => {
 const ListJobBox = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const jobsPerPage = 9;
-
-  // State để giữ query filter
   const [filters, setFilters] = useState({});
 
   // Custom hook fetch theo query
@@ -58,6 +56,9 @@ const ListJobBox = () => {
     console.log("Filter value>>>>>>>>>>>..:", filters);
   };
 
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [jobs]);
   // Xử lý filter từ location button
   const handleLocationFilter = (locationValue) => {
     setFilters((prev) => ({
@@ -75,7 +76,7 @@ const ListJobBox = () => {
 
   return (
     <div className="flex justify-center h-full relative">
-      <div >
+      <div>
         <div className="relative min-w-[59rem]">
           <div className="my-3">
             <h1 className="text-3xl font-bold text-[#0C8E5E]">

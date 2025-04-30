@@ -6,19 +6,13 @@ import Header1 from "../components/Header/Header1";
 import Footer from "../components/Footer/Footer";
 import { useAuthContext } from "../contexts/AuthContext";
 
-export default function HomeLayout() {
-  const { isAuthenticated, user } = useAuthContext();
-
+export default function BusinessLayout() {
   return (
     <div className="pt-[75px]">
-      {/* Nếu đã đăng nhập (có user), dùng Header1 có avatar/menu, ngược lại dùng Header mặc định */}
-      {isAuthenticated && user ? <Header1 /> : <Header />}
-
+      <Header></Header>
       <div>
         <Outlet />
       </div>
-
-      <Footer />
     </div>
   );
 }

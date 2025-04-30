@@ -31,7 +31,7 @@ export default function GeneralInformation({ data, degree }) {
         </h1>
         <h1>
           {" "}
-          <span className="font-semibold">Hình thứclàm việc: </span>{" "}
+          <span className="font-semibold">Hình thức làm việc: </span>{" "}
           {data?.workType || "Thương lượng"}
         </h1>
         <h1>

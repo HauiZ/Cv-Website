@@ -12,7 +12,7 @@ import useAuth from "../../hooks/useAuth";
 import { ImProfile } from "react-icons/im";
 import { TbLockPassword } from "react-icons/tb";
 
-const Header1 = () => {
+const BusinessHeader = () => {
   const { user } = useAuthContext();
   const { logOut } = useAuth((path) => navigate(path));
   const navigate = useNavigate();
@@ -66,19 +66,17 @@ const Header1 = () => {
   ];
 
   const UserDropdown = () => (
-    <Dropdown menu={{ items }} >
+    <Dropdown menu={{ items }}>
       <a onClick={(e) => e.preventDefault()}>
-        <Space >
-          <Avatar size={40} src={avatar} icon={!avatar && <UserOutlined />} />
-          <span className="font-medium">{displayName}</span>
-          <DownOutlined className="size-3" />
+        <Space>
+          <Avatar size={40} src={avatar} icon={!avatar && <UserOutlined />}/>
         </Space>
       </a>
     </Dropdown>
   );
 
   return (
-    <div className="w-full h-[75px] bg-white fixed top-0 left-0 z-50 object-contain">
+    <div className="w-full h-[75px] bg-[#212F3F] fixed top-0 left-0 z-50 object-contain">
       <div className="flex justify-between items-center max-h-[75px]">
         <div className="flex w-[8vw] h-[75px] justify-between items-center ml-5 ">
           <img
@@ -90,13 +88,13 @@ const Header1 = () => {
           />
         </div>
         <div className="flex gap-x-20 px-6 py-2 mt-4 mb-4">
-          <a href="/" className="menu">
+          <a href="/" className="menu bg-[#3B546F] text-white px-4 py-2 rounded-full hover:text-[#5DDA33]" >
             Việc làm
           </a>
-          <a href="/templateCV" className="menu">
+          <a href="/templateCV" className="menu bg-[#3B546F] text-white px-4 py-2 rounded-full hover:text-[#5DDA33]">
             Hồ sơ & CV
           </a>
-          <a href="/" className="menu">
+          <a href="/" className="menu bg-[#3B546F] text-white px-4 py-2 rounded-full hover:text-[#5DDA33]">
             Công cụ
           </a>
         </div>
@@ -105,11 +103,11 @@ const Header1 = () => {
             <span className="text-[13px] text-[#A9A9A9]">
               Bạn là nhà tuyển dụng?
             </span>
-            <a href="/login/recruiter" className="hover:text-[#0C8E5E]">
+            <a href="/login/recruiter" className="text-white  hover:text-[#0C8E5E]">
               Đăng tuyển ngay {">>"}
             </a>
           </div>
-          <span className="text-2xl text-[#A9A9A9]">{"|"}</span>
+          <span className="text-2xl text-white">{"|"}</span>
           <Notification />
           <UserDropdown />
         </div>
@@ -118,4 +116,4 @@ const Header1 = () => {
   );
 };
 
-export default Header1;
+export default BusinessHeader;

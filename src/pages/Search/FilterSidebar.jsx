@@ -20,17 +20,17 @@ const FilterSidebar = ({ onFilterChange, totalJobs, initialFilters = {} }) => {
   useEffect(() => {
     setFilters(prev => ({
       ...prev,
-      keyword: initialFilters.keyword || prev.keyword,
-      profession: initialFilters.profession || prev.profession,
-      area: initialFilters.area || prev.area,
-      experience: initialFilters.experience || prev.experience,
-      jobLevel: initialFilters.jobLevel || prev.jobLevel,
-      salaryMin: initialFilters.salaryMin || prev.salaryMin,
-      salaryMax: initialFilters.salaryMax || prev.salaryMax,
-      salaryRange: initialFilters.salaryRange || prev.salaryRange,
-      workType: initialFilters.workType || prev.workType,
+      keyword: initialFilters.keyword || prev.keyword ,
+      profession: initialFilters.profession || prev.profession ,
+      area: initialFilters.area || prev.area ,
+      experience: initialFilters.experience || prev.experience ,
+      jobLevel: initialFilters.jobLevel || prev.jobLevel ,
+      salaryMin: initialFilters.salaryMin || prev.salaryMin ,
+      salaryMax: initialFilters.salaryMax || prev.salaryMax ,
+      salaryRange: initialFilters.salaryRange || prev.salaryRange ,
+      workType: initialFilters.workType || prev.workType ,
       sortBy: initialFilters.sortBy || prev.sortBy,
-      order: initialFilters.order || prev.order
+      order: initialFilters.order || prev.order 
     }));
   }, [initialFilters]);
 
@@ -165,10 +165,17 @@ const FilterSidebar = ({ onFilterChange, totalJobs, initialFilters = {} }) => {
 
           {expandedSections.profession && (
             <div className="mt-1 ml-1 max-h-40 overflow-y-auto pr-1">
-              {['Marketing', 'Kế toán', 'Kinh doanh/ Bán hàng', 'Quản lý dự án xây dựng', 'Sales Bán lẻ', 'Công nghệ thông tin'].map((profession) => (
-                <label key={profession} className="flex items-center py-1 px-2 text-sm rounded hover:bg-green-50 cursor-pointer">
+              {[
+                { title: "Công nghệ thông tin", keyword: "Công nghệ thông tin" },
+                { title: "Kinh doanh - Bán hàng", keyword: "Thương mại điện tử, Kinh doanh, Sales" },
+                { title: "Truyền hình - Viễn Thông", keyword: "Viễn thông, Ngân hàng" },
+                { title: "Tài chính - Ngân hàng", keyword: "Ngân hàng" },
+                { title: "Marketing - Quảng cáo", keyword: "Marketing, Quảng cáo" },
+                { title: "Nhân sự - Hành chính", keyword: "Đầu tư đa ngành, hành chính, nhân sự" }
+              ].map((itmes, index) => (
+                <label key={index} className="flex items-center py-1 px-2 text-sm rounded hover:bg-green-50 cursor-pointer">
                   <div className="flex items-center">
-                    {filters.profession.includes(profession) ? (
+                    {filters.profession.includes(itmes.keyword) ? (
                       <CheckCircle size={14} className="text-green-600" />
                     ) : (
                       <Circle size={14} className="text-gray-400" />
@@ -176,12 +183,12 @@ const FilterSidebar = ({ onFilterChange, totalJobs, initialFilters = {} }) => {
                     <input
                       type="checkbox"
                       className="absolute opacity-0 w-0 h-0"
-                      checked={filters.profession.includes(profession)}
-                      onChange={() => handleProfessionChange(profession)}
+                      checked={filters.profession.includes(itmes.keyword)}
+                      onChange={() => handleProfessionChange(itmes.keyword)}
                     />
                   </div>
                   <span className="ml-2 text-gray-700 hover:text-green-700">
-                    {profession} <span className="text-gray-400 text-xs">(50)</span>
+                    {itmes.title} <span className="text-gray-400 text-xs">(50)</span>
                   </span>
                 </label>
               ))}

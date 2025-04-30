@@ -6,7 +6,7 @@ import Header1 from "../components/Header/Header1";
 import Footer from "../components/Footer/Footer";
 import { useAuthContext } from "../contexts/AuthContext";
 
-export default function AdminLayout() {
+export default function HomeLayout() {
   const { isAuthenticated, user } = useAuthContext();
 
   return (

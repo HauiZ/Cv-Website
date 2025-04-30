@@ -2,6 +2,7 @@ import React from "react";
 
 export default function ProfileIntroduction({data}) {
   const content = data?.introduction || ["Công ty chưa có thông tin giới thiệu"];
+  const renderContent = Array.isArray(content) ? content.join(' ') : content;
   return (
     <div className="w-[33rem] h-fit  mt-5 rounded-[1em] bg-white">
       {/* banner */}
@@ -14,9 +15,7 @@ export default function ProfileIntroduction({data}) {
         </h1>
       </div>
       <div className="content p-5 text-[0.95rem] space-y-3 leading-relaxed">
-        {content.map((paragraph, index) => (
-          <p key={index}>{paragraph}</p>
-        ))}
+        <p>{renderContent}</p>
       </div>
     </div>
   );

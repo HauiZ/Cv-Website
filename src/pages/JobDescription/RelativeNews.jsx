@@ -11,6 +11,9 @@ export default function RelativeNews({ data }) {
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE
   );
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [data]);
 
   return (
     <div className="mt-5 mb-10 rounded-[.5em] bg-white shadow-md">
@@ -24,7 +27,7 @@ export default function RelativeNews({ data }) {
         {jobs.length > 0 ? (
           <>
             <div className="space-y-4">
-              <ListNews jobs={currentJobs}/>
+              <ListNews jobs={currentJobs} />
             </div>
             {totalPages > 1 && (
               <div className="absolute bottom-0 left-0 right-0 flex justify-center items-center py-4 bg-white">

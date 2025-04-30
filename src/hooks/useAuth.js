@@ -86,7 +86,7 @@ export default function useAuth(navigationCallback = null) {
             await fetchUser(); // ✅ gọi trực tiếp
             showToast("Đăng nhập thành công!", "success");
             if (navigationCallback) {
-              navigationCallback("/");
+              navigationCallback("/recruiter");
             }
           } else {
             showToast("Token không hợp lệ!", "error");

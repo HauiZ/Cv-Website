@@ -17,8 +17,8 @@ const BusinessHeader = () => {
   const { logOut } = useAuth((path) => navigate(path));
   const navigate = useNavigate();
 
-  const avatar = user?.avatarUrl || user?.linkLogo;
-  const displayName = user?.userName || user?.businessName || "User";
+  const avatar =  user?.linkLogo;
+  const displayName =  user?.businessName || "User";
   const email = user?.email || "";
 
   const items = [
@@ -30,31 +30,30 @@ const BusinessHeader = () => {
     {
       type: "divider",
     },
-    {
-      key: "2",
-      label: <a href="/profile">Thông tin cá nhân</a>,
-      icon: <ImProfile />,
-      extra: "⌘",
-    },
-    {
-      key: "3",
-      label: <a href="/change-Password">Đổi mật khẩu</a>,
-      icon: <TbLockPassword />,
-      extra: "⌘",
-    },
-    {
-      key: "4",
-      label: <a href="/candidate-application">Quản lý đơn ứng tuyển</a>,
-      icon: <SettingOutlined />,
-      extra: "⌘",
-    },
+    // {
+    //   key: "2",
+    //   label: <a href="/profile">Thông tin cá nhân</a>,
+    //   icon: <ImProfile />,
+    //   extra: "⌘",
+    // },
+    // {
+    //   key: "3",
+    //   label: <a href="/change-Password">Đổi mật khẩu</a>,
+    //   icon: <TbLockPassword />,
+    //   extra: "⌘",
+    // },
+    // {
+    //   key: "4",
+    //   label: <a href="/candidate-application">Quản lý đơn ứng tuyển</a>,
+    //   icon: <SettingOutlined />,
+    //   extra: "⌘",
+    // },
     {
       key: "5",
       label: (
         <button
           onClick={() => {
             logOut();
-            navigate("/");
           }}
         >
           Đăng xuất
@@ -69,7 +68,8 @@ const BusinessHeader = () => {
     <Dropdown menu={{ items }}>
       <a onClick={(e) => e.preventDefault()}>
         <Space>
-          <Avatar size={40} src={avatar} icon={!avatar && <UserOutlined />}/>
+          <Avatar size={40} src={avatar} icon={!avatar && <UserOutlined />} />
+          <p className="text-white ">{displayName}</p>
         </Space>
       </a>
     </Dropdown>
@@ -83,7 +83,7 @@ const BusinessHeader = () => {
             src="/src/image/logo.png"
             className="object-contain hover:cursor-pointer"
             alt="Logo"
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/recruiter")}
 
           />
         </div>
@@ -99,16 +99,7 @@ const BusinessHeader = () => {
           </a>
         </div>
         <div className="flex gap-x-10 justify-end max-h-[50] mr-5">
-          <div className="flex flex-col ">
-            <span className="text-[13px] text-[#A9A9A9]">
-              Bạn là nhà tuyển dụng?
-            </span>
-            <a href="/login/recruiter" className="text-white  hover:text-[#0C8E5E]">
-              Đăng tuyển ngay {">>"}
-            </a>
-          </div>
           <span className="text-2xl text-white">{"|"}</span>
-          <Notification />
           <UserDropdown />
         </div>
       </div>

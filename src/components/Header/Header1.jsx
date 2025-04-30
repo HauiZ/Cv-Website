@@ -17,8 +17,8 @@ const Header1 = () => {
   const { logOut } = useAuth((path) => navigate(path));
   const navigate = useNavigate();
 
-  const avatar = user?.avatarUrl || user?.linkLogo;
-  const displayName = user?.userName || user?.businessName || "User";
+  const avatar = user?.avatarUrl ;
+  const displayName = user?.userName || "User";
   const email = user?.email || "";
 
   const items = [

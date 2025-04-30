@@ -67,7 +67,7 @@ const router = createBrowserRouter([
       ...adminRoutes,
 
       { path: "/authsuccess", element: <AuthSuccess /> },
-      { path: "/test", element: <BusinessLayout/> },
+      { path: "/recruiter", element: <BusinessLayout/> },
       {
         path: "/",
         element: <HomeLayout />,

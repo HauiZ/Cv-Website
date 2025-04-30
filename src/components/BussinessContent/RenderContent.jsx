@@ -1,15 +1,16 @@
 import { useState, useMemo, useEffect } from 'react';
+import JobPostingForm from '../../pages/JobPosting/JobPostingForm';
 
 export default function RenderContent({activeTab}) {
     switch (activeTab) {
         case 'bang-tin':
-            return (<div>bang tin</div>);
+            return (<div>bang tin 0</div>);
         case 'insights':
             return (<div>bang tin 1</div>);
         case 'tin-tuyen-dung':
             return (<div>bang tin 2</div>);
         case 'dang-tin':
-            return (<div>bang tin 3</div>);
+            return (<JobPostingForm />);
         case 'cv-de-xuat':
             return (<div>bang tin 4</div>);
         case 'profile':

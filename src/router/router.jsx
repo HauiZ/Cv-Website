@@ -22,6 +22,7 @@ import { authRoutes } from "./authRoutes";
 // ✅ RequireAuth
 import RequireAuth from "../components/RequireAuth";
 import ApplicationManerment from "../pages/ApplicationManerment/ApplicationManerment";
+import BusinessLayout from "../layouts/BusinessLayOut";
 
 // ✅ Các route cần đăng nhập trong HomeLayout
 const protectedRoutes = [
@@ -66,6 +67,7 @@ const router = createBrowserRouter([
       ...adminRoutes,
 
       { path: "/authsuccess", element: <AuthSuccess /> },
+      { path: "/test", element: <BusinessLayout/> },
       {
         path: "/",
         element: <HomeLayout />,

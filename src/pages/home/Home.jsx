@@ -15,7 +15,7 @@ const Mix = () => {
   const navigate = useNavigate();
 
   const handleProfessionClick = (profession) => {
-      navigate(`/search?profession=${encodeURIComponent(profession)}`);
+      navigate(`/search?keyword=${encodeURIComponent(profession)}`);
   };
 
   return (
@@ -28,19 +28,19 @@ const Mix = () => {
               <div className="w-[300px] h-[240px] bg-white rounded-2xl shadow-md">
                   <ul className="space-y-3 ml-3 pr-3 py-4">
                       {[
-                          "Công nghệ thông tin",
-                          "Kinh doanh - Bán hàng",
-                          "Bất động sản - Xây dựng",
-                          "Tài chính - Ngân hàng",
-                          "Marketing - Quảng cáo",
-                          "Nhân sự - Hành chính"
-                      ].map((title, index) => (
+                          { title: "Công nghệ thông tin", keyword: "Công nghệ" },
+                          { title: "Kinh doanh - Bán hàng", keyword: "Thương mại" },
+                          { title: "Truyền hình - Viễn Thông", keyword: "Viễn thông" },
+                          { title: "Tài chính - Ngân hàng", keyword: "Ngân hàng" },
+                          { title: "Marketing - Quảng cáo", keyword: "Marketing" },
+                          { title: "Nhân sự - Hành chính", keyword: "Nhân sự" }
+                      ].map((items, index) => (
                           <li key={index}>
                               <div
                                   className="hover:text-[#5DDA33] flex justify-between cursor-pointer"
-                                  onClick={() => handleProfessionClick(title)}
+                                  onClick={() => handleProfessionClick(items.keyword)}
                               >
-                                  <span className="font-semibold">{title}</span>
+                                  <span className="font-semibold">{items.title}</span>
                                   <FaAngleRight className="text-[#D9D9D9]" />
                               </div>
                           </li>

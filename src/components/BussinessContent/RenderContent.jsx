@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import JobPostingForm from '../../pages/JobPosting/JobPostingForm';
 import ProfileSettingPage from '../../pages/InfomationPage/BusinessInfomation/ProfileSettingPage';
+import SecurityPage from '../../pages/InfomationPage/BusinessInfomation/SecurityPage';
 
 export default function RenderContent({ activeTab }) {
     switch (activeTab) {
@@ -23,7 +24,7 @@ export default function RenderContent({ activeTab }) {
         case 'bao-cao':
             return (<div>bang tin 9</div>);
         case 'security':
-            return (<div>bang tin 10</div>);
+            return (<SecurityPage />);
         default:
             return (<ProfileSettingPage />);
     }

@@ -1,4 +1,4 @@
-
+import { useState } from 'react';
 import JobPostingForm from '../../pages/JobPosting/JobPostingForm';
 import ProfileSettingPage from '../../pages/InfomationPage/BusinessInfomation/ProfileSettingPage';
 import SecurityPage from '../../pages/InfomationPage/BusinessInfomation/SecurityPage';

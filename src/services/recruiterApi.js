@@ -43,4 +43,22 @@ const changeProfileBusinessApi = async ({ name, phone, province, district, domai
   };
   return await axios.patch(URL_API, data);
 }
-export { fetchCompanyInfoApi, fetchAllCompanyApi, postRecruitmentNewsApi, changeLogo, changeProfileBusinessApi };
+
+const getApplicantApi = async () => {
+  const URL_API = "/recruiter/getApplicant"
+  const res = await axios(URL_API);
+  return res.data;
+}
+
+const getApplicantApiForNews = async (newsId) => {
+  const res = await axios(`/recruiter/getApplicant/${newsId}`);
+  return res.data;
+}
+
+const approveApplicationApi = async (id, data) => {
+  return axios.post(`/recruiter/approvedApplication/${id}`, data);
+}
+export {
+  fetchCompanyInfoApi, fetchAllCompanyApi, postRecruitmentNewsApi,
+  changeLogo, changeProfileBusinessApi, getApplicantApi, approveApplicationApi
+};

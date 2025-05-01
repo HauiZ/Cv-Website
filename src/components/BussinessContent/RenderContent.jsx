@@ -2,6 +2,7 @@ import { useState, useMemo, useEffect } from 'react';
 import JobPostingForm from '../../pages/JobPosting/JobPostingForm';
 import ProfileSettingPage from '../../pages/InfomationPage/BusinessInfomation/ProfileSettingPage';
 import SecurityPage from '../../pages/InfomationPage/BusinessInfomation/SecurityPage';
+import ApplicantLayout from '../../pages/CVManagement/ApplicantLayout';
 
 export default function RenderContent({ activeTab }) {
     switch (activeTab) {
@@ -20,7 +21,7 @@ export default function RenderContent({ activeTab }) {
         case 'mail':
             return (<div>bang tin 7</div>);
         case 'quan-ly-cv':
-            return (<div>bang tin 8</div>);
+            return (<ApplicantLayout />);
         case 'bao-cao':
             return (<div>bang tin 9</div>);
         case 'security':

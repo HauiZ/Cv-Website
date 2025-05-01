@@ -164,7 +164,7 @@ const FilterSidebar = ({ onFilterChange, totalJobs, initialFilters = {} }) => {
           </button>
 
           {expandedSections.profession && (
-            <div className="mt-1 ml-1 max-h-40 overflow-y-auto pr-1">
+            <div className="mt-1 ml-1 h-fit pr-1">
               {[
                 { title: "Công nghệ thông tin", keyword: "Công nghệ thông tin" },
                 { title: "Kinh doanh - Bán hàng", keyword: "Thương mại điện tử, Kinh doanh, Sales" },

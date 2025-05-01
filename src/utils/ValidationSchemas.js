@@ -53,10 +53,7 @@ export const signUpPersonalSchema = yup.object().shape({
 // Signup Business (Different rules)
 export const signUpBusinessSchema = yup.object().shape({
   email: emailSchema,
-  password: passwordSchema.min(
-    8,
-    "Business password must be at least 8 characters"
-  ),
+  password: passwordSchema,
   confirmPassword: yup
     .string()
     .oneOf([yup.ref("password"), null], "Passwords do not match")

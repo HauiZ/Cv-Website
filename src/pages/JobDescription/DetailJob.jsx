@@ -29,7 +29,7 @@ export default function DetailJob({ data }) {
         ? content.map((item, idx) => (
             <p key={idx} className="text-[#333] ml-7">- {item}</p>
           ))
-        : <p className="ml-7">{content || "Không có thông tin"}</p>}
+        : <pre className="text-[#333] font-sans ml-7">{content || "Không có thông tin"}</pre>}
     </div>
   );
 

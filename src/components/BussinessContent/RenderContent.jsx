@@ -1,7 +1,8 @@
 import { useState, useMemo, useEffect } from 'react';
 import JobPostingForm from '../../pages/JobPosting/JobPostingForm';
+import ProfileSettingPage from '../../pages/InfomationPage/BusinessInfomation/ProfileSettingPage';
 
-export default function RenderContent({activeTab}) {
+export default function RenderContent({ activeTab }) {
     switch (activeTab) {
         case 'bang-tin':
             return (<div>bang tin 0</div>);
@@ -14,7 +15,7 @@ export default function RenderContent({activeTab}) {
         case 'cv-de-xuat':
             return (<div>bang tin 4</div>);
         case 'profile':
-            return (<div>bang tin 6</div>);
+            return (<ProfileSettingPage />);
         case 'mail':
             return (<div>bang tin 7</div>);
         case 'quan-ly-cv':
@@ -24,6 +25,6 @@ export default function RenderContent({activeTab}) {
         case 'security':
             return (<div>bang tin 10</div>);
         default:
-            return <div>None</div>;
+            return (<ProfileSettingPage />);
     }
 };

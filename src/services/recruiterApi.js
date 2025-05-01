@@ -128,9 +128,14 @@ const getApplicantApiForNews = async (newsId) => {
 const approveApplicationApi = async (id, data) => {
   return axios.post(`/recruiter/approvedApplication/${id}`, data);
 }
+const getDashBoardApi = async () =>{
+  const res = await axios.get('/recruiter/get');
+  return res.data;
+}
 export {
   fetchCompanyInfoApi, fetchAllCompanyApi, postRecruitmentNewsApi,
   changeLogo, changeProfileBusinessApi, getApplicantApi, approveApplicationApi, fetchAllNewsApi,
   getNotificationApi,
+  getDashBoardApi,
 };
 

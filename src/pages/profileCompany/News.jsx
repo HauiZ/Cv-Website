@@ -1,12 +1,8 @@
 import React from "react";
 import formatSalaryRangeToVND from "../../utils/formatSalaryRangeToVND";
 import { useNavigate } from "react-router-dom";
-import dayjs from "dayjs";
-import "dayjs/locale/vi";
-import relativeTime from "dayjs/plugin/relativeTime";
 
-dayjs.extend(relativeTime);
-dayjs.locale("vi");
+
 
 export default function News({ job }) {
   const salaryRange = formatSalaryRangeToVND(
@@ -39,7 +35,7 @@ export default function News({ job }) {
               {job?.companyAddress || "ha noi"}
             </div>
             <div className="bg-gray-300 h-fit w-fit text-center p-1.5 rounded-[.5em] hover:bg-gray-200 transition-colors duration-200 ">
-              {dayjs(job.datePosted).format("DD/MM/YYYY")}
+              {job?.applicationDeadline || "0"}
             </div>
           </div>
           <div className="xl:absolute xl:right-5">

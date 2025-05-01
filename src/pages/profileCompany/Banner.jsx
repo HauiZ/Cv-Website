@@ -36,7 +36,7 @@ export default function Banner({ data }) {
             </div>
           </div>
         </div>
-        <span className="logo absolute w-[8rem] h-[8rem] bg-blue-700 top-[35%] left-[5vh]">
+        <span className="logo absolute w-[8rem] h-[8rem] top-[35%] left-[5vh]">
           <img src={logoImage} alt="Company logo" className="h-full object-cover w-full" />
         </span>
       </div>

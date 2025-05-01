@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import RequestDetailModal from "./RequestDetailModal";
-import { getRequestApi, approveRequestApi } from "../../../../services/adminApi";
+import {
+  getRequestApi,
+  approveRequestApi,
+} from "../../../../services/adminApi";
 import useCustomFetch from "../../../../hooks/useCustomFetch";
 import useCustomMutation from "../../../../hooks/useCustomMutation";
 import Pagination from "../../../home/component/ListJob/Pagination";
@@ -15,11 +18,11 @@ const RequestContent = () => {
   const { data, refetch } = useCustomFetch(getRequestApi);
   const [requestData, setRequestData] = useState([]);
   const [selectedRequest, setSelectedRequest] = useState(null);
-  
+
   // Bộ lọc
   const [statusFilter, setStatusFilter] = useState("all");
   const [typeFilter, setTypeFilter] = useState("all");
-  
+
   // Phân trang
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10); // Số lượng mục trên mỗi trang
@@ -27,7 +30,11 @@ const RequestContent = () => {
   const { mutate: approvedRequest } = useCustomMutation(approveRequestApi);
 
   useEffect(() => {
-    setRequestData(data || []);
+    // Sort the data by ID in descending order when it's loaded
+    if (data) {
+      const sortedData = [...data].sort((a, b) => b.id - a.id);
+      setRequestData(sortedData);
+    }
   }, [data]);
 
   const handleApprove = async (id) => {
@@ -53,7 +60,7 @@ const RequestContent = () => {
   // Lấy danh sách các loại request có trong data
   const getUniqueTypes = () => {
     if (!requestData || requestData.length === 0) return [];
-    return [...new Set(requestData.map(item => item.typeOf))];
+    return [...new Set(requestData.map((item) => item.typeOf))];
   };
 
   // Xử lý thay đổi bộ lọc trạng thái
@@ -76,15 +83,15 @@ const RequestContent = () => {
   };
 
   // Lọc dữ liệu theo các bộ lọc đã chọn
-  const filteredData = requestData.filter(item => {
+  const filteredData = requestData.filter((item) => {
     // Lọc theo trạng thái
-    const statusMatch = statusFilter === "all" || 
+    const statusMatch =
+      statusFilter === "all" ||
       item.status.toLowerCase() === statusFilter.toLowerCase();
-    
+
     // Lọc theo loại
-    const typeMatch = typeFilter === "all" || 
-      item.typeOf === typeFilter;
-    
+    const typeMatch = typeFilter === "all" || item.typeOf === typeFilter;
+
     // Trả về true nếu tất cả các điều kiện đều khớp
     return statusMatch && typeMatch;
   });
@@ -93,10 +100,10 @@ const RequestContent = () => {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
-  
+
   // Tính tổng số trang
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
-  
+
   // Xử lý thay đổi trang
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -106,10 +113,10 @@ const RequestContent = () => {
     <div className="bg-white p-4 rounded shadow-md">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4">
         <h2 className="text-lg font-semibold mb-2 sm:mb-0">List of request</h2>
-        
+
         <div className="flex flex-wrap gap-2">
           {/* Bộ lọc theo trạng thái */}
-          <select 
+          <select
             className="px-2 py-1 focus:outline-none border rounded"
             value={statusFilter}
             onChange={handleStatusFilterChange}
@@ -119,21 +126,23 @@ const RequestContent = () => {
             <option value="pending">Pending</option>
             <option value="rejected">Rejected</option>
           </select>
-          
+
           {/* Bộ lọc theo loại */}
-          <select 
+          <select
             className="px-2 py-1 focus:outline-none border rounded"
             value={typeFilter}
             onChange={handleTypeFilterChange}
           >
             <option value="all">All Types</option>
-            {getUniqueTypes().map(type => (
-              <option key={type} value={type}>{type}</option>
+            {getUniqueTypes().map((type) => (
+              <option key={type} value={type}>
+                {type}
+              </option>
             ))}
           </select>
-          
+
           {/* Nút reset bộ lọc */}
-          <button 
+          <button
             className="px-2 py-1 bg-gray-200 hover:bg-gray-300 rounded"
             onClick={handleResetFilters}
           >
@@ -155,7 +164,7 @@ const RequestContent = () => {
           </thead>
           <tbody className="stagger-animate">
             {currentItems.length > 0 ? (
-              [...currentItems].reverse().map((item, index) => (
+              currentItems.map((item, index) => (
                 <tr
                   key={item.id}
                   className="cursor-pointer hover:bg-gray-50 border-b transition-transform duration-300 animate-slideIn"
@@ -193,10 +202,10 @@ const RequestContent = () => {
 
       {/* Component phân trang */}
       {totalPages > 0 && (
-        <Pagination 
-          currentPage={currentPage} 
-          totalPages={totalPages} 
-          onPageChange={handlePageChange} 
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
         />
       )}
 

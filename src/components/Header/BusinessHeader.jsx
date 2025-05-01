@@ -17,7 +17,7 @@ const BusinessHeader = () => {
   const { logOut } = useAuth((path) => navigate(path));
   const navigate = useNavigate();
 
-  const avatar =  user?.linkLogo;
+  const avatar =  user?.logoUrl;
   const displayName =  user?.businessName || "User";
   const email = user?.email || "";
 

@@ -28,9 +28,8 @@ const changeAvatar = async (file) => {
   formData.append("file", file);
   // console.log("formData>>>>>>:", formData);
   // console.log("formdata>>", formData.get("file"));
-  const res = await axios.post(`/upload/upload-avatar`, formData
+  return await axios.post(`/upload/upload-avatar`, formData
   );
-  return res.data;
 }
 
 const changePassword = async ({ oldPassword, newPassword, confirmNewPassword }) => {

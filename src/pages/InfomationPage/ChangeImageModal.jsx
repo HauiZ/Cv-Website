@@ -1,6 +1,5 @@
 import React, { useState, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { changeAvatar } from "../../services/userApi";
 import useLoading from "../../hooks/useLoading";
 import { useToast } from "../../contexts/ToastContext";
 import Loader from "../../components/Loader";
@@ -11,7 +10,7 @@ import {
     faTrashAlt,
 } from "@fortawesome/free-solid-svg-icons";
 
-const ChangeAvatarModal = ({ visible, onClose }) => {
+const ChangeAvatarModal = ({ visible, onClose, funcApi }) => {
     const [file, setFile] = useState(null);
     const [previewUrl, setPreviewUrl] = useState(null);
     const [dragging, setDragging] = useState(false);
@@ -58,7 +57,7 @@ const ChangeAvatarModal = ({ visible, onClose }) => {
         await withLoading(async () => {
             console.log("Đang xử lý với file:", file);
             try {
-                await changeAvatar(file);
+                await funcApi(file);
                 await fetchUser();
                 showToast(`Cập nhật ảnh đại diện thành công với file: ${file.name}`, "success");
                 onClose();

@@ -25,4 +25,22 @@ const postRecruitmentNewsApi = async ({ jobTitle, profession, candidateNumber, j
   return await axios.post(URL_API, data);
 }
 
-export { fetchCompanyInfoApi, fetchAllCompanyApi, postRecruitmentNewsApi };
+const changeLogo = async (file) => {
+  const formData = new FormData();
+  formData.append("file", file);
+  // console.log("formData>>>>>>:", formData);
+  // console.log("formdata>>", formData.get("file"));
+  return await axios.post(`/upload/upload-logoBusiness`, formData
+  );
+}
+
+const changeProfileBusinessApi = async ({ name, phone, province, district, domain,
+  companyAddress, field, companySize, website, introduction }) => {
+  const URL_API = "/users/changeProfile";
+  const data = {
+    name, phone, province, district, domain,
+    companyAddress, field, companySize, website, introduction
+  };
+  return await axios.patch(URL_API, data);
+}
+export { fetchCompanyInfoApi, fetchAllCompanyApi, postRecruitmentNewsApi, changeLogo, changeProfileBusinessApi };

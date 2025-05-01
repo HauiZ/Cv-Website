@@ -3,7 +3,8 @@ import { useAuthContext } from "../../contexts/AuthContext";
 import { Avatar } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { IoCamera } from "react-icons/io5";
-import ChangeAvatarModal from "./ChangeAvatarModal";
+import { changeAvatar } from '../../services/userApi';
+import ChangeAvatarModal from "./ChangeImageModal";
 
 export default function Introduce() {
     const { user } = useAuthContext();
@@ -84,7 +85,7 @@ export default function Introduce() {
                     </p>
                 </div>
             </div>
-            <ChangeAvatarModal visible={modalVisible} onClose={() => setModalVisible(false)} />
+            <ChangeAvatarModal visible={modalVisible} onClose={() => setModalVisible(false)} funcApi={changeAvatar}/>
         </div>
     );
 }

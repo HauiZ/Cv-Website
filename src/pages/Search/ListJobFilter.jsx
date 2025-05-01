@@ -11,6 +11,7 @@ export default function ListJobFilter({ data }) {
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE
   );
+  console.log(">>>>>>>>>>", currentJobs)
 
   return (
     <div className=" mb-10 rounded-[.5em] bg-white shadow-md h-fit">

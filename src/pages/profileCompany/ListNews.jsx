@@ -5,7 +5,7 @@ export default function ListNews({ jobs}) {
   return (
     <div className="space-y-4">
       {jobs.map((job) => (
-        <NewsItem key={job.id} job={job}/>
+        <NewsItem key={job.id} job={job} companyName={job?.companyName}/>
       ))}
     </div>
   );

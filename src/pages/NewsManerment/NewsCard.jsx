@@ -67,7 +67,7 @@ export default function NewsCard({ job, setFilterWithNews, setNewsId }) {
               {job?.companyAddress || "ha noi"}
             </div>
             <div className="bg-gray-300 h-fit w-fit text-center p-1.5 rounded-[.5em] hover:bg-gray-200 transition-colors duration-200 ">
-              {dayjs(job.datePosted).format("DD/MM/YYYY")}
+              Ngày đăng: {dayjs(job.datePosted).format("DD/MM/YYYY")}
             </div>
             <div className="bg-gray-300 h-fit w-fit text-center p-1.5 rounded-[.5em] hover:bg-gray-200 transition-colors duration-200 ">
               {salaryRange || "Thương lượng"}

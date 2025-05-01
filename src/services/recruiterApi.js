@@ -114,13 +114,23 @@ const getNotificationApi = async() =>{
   const res = await axios(URL_API);
   return res.data;
 }
+const getApplicantApi = async () => {
+  const URL_API = "/recruiter/getApplicant"
+  const res = await axios(URL_API);
+  return res.data;
+}
 
+const getApplicantApiForNews = async (newsId) => {
+  const res = await axios(`/recruiter/getApplicant/${newsId}`);
+  return res.data;
+}
+
+const approveApplicationApi = async (id, data) => {
+  return axios.post(`/recruiter/approvedApplication/${id}`, data);
+}
 export {
-  fetchCompanyInfoApi,
-  fetchAllCompanyApi,
-  postRecruitmentNewsApi,
-  changeLogo,
-  changeProfileBusinessApi,
-  fetchAllNewsApi,
+  fetchCompanyInfoApi, fetchAllCompanyApi, postRecruitmentNewsApi,
+  changeLogo, changeProfileBusinessApi, getApplicantApi, approveApplicationApi, fetchAllNewsApi,
   getNotificationApi,
 };
+

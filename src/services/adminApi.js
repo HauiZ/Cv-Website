@@ -21,7 +21,7 @@ const getRequestApi = async () =>{
   return data; 
 }
 const approveRequestApi = async (id,data) =>{
-  return axios.post(`admin/approveRecruitment/${id}`,data);
+  return axios.post(`/admin/approveRecruitment/${id}`,data);
   
 }
 export {fetchUserApi, fetchDataDashBoardApi, deleteUserApi, getRequestApi, approveRequestApi};

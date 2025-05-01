@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import RequestDetailModal from "./RequestDetailModal";
-import { getRequestApi, approveRequestApi } from "../../../services/adminApi";
-import useCustomFetch from "../../../hooks/useCustomFetch";
-import useCustomMutation from "../../../hooks/useCustomMutation";
-import Pagination from "../../home/component/ListJob/Pagination";
+import { getRequestApi, approveRequestApi } from "../../../../services/adminApi";
+import useCustomFetch from "../../../../hooks/useCustomFetch";
+import useCustomMutation from "../../../../hooks/useCustomMutation";
+import Pagination from "../../../home/component/ListJob/Pagination";
 
 const statusColors = {
   PENDING: "bg-yellow-300 text-black",
@@ -155,7 +155,7 @@ const RequestContent = () => {
           </thead>
           <tbody className="stagger-animate">
             {currentItems.length > 0 ? (
-              currentItems.map((item, index) => (
+              [...currentItems].reverse().map((item, index) => (
                 <tr
                   key={item.id}
                   className="cursor-pointer hover:bg-gray-50 border-b transition-transform duration-300 animate-slideIn"

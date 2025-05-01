@@ -9,7 +9,7 @@ export default function useCustomFetch(fetchFunction, params = []) {
   const [refreshTrigger, setRefreshTrigger] = useState(0);
 
   const refetch = useCallback(() => {
-    setRefreshTrigger(prev => prev + 1);
+    setRefreshTrigger((prev) => prev + 1);
   }, []);
 
   useEffect(() => {
@@ -27,7 +27,10 @@ export default function useCustomFetch(fetchFunction, params = []) {
         }
       } catch (err) {
         if (isMounted) {
-          const msg = err?.response?.data?.message || "Data fetching failed!";
+          const msg =
+            err?.response?.data?.message ||
+            err?.message ||
+            "Data fetching failed!";
           showToast(msg, "error");
           console.error("Fetch error:", msg);
           setData(null);

@@ -4,10 +4,9 @@ import BusinessHeader from "../components/Header/BusinessHeader";
 import Sidebar from "../components/BussinessContent/SideBarLayout";
 import RenderContent from "../components/BussinessContent/RenderContent";
 
-
 export default function BusinessLayout() {
-  const [activeTab, setActiveTab] = useState('bang-tin');
-  const [settingsTab, setSettingsTab] = useState('');
+  const [activeTab, setActiveTab] = useState("bang-tin");
+  const [settingsTab, setSettingsTab] = useState("");
   useEffect(() => {
     const handleSettingsTabChange = () => {
       if (window && window.settingsTab) {
@@ -16,7 +15,7 @@ export default function BusinessLayout() {
     };
 
     // Set up listener
-    window.addEventListener('storage', handleSettingsTabChange);
+    window.addEventListener("storage", handleSettingsTabChange);
 
     // Check if it's already set
     if (window && window.settingsTab) {
@@ -24,20 +23,22 @@ export default function BusinessLayout() {
     }
 
     return () => {
-      window.removeEventListener('storage', handleSettingsTabChange);
+      window.removeEventListener("storage", handleSettingsTabChange);
     };
   }, []);
   return (
     <div className="pt-[75px]">
       <BusinessHeader></BusinessHeader>
-      <div className="flex h-screen bg-gray-100">
+      <div className="flex bg-gray-100">
         {/* Sidebar */}
-        <div className="w-[200px] bg-white shadow">
+        <div className="w-[15rem] h-[40rem] bg-white shadow fixed">
           <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
         </div>
 
         {/* Content */}
-        <div className="flex-1 p-6 overflow-auto"><RenderContent activeTab={activeTab} /></div>
+        <div className="flex-1 p-9  ml-[15rem]">
+          <RenderContent activeTab={activeTab} />
+        </div>
       </div>
     </div>
   );

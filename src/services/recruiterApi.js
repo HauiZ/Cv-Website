@@ -109,33 +109,38 @@ const fetchAllNewsApi = async () => {
   const data = res.data;
   return data;
 };
-const getNotificationApi = async() =>{
-  const URL_API = "recruiter/getNotification"
-  const res = await axios(URL_API);
+const getNotificationApi = async () => {
+  const URL_API = "recruiter/getNotification";
+  const res = await axios.get(URL_API);
   return res.data;
-}
+};
 const getApplicantApi = async () => {
-  const URL_API = "/recruiter/getApplicant"
+  const URL_API = "/recruiter/getApplicant";
   const res = await axios(URL_API);
   return res.data;
-}
+};
 
 const getApplicantApiForNews = async (newsId) => {
   const res = await axios(`/recruiter/getApplicant/${newsId}`);
   return res.data;
-}
+};
 
 const approveApplicationApi = async (id, data) => {
   return axios.post(`/recruiter/approvedApplication/${id}`, data);
-}
-const getDashBoardApi = async () =>{
-  const res = await axios.get('/recruiter/get');
+};
+const getDashBoardApi = async () => {
+  const res = await axios.get("/recruiter/getDataDashBoard");
   return res.data;
-}
+};
 export {
-  fetchCompanyInfoApi, fetchAllCompanyApi, postRecruitmentNewsApi,
-  changeLogo, changeProfileBusinessApi, getApplicantApi, approveApplicationApi, fetchAllNewsApi,
+  fetchCompanyInfoApi,
+  fetchAllCompanyApi,
+  postRecruitmentNewsApi,
+  changeLogo,
+  changeProfileBusinessApi,
+  getApplicantApi,
+  approveApplicationApi,
+  fetchAllNewsApi,
   getNotificationApi,
   getDashBoardApi,
 };
-

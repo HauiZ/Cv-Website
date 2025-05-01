@@ -1,15 +1,7 @@
 export default function BttnSignIn() {
   const handleGoogleOnClick = () => {
-  const width = 500, height = 600;
-  const left = (window.innerWidth - width) / 2;
-  const top = (window.innerHeight - height) / 2;
-
-  window.open(
-    "http://localhost:3000/api/auth/google?prompt=select_account",
-    "_blank",
-    `width=${width},height=${height},top=${top},left=${left}`
-  );
-};
+    window.location.href = "http://localhost:3000/api/auth/google";
+  };
 
   return (
     <div className="flex space-x-2">

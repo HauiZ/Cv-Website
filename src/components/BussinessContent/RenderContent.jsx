@@ -5,15 +5,19 @@ import ProfileSettingPage from '../../pages/InfomationPage/BusinessInfomation/Pr
 import SecurityPage from '../../pages/InfomationPage/BusinessInfomation/SecurityPage';
 import ApplicantLayout from '../../pages/CVManagement/ApplicantLayout';
 import NewsManerment from "../../pages/NewsManerment/NewsManerment";
+import { getApplicantApi, getApplicantForNewsApi } from "../../services/recruiterApi";
 
 export default function RenderContent({ activeTab }) {
+    const [filterWithNews, setFilterWithNews] = useState(false);
+    const [newsId, setNewsId] = useState(null);
+    const funcApi = filterWithNews ? getApplicantForNewsApi : getApplicantApi;
     switch (activeTab) {
         case 'bang-tin':
             return (<div>bang tin 0</div>);
         case 'insights':
             return (<div>bang tin 1</div>);
         case 'tin-tuyen-dung':
-            return (<NewsManerment />);
+            return (<NewsManerment setFilterWithNews={setFilterWithNews} setNewsId={setNewsId}/>);
         case 'dang-tin':
             return (<JobPostingForm />);
         case 'cv-de-xuat':
@@ -23,7 +27,7 @@ export default function RenderContent({ activeTab }) {
         case 'mail':
             return (<div>bang tin 7</div>);
         case 'quan-ly-cv':
-            return (<ApplicantLayout />);
+            return (<ApplicantLayout funcApi={funcApi} newsId={newsId}/>);
         case 'bao-cao':
             return (<div>bang tin 9</div>);
         case 'security':

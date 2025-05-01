@@ -120,7 +120,7 @@ const getApplicantApi = async () => {
   return res.data;
 }
 
-const getApplicantApiForNews = async (newsId) => {
+const getApplicantForNewsApi = async (newsId) => {
   const res = await axios(`/recruiter/getApplicant/${newsId}`);
   return res.data;
 }
@@ -131,6 +131,6 @@ const approveApplicationApi = async (id, data) => {
 export {
   fetchCompanyInfoApi, fetchAllCompanyApi, postRecruitmentNewsApi,
   changeLogo, changeProfileBusinessApi, getApplicantApi, approveApplicationApi, fetchAllNewsApi,
-  getNotificationApi,
+  getNotificationApi, getApplicantForNewsApi
 };
 

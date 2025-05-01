@@ -4,7 +4,7 @@ import Pagination from "../home/component/ListJob/Pagination";
 import useCustomFetch from "../../hooks/useCustomFetch";
 import { fetchAllNewsApi } from "../../services/recruiterApi";
 const ITEMS_PER_PAGE = 4;
-export default function NewsManerment() {
+export default function NewsManerment({ setFilterWithNews, setNewsId }) {
   const { data } = useCustomFetch(fetchAllNewsApi);
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -26,7 +26,7 @@ export default function NewsManerment() {
         {jobs.length > 0 ? (
           <>
             <div className="">
-              <ListNews jobs={currentJobs} />
+              <ListNews jobs={currentJobs} setFilterWithNews={setFilterWithNews} setNewsId={setNewsId}/>
             </div>
             {totalPages > 1 && (
               <div className="absolute bottom-3 left-0 right-0 flex justify-center items-center p- bg-white">

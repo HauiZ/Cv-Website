@@ -215,7 +215,7 @@ export default function ProfileSettingPage() {
                                             setSelectedProvince(option);
                                             setSelectedDistrict(null);
                                         }}
-                                        placeholder="Chọn tỉnh/thành"
+                                        placeholder={user?.provice || "Chọn tỉnh/thành"} 
                                         className="basic-select"
                                         classNamePrefix="select"
                                     />
@@ -235,7 +235,7 @@ export default function ProfileSettingPage() {
                                         value={selectedDistrict}
                                         onChange={setSelectedDistrict}
                                         isDisabled={!selectedProvince}
-                                        placeholder="Chọn quận/huyện"
+                                        placeholder={user?.district ||"Chọn quận/huyện"}
                                         className="basic-select"
                                         classNamePrefix="select"
                                     />

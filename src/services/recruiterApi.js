@@ -109,6 +109,11 @@ const fetchAllNewsApi = async () => {
   const data = res.data;
   return data;
 };
+const getNotificationApi = async() =>{
+  const URL_API = "recruiter/getNotification"
+  const res = await axios(URL_API);
+  return res.data;
+}
 
 export {
   fetchCompanyInfoApi,
@@ -117,4 +122,5 @@ export {
   changeLogo,
   changeProfileBusinessApi,
   fetchAllNewsApi,
+  getNotificationApi,
 };

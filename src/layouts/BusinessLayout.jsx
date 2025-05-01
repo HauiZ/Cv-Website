@@ -1,12 +1,21 @@
 // src/layouts/adminLayout.jsx
 import React, { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import BusinessHeader from "../components/Header/BusinessHeader";
 import Sidebar from "../components/BussinessContent/SideBarLayout";
 import RenderContent from "../components/BussinessContent/RenderContent";
 
 export default function BusinessLayout() {
-  const [activeTab, setActiveTab] = useState("bang-tin");
+  // Use search params to get and set the active tab
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeTab = searchParams.get("tab") || "bang-tin";
   const [settingsTab, setSettingsTab] = useState("");
+
+  // Function to update the activeTab via URL
+  const handleTabChange = (newTab) => {
+    setSearchParams({ tab: newTab }, { replace: true });
+  };
+
   useEffect(() => {
     const handleSettingsTabChange = () => {
       if (window && window.settingsTab) {
@@ -26,17 +35,18 @@ export default function BusinessLayout() {
       window.removeEventListener("storage", handleSettingsTabChange);
     };
   }, []);
+
   return (
     <div className="pt-[75px]">
-      <BusinessHeader></BusinessHeader>
+      <BusinessHeader />
       <div className="flex bg-gray-100">
         {/* Sidebar */}
         <div className="w-[15rem] h-[40rem] bg-white shadow fixed">
-          <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
+          <Sidebar activeTab={activeTab} setActiveTab={handleTabChange} />
         </div>
 
         {/* Content */}
-        <div className="flex-1 p-9  ml-[15rem]">
+        <div className="flex-1 p-9 ml-[15rem]">
           <RenderContent activeTab={activeTab} />
         </div>
       </div>

@@ -1,7 +1,7 @@
 // src/components/Header.jsx
 import React from "react";
 import "./Header.css";
-import Notification from "./Notification";
+import Notification from "./NotificationRecruiter";
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Space, Dropdown } from "antd";
 import { DownOutlined, SettingOutlined } from "@ant-design/icons";
@@ -100,6 +100,7 @@ const BusinessHeader = () => {
         </div>
         <div className="flex gap-x-10 justify-end max-h-[50] mr-5">
           <span className="text-2xl text-white">{"|"}</span>
+          <Notification></Notification>
           <UserDropdown />
         </div>
       </div>

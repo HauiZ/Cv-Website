@@ -160,87 +160,89 @@ export default function SecurityPage() {
                     <IntroduceBusiness></IntroduceBusiness>
                 </div>
 
-                <div className="w-full md:w-2/3">
-                    <h2 className="text-xl font-bold mb-6">Thay đổi mật khẩu đăng nhập</h2>
+                <div className="w-full md:w-2/3 ">
+                    <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+                        <h2 className="text-xl font-bold mb-6">Thay đổi mật khẩu đăng nhập</h2>
 
-                    <div className="space-y-4">
-                        <div className="flex items-center">
-                            <label className="w-40 text-gray-700">Email đăng nhập:</label>
-                            <input
-                                type="email"
-                                className="flex-1 px-3 py-2 rounded-md bg-gray-300"
-                                value={email}
-                                disabled
-                            />
+                        <div className="space-y-4">
+                            <div className="flex items-center">
+                                <label className="w-40 text-gray-700">Email đăng nhập:</label>
+                                <input
+                                    type="email"
+                                    className="flex-1 px-3 py-2 rounded-md bg-gray-300"
+                                    value={email}
+                                    disabled
+                                />
+                            </div>
+                            <form onSubmit={handleSubmit}>
+                                <div className="mb-4">
+                                    <div className="flex items-center mb-1">
+                                        <label className="w-40 text-gray-700">Mật khẩu hiện tại:</label>
+                                        <div className="flex-1">
+                                            <input
+                                                type="password"
+                                                name="currentPassword"
+                                                className={`w-full px-3 py-2 border rounded-md ${touched.currentPassword && errors.currentPassword ? 'border-red-500' : ''}`}
+                                                placeholder="Nhập mật khẩu hiện tại"
+                                                value={formData.currentPassword}
+                                                onChange={handleChange}
+                                            />
+                                            {touched.currentPassword && errors.currentPassword && (
+                                                <p className="text-red-500 text-sm mt-1">{errors.currentPassword}</p>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="mb-4">
+                                    <div className="flex items-center mb-1">
+                                        <label className="w-40 text-gray-700">Mật khẩu mới:</label>
+                                        <div className="flex-1">
+                                            <input
+                                                type="password"
+                                                name="newPassword"
+                                                className={`w-full px-3 py-2 border rounded-md ${touched.newPassword && errors.newPassword ? 'border-red-500' : ''}`}
+                                                placeholder="Nhập mật khẩu mới"
+                                                value={formData.newPassword}
+                                                onChange={handleChange}
+                                            />
+                                            {touched.newPassword && errors.newPassword && (
+                                                <p className="text-red-500 text-sm mt-1">{errors.newPassword}</p>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="mb-4">
+                                    <div className="flex items-center mb-1">
+                                        <label className="w-40 text-gray-700">Nhập lại mật khẩu mới:</label>
+                                        <div className="flex-1">
+                                            <input
+                                                type="password"
+                                                name="confirmPassword"
+                                                className={`w-full px-3 py-2 border rounded-md ${touched.confirmPassword && errors.confirmPassword ? 'border-red-500' : ''}`}
+                                                placeholder="Nhập lại mật khẩu mới"
+                                                value={formData.confirmPassword}
+                                                onChange={handleChange}
+                                            />
+                                            {touched.confirmPassword && errors.confirmPassword && (
+                                                <p className="text-red-500 text-sm mt-1">{errors.confirmPassword}</p>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="flex">
+                                    <div className="w-40"></div>
+                                    <button
+                                        className="px-6 py-2 bg-[#212F3F] font-semibold text-white rounded-md hover:text-green-600 hover:bg-gray-300"
+                                        type="submit"
+                                    >
+                                        Cập nhật
+                                    </button>
+                                </div>
+                            </form>
                         </div>
-                        <form onSubmit={handleSubmit}>
-                            <div className="mb-4">
-                                <div className="flex items-center mb-1">
-                                    <label className="w-40 text-gray-700">Mật khẩu hiện tại:</label>
-                                    <div className="flex-1">
-                                        <input
-                                            type="password"
-                                            name="currentPassword"
-                                            className={`w-full px-3 py-2 border rounded-md ${touched.currentPassword && errors.currentPassword ? 'border-red-500' : ''}`}
-                                            placeholder="Nhập mật khẩu hiện tại"
-                                            value={formData.currentPassword}
-                                            onChange={handleChange}
-                                        />
-                                        {touched.currentPassword && errors.currentPassword && (
-                                            <p className="text-red-500 text-sm mt-1">{errors.currentPassword}</p>
-                                        )}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="mb-4">
-                                <div className="flex items-center mb-1">
-                                    <label className="w-40 text-gray-700">Mật khẩu mới:</label>
-                                    <div className="flex-1">
-                                        <input
-                                            type="password"
-                                            name="newPassword"
-                                            className={`w-full px-3 py-2 border rounded-md ${touched.newPassword && errors.newPassword ? 'border-red-500' : ''}`}
-                                            placeholder="Nhập mật khẩu mới"
-                                            value={formData.newPassword}
-                                            onChange={handleChange}
-                                        />
-                                        {touched.newPassword && errors.newPassword && (
-                                            <p className="text-red-500 text-sm mt-1">{errors.newPassword}</p>
-                                        )}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="mb-4">
-                                <div className="flex items-center mb-1">
-                                    <label className="w-40 text-gray-700">Nhập lại mật khẩu mới:</label>
-                                    <div className="flex-1">
-                                        <input
-                                            type="password"
-                                            name="confirmPassword"
-                                            className={`w-full px-3 py-2 border rounded-md ${touched.confirmPassword && errors.confirmPassword ? 'border-red-500' : ''}`}
-                                            placeholder="Nhập lại mật khẩu mới"
-                                            value={formData.confirmPassword}
-                                            onChange={handleChange}
-                                        />
-                                        {touched.confirmPassword && errors.confirmPassword && (
-                                            <p className="text-red-500 text-sm mt-1">{errors.confirmPassword}</p>
-                                        )}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="flex">
-                                <div className="w-40"></div>
-                                <button
-                                    className="px-6 py-2 bg-[#212F3F] font-semibold text-white rounded-md hover:text-green-600 hover:bg-gray-300"
-                                    type="submit"
-                                >
-                                    Cập nhật
-                                </button>
-                            </div>
-                        </form>
                     </div>
                 </div>
             </div>

@@ -5,15 +5,17 @@ import { FaCheckCircle, FaTimesCircle, FaClock } from "react-icons/fa";
 import dayjs from "dayjs";
 import "dayjs/locale/vi";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { getApplicantForNewsApi } from "../../services/recruiterApi";
 
 dayjs.extend(relativeTime);
 dayjs.locale("vi");
 
-export default function NewsCard({ job }) {
+export default function NewsCard({ job, setFilterWithNews, setNewsId }) {
   const salaryRange = formatSalaryRangeToVND(
     `${job.salaryMin} - ${job.salaryMax}`
   );
   const navigate = useNavigate();
+  const path = `/recruiter?tab=quan-ly-cv`;
 
   // Hàm xác định màu sắc cho status
   const statusMap = {
@@ -31,10 +33,17 @@ export default function NewsCard({ job }) {
     },
   };
 
+  const handleOnclick = () => {
+    setFilterWithNews(true);
+    setNewsId(job.id);
+    navigate(path);
+  }
+
   const statusData = statusMap[job?.status.toUpperCase() || ""] || statusMap["PENDING"];
 
   return (
-    <div className="flex gap-4 border p-3 rounded-lg shadow-sm hover:shadow-[0_0_10px_rgba(12,142,94,0.5)] hover:border-[#0C8E5E] hover:border-1 transition-all duration-300 cursor-pointer group relative">
+    <div className="flex gap-4 border p-3 rounded-lg shadow-sm hover:shadow-[0_0_10px_rgba(12,142,94,0.5)] hover:border-[#0C8E5E] hover:border-1 transition-all duration-300 cursor-pointer group relative"
+      onClick={handleOnclick}>
       <img
         src={job?.logoUrl || "/src/assets/image/logoNoBg.png"}
         alt="logo"

@@ -88,14 +88,14 @@ const BusinessHeader = () => {
           />
         </div>
         <div className="flex gap-x-20 px-6 py-2 mt-4 mb-4">
-          <a href="/" className="menu bg-[#3B546F] text-white px-4 py-2 rounded-full hover:text-[#5DDA33]" >
-            Việc làm
+          <a href="/recruiter?tab=tin-tuyen-dung" className="menu bg-[#3B546F] text-white px-4 py-2 rounded-full hover:text-[#5DDA33]" >
+            Tin đã đăng tuyển
           </a>
-          <a href="/templateCV" className="menu bg-[#3B546F] text-white px-4 py-2 rounded-full hover:text-[#5DDA33]">
-            Hồ sơ & CV
+          <a href="/recruiter?tab=quan-ly-cv" className="menu bg-[#3B546F] text-white px-4 py-2 rounded-full hover:text-[#5DDA33]">
+            Quản lý CV
           </a>
-          <a href="/" className="menu bg-[#3B546F] text-white px-4 py-2 rounded-full hover:text-[#5DDA33]">
-            Công cụ
+          <a href="/recruiter?tab=profile" className="menu bg-[#3B546F] text-white px-4 py-2 rounded-full hover:text-[#5DDA33]">
+            Hồ sơ cá nhân
           </a>
         </div>
         <div className="flex gap-x-10 justify-end max-h-[50] mr-5">

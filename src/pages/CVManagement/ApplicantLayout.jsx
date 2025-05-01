@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import ApplicantCard from "./ApplicantCard";
 import useCustomFetch from "../../hooks/useCustomFetch";
-import { getApplicantApi } from "../../services/recruiterApi";
 import Pagination from "../home/component/ListJob/Pagination";
 
-export default function ApplicantLayout() {
-    const { data, loading, refetch } = useCustomFetch(getApplicantApi);
+export default function ApplicantLayout({ funcApi , newsId}) {
+    const { data, loading, refetch } = useCustomFetch(funcApi, [newsId]);
     const applicants = Array.isArray(data) ? data : [];
 
     const [statusFilter, setStatusFilter] = useState("all");
@@ -50,7 +49,7 @@ export default function ApplicantLayout() {
                     <p>Đang tải...</p>
                 ) : currentApplicants.length > 0 ? (
                     currentApplicants.map((applicant) =>
-                        applicant ? <ApplicantCard key={applicant.id} applicant={applicant} refetch={refetch}/> : null
+                        applicant ? <ApplicantCard key={applicant.id} applicant={applicant} refetch={refetch} /> : null
                     )
                 ) : (
                     <p>Không có đơn ứng tuyển nào phù hợp.</p>

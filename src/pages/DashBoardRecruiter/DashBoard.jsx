@@ -57,7 +57,7 @@ const OverViewContent = () => {
           <div
             key={index}
             className={`p-4 w-[20rem] rounded-xl shadow-md transition-all duration-300 transform ${item.color} flex items-center space-x-4 animate-scaleIn`}
-            style={{ animationDelay: `${index * 1000}ms` }}
+            style={{ animationDelay: `${index * 300}ms` }}
           >
             <div className="p-3 rounded-full bg-white bg-opacity-50">
               <FontAwesomeIcon icon={faChartBar} className="text-2xl" />

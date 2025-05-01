@@ -65,9 +65,16 @@ const router = createBrowserRouter([
     children: [
       ...authRoutes,
       ...adminRoutes,
+      {
+        path: "/recruiter",
+        element: (
+          <RequireAuth>
+            <BusinessLayout />
+          </RequireAuth>
+        ),
+      },
 
       { path: "/authsuccess", element: <AuthSuccess /> },
-      { path: "/recruiter", element: <BusinessLayout/> },
       {
         path: "/",
         element: <HomeLayout />,

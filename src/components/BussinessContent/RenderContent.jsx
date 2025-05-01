@@ -1,8 +1,10 @@
+
 import { useState, useMemo, useEffect } from 'react';
 import JobPostingForm from '../../pages/JobPosting/JobPostingForm';
 import ProfileSettingPage from '../../pages/InfomationPage/BusinessInfomation/ProfileSettingPage';
 import SecurityPage from '../../pages/InfomationPage/BusinessInfomation/SecurityPage';
 import ApplicantLayout from '../../pages/CVManagement/ApplicantLayout';
+import NewsManerment from "../../pages/NewsManerment/NewsManerment";
 
 export default function RenderContent({ activeTab }) {
     switch (activeTab) {
@@ -11,7 +13,7 @@ export default function RenderContent({ activeTab }) {
         case 'insights':
             return (<div>bang tin 1</div>);
         case 'tin-tuyen-dung':
-            return (<div>bang tin 2</div>);
+            return (<NewsManerment />);
         case 'dang-tin':
             return (<JobPostingForm />);
         case 'cv-de-xuat':
@@ -30,3 +32,4 @@ export default function RenderContent({ activeTab }) {
             return (<ProfileSettingPage />);
     }
 };
+

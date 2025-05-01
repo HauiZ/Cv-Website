@@ -2,23 +2,15 @@ import { FaBuilding, FaCalendarAlt, FaFileAlt, FaEye } from "react-icons/fa";
 import { FaCheckCircle, FaTimesCircle, FaClock } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 const statusMap = {
-  "Chờ xử lý": {
-    icon: <FaClock className="text-black" />,
-    class: "bg-yellow-300 text-black",
-  },
-  "Đã xem": {
-    icon: <FaEye className="text-blue-600" />,
-    class: "bg-blue-100 text-blue-800",
-  },
-  "Đã duyệt": {
-    icon: <FaCheckCircle className="text-green-600" />,
-    class: "bg-green-500 text-green-800",
-  },
-  "Đã từ chối": {
-    icon: <FaTimesCircle className="text-red-600" />,
-    class: "bg-red-500 text-red-800",
-  },
-};
+    "PENDING": {
+      icon: <FaClock className="text-black" />,
+      class: "bg-yellow-300 text-black",
+    },
+    "APPROVED": {
+      icon: <FaCheckCircle className="text-white" />,
+      class: "bg-green-500 text-white ",
+    }
+  };
 
 export default function ApplicationCard({ application }) {
   const news = application?.recruitmentNews
@@ -47,7 +39,7 @@ export default function ApplicationCard({ application }) {
     }
   };
   const statusData =
-    statusMap[application?.status || ""] || statusMap["Chờ xử lý"];
+    statusMap[application?.status.toUpperCase() || ""] || statusMap["PENDING"];
 
   return (
     <div className="flex flex-col md:flex-row items-start md:items-center justify-between bg-white p-4 rounded-xl shadow border gap-4 hover:shadow-[0_0_10px_rgba(12,142,94,0.5)] hover:border-[#0C8E5E] hover:border-2 transition-all duration-300 cursor-pointer group">

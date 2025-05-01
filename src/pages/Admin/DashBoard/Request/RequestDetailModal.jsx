@@ -1,10 +1,10 @@
 import React from "react";
-
+import { useNavigate } from "react-router-dom";
 const RequestDetailModal = ({ request, onClose, onApprove, onReject }) => {
   if (!request) return null;
-
+  const navigate = useNavigate();
   const isPending = request.status === "PENDING";
-
+  const isRejected = request.status === "REJECTED";
   return (
     <div className="fixed inset-0 bg-black/75 flex justify-center items-center z-50">
       <div className="bg-white p-5 rounded-md shadow-md relative min-w-[300px] max-w-[400px]">
@@ -47,11 +47,13 @@ const RequestDetailModal = ({ request, onClose, onApprove, onReject }) => {
               ✓
             </button>
           )}
-
-          <button className="px-4 py-1 border rounded hover:bg-gray-200 text-sm">
-            detail
-          </button>
-
+          {!isRejected && (
+            <button className="px-4 py-1 border rounded hover:bg-gray-200 text-sm" onClick={() => {
+                navigate(`/admin/job/${request.recruitmentNewsId}`)
+            }}>
+              detail
+            </button>
+          )}
           {isPending && (
             <button
               onClick={() => onReject(request.id)}

@@ -140,7 +140,7 @@ const TableContent = ({ data, onUserDeleted }) => {
             </tr>
           </thead>
           <tbody className="stagger-animate">
-            {displayData.map((item, index) => (
+            {[...displayData].reverse().map((item, index) => (
               <tr
                 key={item.id}
                 className="hover:bg-gray-50 border-b transition-colors duration-200 animate-slideIn"

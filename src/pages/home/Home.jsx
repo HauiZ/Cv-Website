@@ -15,7 +15,7 @@ const Mix = () => {
   const navigate = useNavigate();
 
   const handleProfessionClick = (keyword) => {
-      navigate(`/search?keyword=${encodeURIComponent(keyword)}`);
+      navigate(`/search?profession=${encodeURIComponent(keyword)}`);
   };
 
   return (
@@ -28,7 +28,7 @@ const Mix = () => {
               <div className="w-[300px] h-[240px] bg-white rounded-2xl shadow-md">
                   <ul className="space-y-3 ml-3 pr-3 py-4">
                       {[
-                          { title: "Công nghệ thông tin", keyword: "Công nghệ" },
+                          { title: "Công nghệ thông tin", keyword: "Công nghệ thông tin" },
                           { title: "Kinh doanh - Bán hàng", keyword: "Thương mại" },
                           { title: "Truyền hình - Viễn Thông", keyword: "Viễn thông" },
                           { title: "Tài chính - Ngân hàng", keyword: "Ngân hàng" },

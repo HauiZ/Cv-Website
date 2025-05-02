@@ -205,7 +205,7 @@ const JobPostingForm = () => {
                 videoUrl: formData.videoUrl,
             });
         });
-        resetForm();
+        // resetForm();
     };
 
     const resetForm = () => {

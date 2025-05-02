@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Select } from "antd";
 import { FaListUl } from "react-icons/fa";
 import { IoLocationSharp } from "react-icons/io5";
 import { useNavigate, useLocation } from "react-router-dom";
+import useCustomFetch from "../../hooks/useCustomFetch"; 
+import { fetchAreaApi } from "../../services/userApi"; 
 
 function Search({ onSearch, initialValues = {} }) {
   const [keyword, setKeyword] = useState(initialValues.keyword || "");
@@ -11,7 +13,23 @@ function Search({ onSearch, initialValues = {} }) {
   );
   const [area, setArea] = useState(initialValues.area || "");
   const navigate = useNavigate();
-  const location = useLocation(); // Lấy thông tin vị trí hiện tại
+  const location = useLocation();
+
+  // Fetch API data
+  const { data: areaData, loading } = useCustomFetch(fetchAreaApi);
+  const [provinceOptions, setProvinceOptions] = useState([]);
+
+  useEffect(() => {
+    if (areaData) {
+      // Tổ chức dữ liệu cho Select component
+      const options = areaData.map(item => ({
+        value: item.province,
+        label: <span>{item.province}</span>
+      }));
+      
+      setProvinceOptions(options);
+    }
+  }, [areaData]);
 
   const ListJob = () => (
     <Select
@@ -82,32 +100,8 @@ function Search({ onSearch, initialValues = {} }) {
       style={{ width: 200 }}
       value={area || undefined}
       onChange={setArea}
-      options={[
-        {
-          label: <span>Miền Bắc</span>,
-          options: [
-            { value: "Hà Nội", label: <span>Hà Nội</span> },
-            { value: "Hải Phòng", label: <span>Hải Phòng</span> },
-            { value: "Quảng Ninh", label: <span>Quảng Ninh</span> },
-          ],
-        },
-        {
-          label: <span>Miền Trung</span>,
-          options: [
-            { value: "Đà Nẵng", label: <span>Đà Nẵng</span> },
-            { value: "Thừa Thiên Huế", label: <span>Thừa Thiên Huế</span> },
-            { value: "Thanh Hóa", label: <span>Thanh Hóa</span> },
-          ],
-        },
-        {
-          label: <span>Miền Nam</span>,
-          options: [
-            { value: "TP. Hồ Chí Minh", label: <span>TP. Hồ Chí Minh</span> },
-            { value: "Bình Dương", label: <span>Bình Dương</span> },
-            { value: "Đồng Nai", label: <span>Đồng Nai</span> },
-          ],
-        },
-      ]}
+      loading={loading}
+      options={provinceOptions}
     />
   );
 

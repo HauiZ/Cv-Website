@@ -6,7 +6,8 @@ import Pagination from "../home/component/ListJob/Pagination";
 
 export default function ApplicationLayout() {
   const { data, loading } = useCustomFetch(getInfoApplicationApi);
-  const jobs = Array.isArray(data) ? data : [];
+  const preJobs = Array.isArray(data) ? data : [];
+  const jobs = [...preJobs].reverse()
 
   const [statusFilter, setStatusFilter] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);

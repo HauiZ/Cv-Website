@@ -8,8 +8,7 @@ export default function NewsManerment({ setFilterWithNews, setNewsId }) {
   const { data } = useCustomFetch(fetchAllNewsApi);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const preJobs = Array.isArray(data) ? data : [];
-  const jobs = [...preJobs].reverse()
+  const jobs = Array.isArray(data) ? data : [];
   const totalPages = Math.ceil(jobs.length / ITEMS_PER_PAGE);
   const currentJobs = jobs.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,

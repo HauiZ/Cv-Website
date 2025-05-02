@@ -12,14 +12,15 @@ import {
 import useLoading from "../../hooks/useLoading";
 import { useToast } from "../../contexts/ToastContext";
 import Loader from "../../components/Loader";
-import { applyJobApi } from "../../services/userApi"; // Giả sử bạn đã tạo API này
+import { applyJobApi } from "../../services/userApi"; // Giả sử bạn đã
+import useCustomMutation from "../../hooks/useCustomMutation";
 
 export default function ApplyPopUp({ isOpen, onClose, jobId }) {
   const [file, setFile] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef(null);
-
-  const { withLoading,loading } = useLoading();
+  const { mutate } = useCustomMutation(applyJobApi);
+  const { withLoading, loading } = useLoading();
   const { showToast } = useToast();
   const handleClose = () => {
     setFile(null);
@@ -54,18 +55,9 @@ export default function ApplyPopUp({ isOpen, onClose, jobId }) {
       showToast("Vui lòng đính kèm file CV trước khi ứng tuyển!", "error");
       return;
     }
-
-    await withLoading(async () => {
-      console.log("Đang xử lý ứng tuyển với file:", file);
-      await new Promise((res) => setTimeout(res, 1500)); // fake delay
-      try { 
-      await applyJobApi( jobId ,file); 
-      showToast(`Ứng tuyển thành công với file: ${file.name}`, "success");
+    withLoading(async () => {
+      await mutate(jobId, file);
       handleClose();
-      } catch (error) {
-        console.error("Error applying for job:", error);
-        showToast(`Đã xảy ra lỗi khi ứng tuyển. Vui lòng thử lại! ${error}`, "error");
-      }
     });
   };
 

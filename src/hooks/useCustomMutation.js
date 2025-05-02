@@ -11,10 +11,12 @@ export default function useCustomMutation(mutationFunction) {
     setError(null);
     try {
       const result = await mutationFunction(...params);
-      showToast("Action successful!", "success");
+      const message = result.message
+      showToast( message, "success");
       return result;
     } catch (err) {
-      const msg = err?.response?.data?.message || "Action failed!";
+      const msg =
+        err?.response?.data?.message || err?.message || "Action failed!";
       showToast(msg, "error");
       setError(err);
       throw err; // để caller biết lỗi nếu cần

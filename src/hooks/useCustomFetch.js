@@ -1,7 +1,8 @@
 import { useEffect, useState, useCallback } from "react";
 import { useToast } from "../contexts/ToastContext";
-
+import useAuth from "./useAuth"
 export default function useCustomFetch(fetchFunction, params = []) {
+  const {logOut} = useAuth();
   const { showToast } = useToast();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -22,8 +23,7 @@ export default function useCustomFetch(fetchFunction, params = []) {
         if (isMounted) {
           setData(result);
           setError(null);
-          // Removed the success toast to avoid spamming user with notifications
-          // for province/district data fetches
+       
         }
       } catch (err) {
         if (isMounted) {
@@ -31,6 +31,9 @@ export default function useCustomFetch(fetchFunction, params = []) {
             err?.response?.data?.message ||
             err?.message ||
             "Data fetching failed!";
+            if(localStorage.getItem("access_token")){
+              logOut()
+            }
           showToast(msg, "error");
           console.error("Fetch error:", msg);
           setData(null);

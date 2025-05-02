@@ -44,9 +44,6 @@ export default function TemplateContent() {
         {/* Nội dung template */}
         <div
           className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-5 gap-y-10 w-fit transition-opacity duration-500 ease-in-out opacity-100"
-          onClick={() => {
-            navigate("/createCV");
-          }}
         >
           {paginatedData?.map((cv) => (
             <TemplateCv
@@ -55,9 +52,9 @@ export default function TemplateContent() {
               hoverContent={
                 <button
                   onClick={() => navigate(`/createCV`)}
-                  className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-400"
+                  className="bg-green-500 text-white px-4 py-2 rounded-full hover:bg-green-400"
                 >
-                  Chọn mẫu
+                  Tạo CV với mẫu
                 </button>
               }
             />

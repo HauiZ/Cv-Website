@@ -20,7 +20,7 @@ const Mix = () => {
 
   return (
       <div className="flex flex-col justify-center items-center gap-y-1">
-          <h1 className="text-2xl text-white font-semibold mt-2 mb-2">
+          <h1 className="text-2xl text-white font-semibold mt-2 mb-2 animate-pulse">
               Tìm việc làm nhanh, việc làm mới nhất trên toàn quốc
           </h1>
           <Search onSearch={null}/>

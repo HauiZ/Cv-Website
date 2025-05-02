@@ -57,6 +57,7 @@ export default function NewsCard({ job, setFilterWithNews, setNewsId }) {
       <div className="flex flex-col flex-grow gap-y-5">
         <div className="flex justify-between font-bold text-sm group-hover:text-[#1b8e0c] transition-colors duration-300">
           <div>{job.jobTitle}</div>
+          <p className="text-[#5DDA33]">Bài đăng số: {job.id}</p>
           <div className="flex flex-col md:items-end gap-2">
             <span
               className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-[0.75rem] font-medium ${statusData.class}`}

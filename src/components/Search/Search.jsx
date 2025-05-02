@@ -3,8 +3,8 @@ import { Select } from "antd";
 import { FaListUl } from "react-icons/fa";
 import { IoLocationSharp } from "react-icons/io5";
 import { useNavigate, useLocation } from "react-router-dom";
-import useCustomFetch from "../../hooks/useCustomFetch"; 
-import { fetchAreaApi } from "../../services/userApi"; 
+import useCustomFetch from "../../hooks/useCustomFetch";
+import { fetchAreaApi } from "../../services/userApi";
 
 function Search({ onSearch, initialValues = {} }) {
   const [keyword, setKeyword] = useState(initialValues.keyword || "");
@@ -22,14 +22,20 @@ function Search({ onSearch, initialValues = {} }) {
   useEffect(() => {
     if (areaData) {
       // Tổ chức dữ liệu cho Select component
-      const options = areaData.map(item => ({
+      const options = areaData.map((item) => ({
         value: item.province,
-        label: <span>{item.province}</span>
+        label: <span>{item.province}</span>,
       }));
-      
+
       setProvinceOptions(options);
     }
   }, [areaData]);
+
+  useEffect(() => {
+    setKeyword(initialValues.keyword || "");
+    setProfession(initialValues.profession?.[0] || "");
+    setArea(initialValues.area || "");
+  }, [initialValues]);
 
   const ListJob = () => (
     <Select

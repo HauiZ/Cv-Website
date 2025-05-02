@@ -72,7 +72,11 @@ const ListJobBox = () => {
   const totalPages = Math.ceil(totalJobs / jobsPerPage);
   const indexOfLastJob = currentPage * jobsPerPage;
   const indexOfFirstJob = indexOfLastJob - jobsPerPage;
-  const currentJobs = jobs ? jobs.slice(indexOfFirstJob, indexOfLastJob) : [];
+  const sortedJobs = jobs
+    ? [...jobs].sort((a, b) => b.id - a.id)
+    : [];
+
+  const currentJobs = sortedJobs.slice(indexOfFirstJob, indexOfLastJob);
 
   return (
     <div className="flex justify-center h-full relative">

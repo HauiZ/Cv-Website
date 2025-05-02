@@ -314,10 +314,16 @@ const JobPostingForm = () => {
                             </label>
                             <input
                                 type="number"
+                                min={1}
                                 className={inputFieldClass}
                                 placeholder="Số lượng"
                                 value={formData.candidateNumber}
-                                onChange={(e) => handleInputChange('candidateNumber', e.target.value)}
+                                onChange={(e) => {
+                                    const rawValue = e.target.value;
+                                    if (rawValue === '' || Number(rawValue) >= 1) {
+                                        handleInputChange('candidateNumber', rawValue);
+                                    }
+                                }}
                                 required
                             />
                         </div>

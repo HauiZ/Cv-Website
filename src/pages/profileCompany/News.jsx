@@ -12,9 +12,7 @@ export default function News({ job, companyName }) {
     <div
       className="flex gap-4 border p-3 rounded-lg shadow-sm hover:shadow-[0_0_10px_rgba(12,142,94,0.5)] hover:border-[#0C8E5E] hover:border-1 transition-all duration-300 cursor-pointer group relative"
       onClick={() => {
-        navigate(`/job/${job.id}`);
-        // window.location.reload();
-        window.scrollTo(0, 0);
+        window.open(`/job/${job.id}`, '_blank');
       }}
     >
       <img
@@ -34,7 +32,7 @@ export default function News({ job, companyName }) {
               {job?.companyAddress || "ha noi"}
             </div>
             <div className="bg-gray-300 h-fit w-fit text-center p-1.5 rounded-[.5em] hover:bg-gray-200 transition-colors duration-200 ">
-            Hạn: {job?.applicationDeadline || "0"}
+              Hạn: {job?.applicationDeadline || "0"}
             </div>
           </div>
           <div className="xl:absolute xl:right-5">

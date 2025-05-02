@@ -1,52 +1,51 @@
 import React from "react";
-import bg from "../../../assets/image/logoNoBg.png";
+import { useState } from "react";
+export default function CvCard({ data, hoverContent }) {
+  const [isHovered, setIsHovered] = useState(false);
 
-// Hàm convert link file Drive thành link ảnh
-function getDirectImageUrl(driveUrl) {
-  if (!driveUrl) return bg;
-  const match = driveUrl.match(/\/d\/([^/]+)\//);
-  if (match && match[1]) {
-    return `https://drive.google.com/uc?export=view&id=${match[1]}`;
-  }
-  return bg;
-}
-
-export default function CvCard({ data }) {
   const { id, name, propoties, url, fileUrl } = data || {};
-  
+
   // Parse the propoties properly, handling different formats
   let tags = [];
   try {
     // First check if it's already a proper array
     if (Array.isArray(propoties)) {
       tags = propoties;
-    } 
+    }
     // Check if it's a JSON string (starts with '[' and ends with ']')
-    else if (typeof propoties === 'string' && propoties.trim().startsWith('[') && propoties.trim().endsWith(']')) {
+    else if (
+      typeof propoties === "string" &&
+      propoties.trim().startsWith("[") &&
+      propoties.trim().endsWith("]")
+    ) {
       tags = JSON.parse(propoties);
-    } 
+    }
     // Fallback to comma-separated string
-    else if (typeof propoties === 'string') {
-      tags = propoties.split(',').map(tag => tag.trim());
+    else if (typeof propoties === "string") {
+      tags = propoties.split(",").map((tag) => tag.trim());
     }
   } catch (error) {
     console.error("Error parsing propoties:", error);
     // Fallback in case of parsing error
-    if (typeof propoties === 'string') {
-      tags = propoties.split(',').map(tag => tag.trim());
+    if (typeof propoties === "string") {
+      tags = propoties.split(",").map((tag) => tag.trim());
     }
   }
-  
+
   // Filter out any empty tags
-  tags = tags.filter(tag => tag && tag.trim() !== '');
-  
+  tags = tags.filter((tag) => tag && tag.trim() !== "");
+
   const visibleTags = tags.slice(0, 2);
   const hiddenTagsCount = tags.length - visibleTags.length;
 
   const imageUrl = fileUrl || "";
 
   return (
-    <div className="w-[23rem] rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 bg-white">
+    <div
+      className="w-[23rem] rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 bg-white relative"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       {/* Image */}
       <div className="bg-gray-200 h-[30rem] flex items-center justify-center cursor-pointer relative">
         <img
@@ -79,6 +78,11 @@ export default function CvCard({ data }) {
           {name || "CV Name"}
         </div>
       </div>
+      {isHovered && hoverContent && (
+        <div className="absolute inset-0 flex justify-center items-center bg-black/30 h-[30rem]">
+          {hoverContent}
+        </div>
+      )}
     </div>
   );
 }

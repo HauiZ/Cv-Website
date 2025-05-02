@@ -19,7 +19,8 @@ import {
 export default function useAuth(navigationCallback = null) {
   const { showToast } = useToast();
   const { withLoading } = useLoading();
-  const { fetchUser, clearUser, setIsAuthenticated , setLoadingAuth } = useAuthContext();
+  const { fetchUser, clearUser, setIsAuthenticated, setLoadingAuth } =
+    useAuthContext();
   const location = useLocation();
   // LOGIN
   const loginAdmin = useCallback(
@@ -40,7 +41,10 @@ export default function useAuth(navigationCallback = null) {
             showToast("Token không hợp lệ!", "error");
           }
         } catch (err) {
-          const msg = err?.response?.data?.message || "Đăng nhập thất bại!";
+          const msg =
+            err?.response?.data?.message ||
+            err?.message ||
+            "Đăng nhập thất bại!";
           showToast(msg, "error");
           console.error("Login error:", msg);
         }
@@ -112,7 +116,8 @@ export default function useAuth(navigationCallback = null) {
             navigationCallback("/login/candidate");
           }
         } catch (err) {
-          const msg = err?.response?.data?.message || "Đăng ký thất bại!";
+          const msg =
+            err?.response?.data?.message || err?.message || "Đăng ký thất bại!";
           showToast(msg, "error");
           console.error("Signup error:", msg);
         }
@@ -146,7 +151,8 @@ export default function useAuth(navigationCallback = null) {
             navigationCallback("/login/recruiter");
           }
         } catch (err) {
-          const msg = err?.response?.data?.message || "Đăng ký thất bại!";
+          const msg =
+            err?.response?.data?.message || err?.message || "Đăng ký thất bại!";
           showToast(msg, "error");
           console.error("Signup error:", msg);
         }
@@ -166,7 +172,9 @@ export default function useAuth(navigationCallback = null) {
           }
         } catch (err) {
           const msg =
-            err?.response?.data?.message || "Khôi phục mật khẩu thất bại!";
+            err?.response?.data?.message ||
+            err?.message ||
+            "Khôi phục mật khẩu thất bại!";
           showToast(msg, "error");
           console.error("Forgot password error:", msg);
         }
@@ -185,7 +193,9 @@ export default function useAuth(navigationCallback = null) {
           }
         } catch (err) {
           const msg =
-            err?.response?.data?.message || "Khôi phục mật khẩu thất bại!";
+            err?.response?.data?.message ||
+            err?.message ||
+            "Khôi phục mật khẩu thất bại!";
           showToast(msg, "error");
           console.error("Forgot password error:", msg);
         }
@@ -210,7 +220,10 @@ export default function useAuth(navigationCallback = null) {
             navigationCallback(`/login/${role}`);
           }
         } catch (err) {
-          const msg = err?.response?.data?.message || "Đổi mật khẩu thất bại!";
+          const msg =
+            err?.response?.data?.message ||
+            err?.message ||
+            "Đổi mật khẩu thất bại!";
           showToast(msg, "error");
           console.error("Forgot password error:", msg);
         }
@@ -236,7 +249,8 @@ export default function useAuth(navigationCallback = null) {
           navigationCallback(path);
         }
       } catch (err) {
-        const msg = err?.response?.data?.message || "Đăng xuất thất bại!";
+        const msg =
+          err?.response?.data?.message || err?.message || "Đăng xuất thất bại!";
         showToast(msg, "error");
         console.error("Logout error:", msg);
       }

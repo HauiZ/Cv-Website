@@ -23,7 +23,10 @@ export default function TemplateContent() {
   };
 
   // Cắt data theo page
-  const paginatedData = data?.slice(currentPage * pageSize, (currentPage + 1) * pageSize);
+  const paginatedData = data?.slice(
+    currentPage * pageSize,
+    (currentPage + 1) * pageSize
+  );
 
   return (
     <div className="relative flex flex-col items-center">
@@ -39,9 +42,25 @@ export default function TemplateContent() {
         </button>
 
         {/* Nội dung template */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-5 gap-y-10 w-fit transition-opacity duration-500 ease-in-out opacity-100" onClick={()=>{navigate('/createCV')}}s>
+        <div
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-5 gap-y-10 w-fit transition-opacity duration-500 ease-in-out opacity-100"
+          onClick={() => {
+            navigate("/createCV");
+          }}
+        >
           {paginatedData?.map((cv) => (
-            <TemplateCv key={cv.id} data={cv} />
+            <TemplateCv
+              key={cv.id}
+              data={cv}
+              hoverContent={
+                <button
+                  onClick={() => navigate(`/createCV`)}
+                  className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-400"
+                >
+                  Chọn mẫu
+                </button>
+              }
+            />
           ))}
         </div>
 

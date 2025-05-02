@@ -8,6 +8,7 @@ import useCustomMutation from "../../../hooks/useCustomMutation";
 import { deleteTemplateCVApi } from "../../../services/CvApi";
 
 export default function CvLayout({ data, refetch }) {
+  data= [...data].reverse()
   const [currentPage, setCurrentPage] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const [selectedCvId, setSelectedCvId] = useState(null);

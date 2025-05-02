@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Select } from 'antd';
 import { FaListUl } from "react-icons/fa";
 import { IoLocationSharp } from "react-icons/io5";
@@ -10,6 +10,12 @@ function Search({ onSearch, initialValues = {} }) {
     const [area, setArea] = useState(initialValues.area || '');
     const navigate = useNavigate();
     const location = useLocation(); // Lấy thông tin vị trí hiện tại
+
+    useEffect(() => {
+        setKeyword(initialValues.keyword || '');
+        setProfession(initialValues.profession?.[0] || '');
+        setArea(initialValues.area || '');
+    }, [initialValues]);
 
     const ListJob = () => (
         <Select

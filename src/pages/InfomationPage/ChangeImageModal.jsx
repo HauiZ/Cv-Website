@@ -4,6 +4,7 @@ import useLoading from "../../hooks/useLoading";
 import { useToast } from "../../contexts/ToastContext";
 import Loader from "../../components/Loader";
 import { useAuthContext } from "../../contexts/AuthContext";
+import useCustomMutation from "../../hooks/useCustomMutation";
 import {
     faUpload,
     faCheck,
@@ -20,6 +21,7 @@ const ChangeAvatarModal = ({ visible, onClose, funcApi }) => {
     const { withLoading, loading } = useLoading();
     const { showToast } = useToast();
     const { fetchUser } = useAuthContext();
+    const { mutate } = useCustomMutation(funcApi);
 
     const handleFileChange = (e) => {
         const selectedFile = e.target.files[0];
@@ -57,14 +59,14 @@ const ChangeAvatarModal = ({ visible, onClose, funcApi }) => {
         await withLoading(async () => {
             console.log("Đang xử lý với file:", file);
             try {
-                await funcApi(file);
+                await mutate(file);
                 await fetchUser();
-                showToast(`Cập nhật ảnh đại diện thành công với file: ${file.name}`, "success");
+                // showToast(`Cập nhật ảnh đại diện thành công với file: ${file.name}`, "success");
                 onClose();
             } catch (error) {
                 console.error(error);
                 setError("Đã xảy ra lỗi khi tải ảnh lên.");
-                showToast(`Đã xảy ra lỗi khi thay đổi ảnh: ${error?.message || error}`, "error");
+                // showToast(`Đã xảy ra lỗi khi thay đổi ảnh: ${error?.message || error}`, "error");
             } finally {
                 setUploading(false);
             }

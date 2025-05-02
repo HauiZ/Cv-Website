@@ -30,7 +30,7 @@ function Hotline() {
           </div>
           <h2 className="font-semibold">
             <MdEmail className="inline border-1 rounded-full p-[3px] m-1 text-2xl" />
-            email: abc@gmail.com
+            email: cvwebsite0@gmail.com
           </h2>
         </div>
         <div className="w-[700px] h-[300px] mt-5  mr-30">

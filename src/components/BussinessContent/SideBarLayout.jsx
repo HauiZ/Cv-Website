@@ -17,7 +17,6 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
   const {user} = useAuthContext()
   const mainNavItems = [
     { id: "bang-tin", icon: <FaList size={18} />, label: "Bảng tin" },
-    { id: "insights", icon: <FaLightbulb size={18} />, label: "Insights" },
     {
       id: "tin-tuyen-dung",
       icon: <FaFileAlt size={18} />,
@@ -26,12 +25,7 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
     { id: "dang-tin", icon: <FaPlus size={18} />, label: "Đăng tin" },
     { id: "cv-de-xuat", icon: <FaThumbsUp size={18} />, label: "CV đề xuất" },
     { id: "quan-ly-cv", icon: <FaFileAlt size={18} />, label: "Quản lý CV" },
-    { id: "mail", icon: <FaEnvelope size={18} />, label: "Quản lý Email" },
-    {
-      id: "bao-cao",
-      icon: <FaFileAlt size={18} />,
-      label: "Báo cáo tuyển dụng",
-    },
+    
     { id: "profile", icon: <FaUser size={16} />, label: "Hồ sơ cá nhân" },
     { id: "security", icon: <FaShieldAlt size={16} />, label: "Bảo mật" },
   ];

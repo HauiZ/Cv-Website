@@ -1,8 +1,11 @@
 import logo1 from "../assets/image/icon_webCV.png";
 import banner_web_business_SignIn_computer from "../assets/image/banner_web_business_SignIn_computer.png";
+import { useNavigate } from "react-router-dom";
 export default function LoginBannerBusiness() {
+  const navigate = useNavigate();
   return (
-    <div className="bg-[#14222D] fixed max-lg:absolute lg:right-0 top-0 w-2/6 max-lg:w-screen max-lg:max-h-[200px] h-screen flex flex-col lg:items-center max-lg:pl-3 max-lg:items-center min-w-[250px] max-sm:min-h-[150px] max-lg:flex-row max-lg:flex-wrap">
+    <div className="bg-[#14222D] fixed max-lg:absolute lg:right-0 top-0 w-2/6 max-lg:w-screen max-lg:max-h-[200px] h-screen flex flex-col lg:items-center max-lg:pl-3 max-lg:items-center min-w-[250px] max-sm:min-h-[150px] max-lg:flex-row max-lg:flex-wrap"
+         onClick={() => navigate('/')}>
       <img
         src={banner_web_business_SignIn_computer}
         alt="images"

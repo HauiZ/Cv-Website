@@ -30,13 +30,13 @@ const Header = () => {
           />
         </div>
         <div className="flex gap-x-20 px-6 py-2 mt-4 mb-4">
-          <a href="#" className="menu">
+          <a href="/" className="menu">
             Việc làm
           </a>
-          <a href="#" className="menu">
+          <a href="/templateCV" className="menu">
             Hồ sơ & CV
           </a>
-          <a href="#" className="menu">
+          <a href="/tools" className="menu">
             Công cụ
           </a>
         </div>

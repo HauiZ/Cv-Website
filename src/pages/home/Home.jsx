@@ -14,8 +14,8 @@ import background_ColorGreen from "../../assets/image/background_ColorGreen.png"
 const Mix = () => {
   const navigate = useNavigate();
 
-  const handleProfessionClick = (profession) => {
-      navigate(`/search?keyword=${encodeURIComponent(profession)}`);
+  const handleProfessionClick = (keyword) => {
+      navigate(`/search?keyword=${encodeURIComponent(keyword)}`);
   };
 
   return (

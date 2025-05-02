@@ -215,13 +215,13 @@ export default function ProfileSettingPage() {
                                             setSelectedProvince(option);
                                             setSelectedDistrict(null);
                                         }}
-                                        placeholder={user?.provice || "Chọn tỉnh/thành"} 
+                                        placeholder={user?.province || "Chọn tỉnh/thành"} 
                                         className="basic-select"
                                         classNamePrefix="select"
                                     />
                                     {!selectedProvince && (
                                         <p className="text-red-500 text-sm mt-1">
-                                            Vui lòng chọn tỉnh/thành phố
+                                            Vui lòng chọn tỉnh/thành phố nếu muốn thay đổi
                                         </p>
                                     )}
                                 </div>
@@ -241,7 +241,7 @@ export default function ProfileSettingPage() {
                                     />
                                     {selectedProvince && !selectedDistrict && (
                                         <p className="text-red-500 text-sm mt-1">
-                                            Vui lòng chọn quận/huyện
+                                            Vui lòng chọn quận/huyện nếu muốn thay đổi
                                         </p>
                                     )}
                                 </div>

@@ -96,7 +96,7 @@ const Header1 = () => {
           <a href="/templateCV" className="menu">
             Hồ sơ & CV
           </a>
-          <a href="/" className="menu">
+          <a href="/tools" className="menu">
             Công cụ
           </a>
         </div>

@@ -78,10 +78,11 @@ const ListJobBox = () => {
     <div className="flex justify-center h-full relative">
       <div>
         <div className="relative min-w-[59rem]">
-          <div className="my-3">
+          <div className="flex my-3 items-center relative">
             <h1 className="text-3xl font-bold text-[#0C8E5E]">
               Danh sách việc làm
             </h1>
+            <a href="/search" className="hover:underline hover:text-green-400 right-0 absolute font-semibold">Xem tất cả</a>
           </div>
           <div className="flex gap-x-10 mb-5">
             <div>

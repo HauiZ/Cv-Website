@@ -9,7 +9,11 @@ const statusMap = {
     "APPROVED": {
       icon: <FaCheckCircle className="text-white" />,
       class: "bg-green-500 text-white ",
-    }
+    },
+    "REJECTED": {
+        icon: <FaTimesCircle className="text-white" />,
+        class: "bg-red-500 text-white",
+    },
   };
 
 export default function ApplicationCard({ application }) {

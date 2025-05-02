@@ -21,10 +21,11 @@ function Footer() {
                 <div className="w-1/4">
                     <h1 className="font-bold text-lg">Về chúng tôi</h1>
                     <ul className="space-y-2 mt-3 text-gray-700">
-                        <li><a href="#">Trang chủ</a></li>
-                        <li><a href="#">Giới thiệu</a></li>
-                        <li><a href="#">Tin tức</a></li>
-                        <li><a href="#">Liên hệ</a></li>
+                        <li><a href="/">Trang chủ</a></li>
+                        <li><a href="/templateCV">Tạo CV</a></li>
+                        <li><a href="/tools">Cẩm nang việc làm</a></li>
+                        <li><a href="/profile">Hồ sơ cá nhân</a></li>
+                        <li><a href="/search">Tìm kiếm việc làm</a></li>
                     </ul>
                 </div>
 
@@ -32,7 +33,7 @@ function Footer() {
                     <h1 className="font-bold text-lg">Liên hệ</h1>
                     <p className="mt-3 flex items-center text-gray-700"><span className="text-green-500 mr-2">📍</span>Địa điểm: 97 Đ. Man Thiện, Hiệp Phú, Thủ Đức, Hồ Chí Minh 70000</p>
                     <p className="mt-2 flex items-center text-gray-700"><FiPhone className="text-green-500 mr-2" /> Hotline: 0123456789</p>
-                    <p className="mt-2 flex items-center text-gray-700"><MdEmail className="text-green-500 mr-2" /> Email: abc123@gmail.com</p>
+                    <p className="mt-2 flex items-center text-gray-700"><MdEmail className="text-green-500 mr-2" /> Email: cvwebsite0@gmail.com</p>
                 </div>
 
                 <div className="w-1/4 h-[280px] flex items-center justify-center rounded-md">

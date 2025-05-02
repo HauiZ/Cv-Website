@@ -14,22 +14,16 @@ export default function RenderContent({ activeTab }) {
     switch (activeTab) {
         case 'bang-tin':
             return (<DashBoard/>);
-        case 'insights':
-            return (<div>bang tin 1</div>);
         case 'tin-tuyen-dung':
             return (<NewsManerment setFilterWithNews={setFilterWithNews} setNewsId={setNewsId}/>);
         case 'dang-tin':
             return (<JobPostingForm />);
         case 'cv-de-xuat':
-            return (<div>bang tin 4</div>);
+            return (<div className='flex text-center text-green-400 justify-center font-bold text-4xl animate-pulse'>COMING SOON</div>);
         case 'profile':
             return (<ProfileSettingPage />);
-        case 'mail':
-            return (<div>bang tin 7</div>);
         case 'quan-ly-cv':
             return (<ApplicantLayout funcApi={funcApi} newsId={newsId}/>);
-        case 'bao-cao':
-            return (<div>bang tin 9</div>);
         case 'security':
             return (<SecurityPage />);
         default:

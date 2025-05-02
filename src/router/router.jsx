@@ -14,6 +14,7 @@ import ChangePassPage from "../pages/InfomationPage/ChangePassPage";
 import ChangeProfilePage from "../pages/InfomationPage/ChangeProfilePage";
 import SearchPage from "../pages/Search/SearchPage";
 import TemplateCV from "../pages/TemplateCV/TemplateCV";
+import ToolFormat from "../pages/ToolsPage/ToolFormat";
 
 // Route nhóm
 import { adminRoutes } from "./adminRoutes";
@@ -55,6 +56,7 @@ const protectedRoutes = [
     element: <TemplateCV />,
   },
   { path: "/candidate-application", element: <ApplicationManerment /> },
+  { path: "/tools", element: <ToolFormat />}
 ];
 
 const router = createBrowserRouter([

@@ -2,8 +2,10 @@ import logo from "../assets/image/icon_webCV.png";
 import headerBgContent from "../assets/image/header_bg_content.png";
 import bgI from "../assets/image/auth_bg_desktop.png"; // used for lg and up
 import bgIH from "../assets/image/BackGroundH.png";     // used for <lg
+import { useNavigate } from "react-router-dom";
 
 export default function LoginBannerPersonal() {
+  const navigate = useNavigate();
   return (
     <>
       {/* For large screens: show bgI with bg-cover */}
@@ -12,6 +14,7 @@ export default function LoginBannerPersonal() {
         style={{
           backgroundImage: `url(${bgI})`,
         }}
+        onClick={() => navigate('/')}
       >
         <img
           src={logo}

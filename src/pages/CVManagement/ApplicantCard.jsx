@@ -75,7 +75,7 @@ export default function ApplicantCard({ applicant, refetch }) {
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between bg-white p-4 rounded-xl shadow border gap-4 hover:shadow-[0_0_10px_rgba(12,142,94,0.5)] hover:border-[#0C8E5E] hover:border-2 transition-all duration-300 cursor-pointer group">
             {/* Thông tin công việc */}
             <div className="flex items-center gap-4">
-                <div className="flex-shrink-0 mr-4 w-16 h-16 rounded-full overflow-hidden shadow-[0_0_10px_rgba(233,30,99,0.4)] transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                <div className="flex-shrink-0 mr-4 w-16 h-16 rounded-full overflow-hidden shadow-[0_0_10px_rgba(12,142,94,0.5)] transition-all duration-300 hover:scale-105 hover:shadow-lg">
                     <img
                         src={applicant.PersonalUser.avatarUrl}
                         alt={applicant.PersonalUser.avatarUrl}

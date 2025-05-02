@@ -14,7 +14,7 @@ const UserContent = ({ onDataUpdate }) => {
 
   useEffect(() => {
     if (fetchedData) {
-      setUsersData(fetchedData.users || []);
+      setUsersData([...fetchedData.users].reverse() || []);
     }
   }, [fetchedData]);
 

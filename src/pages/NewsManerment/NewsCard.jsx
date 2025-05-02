@@ -19,15 +19,15 @@ export default function NewsCard({ job, setFilterWithNews, setNewsId }) {
 
   // Hàm xác định màu sắc cho status
   const statusMap = {
-    "PENDING": {
+    PENDING: {
       icon: <FaClock className="text-black" />,
       class: "bg-yellow-300 text-black",
     },
-    "APPROVED": {
+    APPROVED: {
       icon: <FaCheckCircle className="text-white" />,
       class: "bg-green-500 text-white ",
     },
-    "REJECTED": {
+    REJECTED: {
       icon: <FaTimesCircle className="text-red-600" />,
       class: "bg-red-500 text-red-800",
     },
@@ -37,13 +37,18 @@ export default function NewsCard({ job, setFilterWithNews, setNewsId }) {
     setFilterWithNews(true);
     setNewsId(job.id);
     navigate(path);
-  }
+  };
 
-  const statusData = statusMap[job?.status.toUpperCase() || ""] || statusMap["PENDING"];
+  const statusData =
+    statusMap[job?.status.toUpperCase() || ""] || statusMap["PENDING"];
 
   return (
-    <div className="flex gap-4 border p-3 rounded-lg shadow-sm hover:shadow-[0_0_10px_rgba(12,142,94,0.5)] hover:border-[#0C8E5E] hover:border-1 transition-all duration-300 cursor-pointer group relative"
-      onClick={handleOnclick}>
+    <div
+      className={`flex gap-4 border p-3 rounded-lg shadow-sm transition-all duration-300 group relative hover:shadow-[0_0_10px_rgba(12,142,94,0.5)] hover:border-[#0C8E5E]
+    ${job?.status === "APPROVED" ? "cursor-pointer " : "cursor-default"}
+  `}
+      onClick={job?.status === "APPROVED" ? handleOnclick : undefined}
+    >
       <img
         src={job?.logoUrl || "/src/assets/image/logoNoBg.png"}
         alt="logo"

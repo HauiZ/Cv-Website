@@ -11,7 +11,7 @@ export default function useCustomMutation(mutationFunction) {
     setError(null);
     try {
       const result = await mutationFunction(...params);
-      const message = result.message
+      const message = result?.message || result.data.message
       showToast( message, "success");
       return result;
     } catch (err) {

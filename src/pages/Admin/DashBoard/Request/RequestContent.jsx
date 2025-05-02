@@ -32,7 +32,7 @@ const RequestContent = () => {
   useEffect(() => {
     // Sort the data by ID in descending order when it's loaded
     if (data) {
-      const sortedData = [...data].sort((a, b) => b.id - a.id);
+      const sortedData = [...data].reverse();
       setRequestData(sortedData);
     }
   }, [data]);

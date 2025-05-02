@@ -40,7 +40,6 @@ export const AuthProvider = ({ children }) => {
         }
       }
     } catch (error) {
-      console.error("Lỗi khi fetch user:", error);
       clearUser();
     } finally {
       setLoadingAuth(false);

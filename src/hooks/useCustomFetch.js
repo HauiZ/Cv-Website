@@ -35,12 +35,10 @@ export default function useCustomFetch(fetchFunction, params = []) {
               logOut()
             }
           showToast(msg, "error");
-          console.error("Fetch error:", msg);
           setData(null);
           setError(err);
         }
       } finally {
-        console.log("Loading finished", ...params);
         if (isMounted) setLoading(false);
       }
     };

@@ -9,7 +9,7 @@ function Footer() {
             <div className="container mx-auto flex justify-between items-start px-12">
                 <div className="flex flex-col items-center w-1/4">
                     <div className="w-40 h-40 bg-white rounded-lg flex justify-center items-center shadow-md">
-                        <img src="/src/image/logo.png" alt="logo" className="w-28" />
+                        <img src="/src/assets/image/logoNoBg.png" alt="logo" className="w-28" />
                     </div>
                     <div className="flex mt-4 space-x-4">
                         <a href="#" className="text-red-500 text-2xl"><FaInstagram /></a>

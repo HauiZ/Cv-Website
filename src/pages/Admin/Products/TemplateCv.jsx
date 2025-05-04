@@ -3,7 +3,7 @@ import { useState } from "react";
 export default function CvCard({ data, hoverContent }) {
   const [isHovered, setIsHovered] = useState(false);
 
-  const { id, name, propoties, url, fileUrl } = data || {};
+  const { id, name, propoties, url, displayUrl } = data || {};
 
   // Parse the propoties properly, handling different formats
   let tags = [];
@@ -38,7 +38,7 @@ export default function CvCard({ data, hoverContent }) {
   const visibleTags = tags.slice(0, 2);
   const hiddenTagsCount = tags.length - visibleTags.length;
 
-  const imageUrl = fileUrl || "";
+  const imageUrl = displayUrl || "";
 
   return (
     <div

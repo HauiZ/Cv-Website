@@ -80,7 +80,7 @@ const BusinessHeader = () => {
       <div className="flex justify-between items-center max-h-[75px]">
         <div className="flex w-[8vw] h-[75px] justify-between items-center ml-5 ">
           <img
-            src="/src/image/logo.png"
+            src="/src/assets/image/logoNoBg.png"
             className="object-contain hover:cursor-pointer"
             alt="Logo"
             onClick={() => navigate("/recruiter")}

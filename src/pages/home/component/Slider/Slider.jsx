@@ -15,16 +15,16 @@ const Slider = () => (
         autoplaySpeed={4000}
     >
         <div>
-            <img src="/src/image/image1.jpg" alt="" style={contentStyle} className="size-300 rounded-2xl"/>
+            <img src="/src/assets/image/tuyendung1.png" alt="" style={contentStyle} className="size-300 rounded-2xl"/>
         </div>
         <div>
-            <img src="/src/image/image2.jpg" alt="" style={contentStyle} className="size-300 rounded-2xl"/>
+            <img src="/src/assets/image/tuyendung2.png" alt="" style={contentStyle} className="size-300 rounded-2xl"/>
         </div>
         <div>
-            <img src="/src/image/image3.jpg" alt="" style={contentStyle} className="size-300 rounded-2xl"/>
+            <img src="/src/assets/image/tuyendung3.png" alt="" style={contentStyle} className="size-300 rounded-2xl"/>
         </div>
         <div>
-            <img src="/src/image/image4.jpg" alt="" style={contentStyle} className="size-300 rounded-2xl"/>
+            <img src="/src/assets/image/tuyendung4.png" alt="" style={contentStyle} className="size-300 rounded-2xl"/>
         </div>
     </Carousel>
 );

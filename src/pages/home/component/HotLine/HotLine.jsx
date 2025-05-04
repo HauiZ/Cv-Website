@@ -21,7 +21,7 @@ function Hotline() {
           </div>
           <div className="w-[350px] h-[40px] bg-gradient-to-r from-[#0C8E5E] to-[#5DDA33] rounded-md flex items-center justify-between">
             <h2 className="font-semibold text-2xl text-white ml-3">
-              0935714169
+              0123456789
             </h2>
             <button className="w-[150px] h-[30px] bg-gradient-to-r from-[#D9D9D9] to-[#FFFFFF] mr-5 rounded-md flex items-center justify-center gap-x-4">
               <FiPhoneCall className="size-5" />

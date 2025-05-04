@@ -7,7 +7,7 @@ function Hotline() {
   return (
     <div className="flex justify-center">
       <div
-        className="w-full h-[300px] bg-[url('../../image/background_ColorGreen.png')] flex justify-between items-center relative"
+        className="w-full h-[300px] flex justify-between items-center relative"
         style={{
           backgroundImage: `url(${background_ColorGreen})`,
         }}
@@ -35,7 +35,7 @@ function Hotline() {
         </div>
         <div className="w-[700px] h-[300px] mt-5  mr-30">
           <img
-            src="/src/image/image_GreenMan.png"
+            src="src/assets/image/image_GreenMan.png"
             alt=""
             className="object-contain"
           />

@@ -6,7 +6,7 @@ import JobIntroduction from "./JobIntroduction";
 import GeneralInformation from "./GeneralInformation";
 import DetailJob from "./DetailJob";
 import RelativeNews from "./RelativeNews";
-import { useMemo } from "react";
+import { useMemo,useState } from "react";
 import useCustomFetch from "../../hooks/useCustomFetch";
 import {
   fetchRecruitmentNewsDetailApi,
@@ -15,6 +15,8 @@ import {
 import { useParams } from "react-router-dom";
 
 export default function JobDescription() {
+  const [filters, setFilters] = useState();
+
   const params = useParams();
   const { jobId } = params;
   const { data } = useCustomFetch(fetchRecruitmentNewsDetailApi, [jobId]);
@@ -35,7 +37,14 @@ export default function JobDescription() {
           backgroundImage: `url(${background})`,
         }}
       >
-        <Search />
+        <Search
+          onSearch={(newFilters) => {
+            setFilters((prev) => ({ ...prev, ...newFilters }));
+          }}
+          initialValues={{
+            keyword: filters,
+          }}
+        />
       </div>
       {/* main content */}
       <div className="flex justify-center bg-[#F5F5F5]">

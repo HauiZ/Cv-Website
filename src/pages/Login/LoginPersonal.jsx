@@ -27,7 +27,6 @@ function LoginPersonal() {
 
   const onSubmit = async (data) => {
     await withLoading(async () => {
-      await new Promise((res) => setTimeout(res, 2000)); // fake delay
       await loginCandidate(data);
     });
   };

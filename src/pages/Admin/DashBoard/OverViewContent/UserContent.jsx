@@ -1,15 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import TableContent from "./TableContent";
 import { fetchUserApi } from "../../../../services/adminApi";
 import useCustomFetch from "../../../../hooks/useCustomFetch";
 
 const UserContent = ({ onDataUpdate }) => {
+  const [filter, setFilter] = useState("Truong")
+  const filterParams = useMemo(
+      () => ({
+        keyword: filter,
+      }),
+      [filter]
+    );
   const {
     data: fetchedData,
     loading,
     error,
     refetch,
-  } = useCustomFetch(fetchUserApi);
+  } = useCustomFetch(fetchUserApi,[filterParams]);
   const [usersData, setUsersData] = useState([]);
 
   useEffect(() => {

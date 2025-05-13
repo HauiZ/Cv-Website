@@ -31,7 +31,7 @@ export default function useCustomFetch(fetchFunction, params = []) {
             err?.response?.data?.message ||
             err?.message ||
             "Data fetching failed!";
-            if(localStorage.getItem("access_token")){
+            if(localStorage.getItem("access_token") && msg === "INVALID OR EXPIRED ACCESS TOKEN"){
               logOut()
             }
           showToast(msg, "error");

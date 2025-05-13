@@ -2,9 +2,9 @@ import React, { useState, useEffect, useMemo } from "react";
 import TableContent from "./TableContent";
 import { fetchUserApi } from "../../../../services/adminApi";
 import useCustomFetch from "../../../../hooks/useCustomFetch";
-
+import { useSearch } from "../../../../contexts/SearchContext";
 const UserContent = ({ onDataUpdate }) => {
-  const [filter, setFilter] = useState("Truong")
+  const {searchTerm: filter} = useSearch()
   const filterParams = useMemo(
       () => ({
         keyword: filter,

@@ -1,8 +1,7 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBell, faSearch } from "@fortawesome/free-solid-svg-icons";
-import React from "react";
-
+import SearchBar from "../SearchBar";
+import Dropdown from "./OverViewContent/DropdownLayout/DropDown";
 const Header = ({ setSelectedPage }) => {
+  const layoutDropdown = <Dropdown></Dropdown>
   return (
     <header className="bg-blue-500 text-white px-4 py-2 flex items-center justify-between shadow">
       {/* Nút điều hướng */}
@@ -25,18 +24,7 @@ const Header = ({ setSelectedPage }) => {
       </div>
 
       {/* Tìm kiếm + Thông báo */}
-      <div className="flex items-center space-x-3">
-        <div className="relative">
-          <input
-            type="text"
-            placeholder="Comming Soon"
-            className="pl-10 pr-3 py-1 bg-[#c5c7cb] [#7c7878] rounded border focus:outline-none text-black transition-all duration-200 hover:ring-2 hover:ring-blue-300 hover:bg-white focus:bg-white"
-            disabled
-          />
-          <FontAwesomeIcon icon={faSearch} className="absolute left-3 top-2 text-gray-500" />
-        </div>
-        <FontAwesomeIcon icon={faBell} className="text-white text-xl cursor-pointer hover:text-yellow-300 transition-all duration-200" />
-      </div>
+      <SearchBar contentDropdown={layoutDropdown}></SearchBar>
     </header>
   );
 };

@@ -4,6 +4,7 @@ import useCustomFetch from "../../hooks/useCustomFetch";
 import { fetchTemplateUserApi } from "../../services/CvApi";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { FaEye } from "react-icons/fa6";
 export default function TemplateContent() {
   const { data } = useCustomFetch(fetchTemplateUserApi);
   const [currentPage, setCurrentPage] = useState(0);
@@ -28,6 +29,24 @@ export default function TemplateContent() {
     (currentPage + 1) * pageSize
   );
 
+  const handCVDisplayClick = (templateUrl) => {
+    const width = 800;
+    const height = 600;
+    const left = window.screenX + (window.innerWidth - width) / 2;
+    const top = window.screenY + (window.innerHeight - height) / 2;
+
+    if (templateUrl) {
+      const previewUrl = templateUrl;
+      window.open(
+        previewUrl,
+        "_blank",
+        `width=${width},height=${height},left=${left},top=${top},resizable=yes,scrollbars=yes`
+      );
+    } else {
+      console.error("Không tìm được fileId trong URL.");
+    }
+  };
+
   return (
     <div className="relative flex flex-col items-center">
       {/* Pagination buttons */}
@@ -50,12 +69,21 @@ export default function TemplateContent() {
               key={cv.id}
               data={cv}
               hoverContent={
-                <button
-                  onClick={() => navigate(`/createCV`)}
-                  className="bg-green-500 text-white px-4 py-2 rounded-full hover:bg-green-400"
-                >
-                  Tạo CV với mẫu
-                </button>
+                <div className="absolute inset-0 flex flex-col gap-y-2 justify-center items-center bg-black/30 h-[30rem]">
+                  <button
+                    onClick={() => handCVDisplayClick(cv.templateUrl)}
+                    className="text-white hover:text-green-400 px-4 py-2 rounded-full w-[10rem] absolute top-0 left-78"
+                  >
+                    <FaEye size={25}/>
+                  </button>
+                  <button
+                    onClick={() => navigate(`/createCV`)}
+                    className="bg-green-500 text-white px-4 py-2 rounded-full hover:bg-green-400 w-[10rem]"
+                  >
+                    Tạo CV với mẫu
+                  </button>
+                  
+                </div>
               }
             />
           ))}

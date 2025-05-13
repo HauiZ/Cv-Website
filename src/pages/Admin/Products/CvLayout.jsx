@@ -8,7 +8,7 @@ import useCustomMutation from "../../../hooks/useCustomMutation";
 import { deleteTemplateCVApi } from "../../../services/CvApi";
 
 export default function CvLayout({ data, refetch }) {
-  data= [...data].reverse()
+  data = [...data].reverse()
   const [currentPage, setCurrentPage] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const [selectedCvId, setSelectedCvId] = useState(null);
@@ -51,12 +51,37 @@ export default function CvLayout({ data, refetch }) {
   // Chỉ hiển thị nút xoá nếu không phải trang user
   const canDelete = !location.pathname.includes("/user");
 
+  const handCVDisplayClick = (templateUrl) => {
+    const width = 800;
+    const height = 600;
+    const left = window.screenX + (window.innerWidth - width) / 2;
+    const top = window.screenY + (window.innerHeight - height) / 2;
+
+    if (templateUrl) {
+      const previewUrl = templateUrl;
+      window.open(
+        previewUrl,
+        "_blank",
+        `width=${width},height=${height},left=${left},top=${top},resizable=yes,scrollbars=yes`
+      );
+    } else {
+      console.error("Không tìm được fileId trong URL.");
+    }
+  };
+
   return (
     <div className="flex flex-col items-center">
       <div className="animate-scaleIn grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-5 gap-y-10 w-fit">
         {paginatedData?.map((cv) => (
           <div key={cv.id} className="relative">
-            <TemplateCv data={cv} />
+            <TemplateCv data={cv} hoverContent={
+              <button
+                onClick={() => handCVDisplayClick(cv.templateUrl)}
+                className="bg-green-500 text-white px-4 py-2 rounded-full hover:bg-green-400"
+              >
+                Xem mẫu
+              </button>
+            } />
 
             {canDelete && (
               <button

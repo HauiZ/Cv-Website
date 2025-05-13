@@ -16,7 +16,7 @@ function Hotline() {
           <h1 className="font-bold text-3xl text-[#0C8E5E] ">Hot Line</h1>
           <div className="flex">
             <h2 className="font-semibold">Tìm việc khó có</h2>
-            <img src="/src/image/logo.png" alt="" className="w-[50px]" />
+            <img src="/src/assets/image/logoNoBg.png" alt="" className="w-[50px]" />
             <h2 className="font-semibold">lo</h2>
           </div>
           <div className="w-[350px] h-[40px] bg-gradient-to-r from-[#0C8E5E] to-[#5DDA33] rounded-md flex items-center justify-between">

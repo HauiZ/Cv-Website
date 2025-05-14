@@ -27,9 +27,9 @@ export default function DetailJob({ data }) {
       </div>
       {Array.isArray(content)
         ? content.map((item, idx) => (
-            <p key={idx} className="text-[#333] ml-7">- {item}</p>
+            <p key={idx} className="text-[#333] ml-7 break-words">- {item}</p>
           ))
-        : <pre className="text-[#333] font-sans ml-7">{content || "Không có thông tin"}</pre>}
+        : <pre className="text-[#333] font-sans ml-7 break-words whitespace-pre-wrap">{content || "Không có thông tin"}</pre>}
     </div>
   );
 

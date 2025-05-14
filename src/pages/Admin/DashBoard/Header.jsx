@@ -1,15 +1,70 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBell, faSearch } from "@fortawesome/free-solid-svg-icons";
-import React from "react";
+import { useLocation } from "react-router-dom";
+import SearchBar from "../SearchBar";
+import Dropdown from "./OverViewContent/DropdownLayout/DropDown";
+import { useSearch } from "../../../contexts/SearchContext";
+import { useEffect } from "react";
 
 const Header = ({ setSelectedPage }) => {
+  const location = useLocation();
+  const { setFinalSearchTerm, setId, id, searchTerm, setSearchTerm } =
+    useSearch();
+
+  // Log current state for debugging
+  useEffect(() => {
+    console.log("Current search context:", { id, searchTerm });
+  }, [id, searchTerm]);
+
+  const handleSubmitSearch = (searchTerm) => {
+    console.log("Search submitted:", searchTerm);
+    // Set selected page to "overview" to show the overview page
+    setSelectedPage("overview");
+    // Store "users" in localStorage to indicate we want to show user content
+    localStorage.setItem("where", "users");
+    setFinalSearchTerm(searchTerm);
+    if (id) {
+      setId("");
+    }
+
+    // Force localStorage event for same-window updates
+    window.dispatchEvent(new Event("storage"));
+  };
+
+  const handleClick = (userId) => {
+    console.log("User card clicked, setting ID:", userId);
+    // Set selected page to "overview" to show the overview page
+    setSelectedPage("overview");
+
+    // Always ensure we're in "users" mode when clicking a user card
+    localStorage.setItem("where", "users");
+
+    // Clear search term to avoid confusion
+    setSearchTerm("");
+    setFinalSearchTerm("");
+
+    // Set the user ID
+    setId(userId);
+
+    // Force localStorage event for same-window updates
+    window.dispatchEvent(new Event("storage"));
+  };
+
+  const layoutDropdown = <Dropdown handleSubmit={handleClick} />;
+
   return (
     <header className="bg-blue-500 text-white px-4 py-2 flex items-center justify-between shadow">
-      {/* Nút điều hướng */}
+      {/* Navigation buttons */}
       <div className="flex space-x-2">
         <button
           className="bg-white text-black rounded-full px-4 py-1 transition-all duration-300 hover:bg-blue-100 hover:scale-105"
-          onClick={() => setSelectedPage("overview")}
+          onClick={() => {
+            setSelectedPage("overview");
+            localStorage.removeItem("where");
+            setSearchTerm(""); // Clear search term when returning to overview
+            setFinalSearchTerm(""); // Also clear final search term
+            setId(""); // Clear any selected user ID
+            // Force localStorage event
+            window.dispatchEvent(new Event("storage"));
+          }}
         >
           Overview
         </button>
@@ -24,19 +79,11 @@ const Header = ({ setSelectedPage }) => {
         </button>
       </div>
 
-      {/* Tìm kiếm + Thông báo */}
-      <div className="flex items-center space-x-3">
-        <div className="relative">
-          <input
-            type="text"
-            placeholder="Comming Soon"
-            className="pl-10 pr-3 py-1 bg-[#c5c7cb] [#7c7878] rounded border focus:outline-none text-black transition-all duration-200 hover:ring-2 hover:ring-blue-300 hover:bg-white focus:bg-white"
-            disabled
-          />
-          <FontAwesomeIcon icon={faSearch} className="absolute left-3 top-2 text-gray-500" />
-        </div>
-        <FontAwesomeIcon icon={faBell} className="text-white text-xl cursor-pointer hover:text-yellow-300 transition-all duration-200" />
-      </div>
+      {/* Search + Notifications */}
+      <SearchBar
+        contentDropdown={layoutDropdown}
+        handleSubmit={handleSubmitSearch}
+      />
     </header>
   );
 };

@@ -16,7 +16,7 @@ export default function ProfileIntroduction({ data }) {
       <div className="content p-5 text-[0.95rem] space-y-3 leading-relaxed">
         {Array.isArray(content)
           ? content.map((item, idx) => (
-            <p key={idx} className="text-[#333] ml-7">- {item}</p>
+            <p key={idx} className="text-[#333] ml-7 break-words">- {item}</p>
           ))
           : <pre className="text-[#333] font-sans ml-7 whitespace-pre-wrap break-words">{content || "Không có thông tin"}</pre>}
       </div>

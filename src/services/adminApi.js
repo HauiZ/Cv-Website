@@ -5,8 +5,10 @@ const fetchDataDashBoardApi = async () =>{
   const data = res.data
   return data; 
 }
-const fetchUserApi = async () =>{
-  const res = await axios.get("/admin/getUsers");
+const fetchUserApi = async (params) =>{
+  const res = await axios.get("/admin/getUsers", {
+    params: params,
+  });
   // console.log(res.data)
   const data = res.data
   return data; 

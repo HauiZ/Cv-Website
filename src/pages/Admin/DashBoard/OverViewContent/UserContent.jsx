@@ -4,12 +4,13 @@ import { fetchUserApi } from "../../../../services/adminApi";
 import useCustomFetch from "../../../../hooks/useCustomFetch";
 import { useSearch } from "../../../../contexts/SearchContext";
 const UserContent = ({ onDataUpdate }) => {
-  const {searchTerm: filter} = useSearch()
+  const {finalSearchTerm: filter, id: idUser} = useSearch()
   const filterParams = useMemo(
       () => ({
         keyword: filter,
+        id: idUser,
       }),
-      [filter]
+      [filter, idUser]
     );
   const {
     data: fetchedData,

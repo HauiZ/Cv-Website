@@ -71,7 +71,7 @@ const Header1 = () => {
       <a onClick={(e) => e.preventDefault()}>
         <Space >
           <Avatar size={40} src={avatar} icon={!avatar && <UserOutlined />} />
-          <span className="font-medium">{displayName}</span>
+          <span className="font-medium cursor-default">{displayName}</span>
           <DownOutlined className="size-3" />
         </Space>
       </a>

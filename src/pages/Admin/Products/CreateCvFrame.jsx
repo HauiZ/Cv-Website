@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CvCard from "./CvCard";
 import { createTemplateCVApi } from "../../../services/CvApi";
 import useCustomMutation from "../../../hooks/useCustomMutation";
+import Loader from "../../../components/Loader";
 
 export default function CreateCvFrame({ request, onClose, refetch }) {
   if (!request) return null;
@@ -16,7 +17,8 @@ export default function CreateCvFrame({ request, onClose, refetch }) {
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef(null);
   const cvCardRef = useRef(null);
-  const { mutate: uploadCvTemplate, loading } = useCustomMutation(createTemplateCVApi);
+  const { mutate: uploadCvTemplate, loading } =
+    useCustomMutation(createTemplateCVApi);
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -80,6 +82,7 @@ export default function CreateCvFrame({ request, onClose, refetch }) {
     // Add tags - send as a comma-separated string instead of JSON string with brackets
     formData.append("propoties", tags.join(", "));
 
+
     // Add image file if available
     if (imageFile) {
       formData.append("image", imageFile);
@@ -101,6 +104,11 @@ export default function CreateCvFrame({ request, onClose, refetch }) {
   return (
     <div className="fixed inset-0 bg-black/60 flex justify-center items-center z-50">
       <div className="bg-white rounded-xl shadow-2xl w-fit h-[35rem] p-6 flex flex-col justify-between relative">
+        {loading && (
+          <div className="absolute inset-0 z-50 flex items-center justify-center bg-white/70 rounded-xl">
+            <Loader />
+          </div>
+        )}
         {/* Close button */}
         <button
           className="absolute top-2 right-2 text-black hover:text-red-600 text-xl font-bold"
@@ -197,11 +205,11 @@ export default function CreateCvFrame({ request, onClose, refetch }) {
         {/* Action buttons */}
         <div className="flex justify-center gap-10 mt-6">
           <button
-            className={`${loading ? 'bg-green-400' : 'bg-green-500 hover:bg-green-600'} text-white px-8 py-2 rounded-lg font-bold`}
+            className={`${loading ? "bg-green-400" : "bg-green-500 hover:bg-green-600"} text-white px-8 py-2 rounded-lg font-bold`}
             onClick={handleApply}
             disabled={loading}
           >
-            {loading ? 'Đang tạo...' : 'Tạo'}
+            {loading ? "Đang tạo..." : "Tạo"}
           </button>
           <button
             className="bg-red-600 text-white px-8 py-2 rounded-lg font-bold hover:bg-red-700"

@@ -4,10 +4,9 @@ import React, { useState, useEffect } from "react";
 import UserContent from "./UserContent";
 import "./animation.css";
 import useCustomFetch from "../../../../hooks/useCustomFetch";
-import {
-  fetchDataDashBoardApi,
-} from "../../../../services/adminApi";
+import { fetchDataDashBoardApi } from "../../../../services/adminApi";
 import OverViewChart from "./OverViewChart";
+import { useSearch } from "../../../../contexts/SearchContext";
 
 const stats = [
   {
@@ -37,6 +36,7 @@ const OverViewContent = () => {
   const [contentVisible, setContentVisible] = useState(true);
   // Use timestamp for chart key to ensure it's always unique
   const [chartKey, setChartKey] = useState(Date.now());
+  const { setSearchTerm } = useSearch();
 
   const [counts, setCounts] = useState({
     users: 0,
@@ -45,7 +45,15 @@ const OverViewContent = () => {
     news: 0,
   });
 
+  // Check localStorage when component mounts
   useEffect(() => {
+    // Set the initial state based on localStorage
+    const storedWhere = localStorage.getItem("where");
+    if (storedWhere === "users") {
+      setActiveKey("users");
+      setCurrentContent("users");
+    }
+
     setCounts({
       users: data?.user || 0,
       candidates: data?.candidate || 0,
@@ -65,7 +73,13 @@ const OverViewContent = () => {
 
         // Create a new key when switching to Overview to force remount
         if (key === "overview") {
+          if (localStorage.getItem("where")) {
+            localStorage.removeItem("where");
+          }
+          setSearchTerm(""); // Clear search term when returning to overview
           setChartKey(Date.now());
+        } else if (key === "users") {
+          localStorage.setItem("where", "users");
         }
 
         setTimeout(() => {
@@ -80,6 +94,11 @@ const OverViewContent = () => {
         // Generate new timestamp key to force chart remount
         setChartKey(Date.now());
 
+        if (localStorage.getItem("where")) {
+          localStorage.removeItem("where");
+        }
+        setSearchTerm(""); // Clear search term
+
         setTimeout(() => {
           setContentVisible(true);
         }, 50);
@@ -93,12 +112,43 @@ const OverViewContent = () => {
   };
 
   const renderContent = () => {
-    if (currentContent === "users") {
+    if (
+      currentContent === "users" ||
+      localStorage.getItem("where") === "users"
+    ) {
+      localStorage.setItem("where", "users");
       return <UserContent onDataUpdate={handleDataUpdate} />;
     } else {
+      if (localStorage.getItem("where")) {
+        localStorage.removeItem("where");
+      }
       return <OverViewChart key={chartKey} counts={counts} />;
     }
   };
+
+  // Listen for localStorage changes
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const storedWhere = localStorage.getItem("where");
+      if (storedWhere === "users" && activeKey !== "users") {
+        setActiveKey("users");
+        setCurrentContent("users");
+      } else if (!storedWhere && activeKey !== "overview") {
+        setActiveKey("overview");
+        setCurrentContent("overview");
+      }
+    };
+
+    // Check for localStorage changes
+    window.addEventListener("storage", handleStorageChange);
+
+    // Initial check
+    handleStorageChange();
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, [activeKey]);
 
   return (
     <div className="p-6 min-h-screen">

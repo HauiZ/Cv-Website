@@ -3,7 +3,7 @@ import { useState } from "react";
 export default function CvCard({ data, hoverContent }) {
   const [isHovered, setIsHovered] = useState(false);
 
-  const { id, name, propoties, url, displayUrl } = data || {};
+  const { id, name, propoties, templateUrl, displayUrl } = data || {};
 
   // Parse the propoties properly, handling different formats
   let tags = [];

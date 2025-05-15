@@ -67,71 +67,25 @@ export default function CreateCvFrame({ request, onClose, refetch }) {
     const name = cvCardRef.current.getName() || "";
     const tags = cvCardRef.current.getTags() || [];
     const imageFile = cvCardRef.current.getImageFile();
-    // Inside the handleApply function of CreateCvFrame.jsx,
-    // replace the formData.append for properties with:
 
-    const handleApply = async () => {
-      if (!file) {
-        showToast("Vui lòng đính kèm file CV trước khi tạo!", "error");
-        return;
-      }
-
-      if (!cvCardRef.current) {
-        showToast("Không thể lấy thông tin từ CV Card!", "error");
-        return;
-      }
-
-      // Get data from the cvCardRef
-      const name = cvCardRef.current.getName() || "";
-      const tags = cvCardRef.current.getTags() || [];
-      const imageFile = cvCardRef.current.getImageFile();
-
-      console.log("Submitting CV data:", { name, tags, hasImage: !!imageFile });
-
-      const formData = new FormData();
-
-      // Add the CV url as a string
-      const fileUrl = "http://localhost:5173/template1"; // Update this to your actual URL
-      formData.append("url", fileUrl);
-
-      // Add name
-      formData.append("name", name);
-
-      // Add tags - send as a comma-separated string instead of JSON string with brackets
-      formData.append("propoties", tags.join(", "));
-
-      // Add image file if available
-      if (imageFile) {
-        formData.append("file", imageFile);
-      }
-
-      try {
-        await uploadCvTemplate(formData);
-        showToast("Tạo CV thành công!", "success");
-        onClose();
-      } catch (error) {
-        // Error is already handled by useCustomMutation
-      } finally {
-        onClose();
-        refetch();
-      }
-    };
-    console.log("Submitting CV data:", { name, tags, hasImage: !!imageFile });
+    console.log('Submitting CV data:', { name, tags, hasImage: !!imageFile });
 
     const formData = new FormData();
 
-    // Add the CV url as a string (NOT the file itself)
-    // This is what the API expects based on the screenshot
-    const fileUrl = "http://localhost:5173/template1"; // This should be where your file is stored
-    formData.append("url", fileUrl);
+    // Add the CV url as a string
+    const pdfFile = file // Update this to your actual URL
+    formData.append("pdf", pdfFile)
 
-    // Add name and tags
+    // Add name
     formData.append("name", name);
-    formData.append("propoties", JSON.stringify(tags));
+
+    // Add tags - send as a comma-separated string instead of JSON string with brackets
+    formData.append("propoties", tags.join(", "));
+
 
     // Add image file if available
     if (imageFile) {
-      formData.append("file", imageFile);
+      formData.append("image", imageFile);
     }
 
     try {
@@ -140,7 +94,8 @@ export default function CreateCvFrame({ request, onClose, refetch }) {
       onClose();
     } catch (error) {
       // Error is already handled by useCustomMutation
-    } finally {
+    }
+    finally {
       onClose();
       refetch();
     }
@@ -166,13 +121,12 @@ export default function CreateCvFrame({ request, onClose, refetch }) {
         <div className="flex items-center justify-center w-fit h-fit">
           {/* Upload area */}
           <div
-            className={`w-[38rem] h-[28rem] border-2 border-dashed rounded-xl p-6 flex flex-col items-center justify-center cursor-pointer transition-all duration-200 ${
-              isDragging
-                ? "border-blue-500 bg-blue-50"
-                : file
-                  ? "border-green-500 bg-green-50"
-                  : "border-gray-300 hover:border-blue-400 hover:bg-blue-50"
-            }`}
+            className={`w-[38rem] h-[28rem] border-2 border-dashed rounded-xl p-6 flex flex-col items-center justify-center cursor-pointer transition-all duration-200 ${isDragging
+              ? "border-blue-500 bg-blue-50"
+              : file
+                ? "border-green-500 bg-green-50"
+                : "border-gray-300 hover:border-blue-400 hover:bg-blue-50"
+              }`}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}

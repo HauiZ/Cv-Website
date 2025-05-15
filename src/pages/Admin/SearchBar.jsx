@@ -1,10 +1,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useSearch } from "../../contexts/SearchContext";
+import { useLocation } from "react-router-dom";
 
 export default function SearchBar({ contentDropdown, handleSubmit }) {
   const { searchTerm, setSearchTerm } = useSearch();
-
+  const location = useLocation();
   return (
     <div className="flex items-center space-x-3">
       <div className="relative">
@@ -19,6 +20,7 @@ export default function SearchBar({ contentDropdown, handleSubmit }) {
               handleSubmit(searchTerm);
             }
           }}
+          disabled = {location.search !== "?page=overview"}
         />
         <FontAwesomeIcon
           icon={faSearch}

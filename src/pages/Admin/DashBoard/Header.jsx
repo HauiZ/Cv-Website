@@ -8,25 +8,21 @@ const Header = ({ setSelectedPage }) => {
   const location = useLocation();
   const { setFinalSearchTerm, setId, id, searchTerm, setSearchTerm } =
     useSearch();
-
-  // Log current state for debugging
-  useEffect(() => {
-    console.log("Current search context:", { id, searchTerm });
-  }, [id, searchTerm]);
-
   const handleSubmitSearch = (searchTerm) => {
-    console.log("Search submitted:", searchTerm);
-    // Set selected page to "overview" to show the overview page
-    setSelectedPage("overview");
-    // Store "users" in localStorage to indicate we want to show user content
-    localStorage.setItem("where", "users");
-    setFinalSearchTerm(searchTerm);
-    if (id) {
-      setId("");
-    }
+    if (location.search === "?page=overview") {
+      console.log("Search submitted:", searchTerm);
+      // Set selected page to "overview" to show the overview page
+      setSelectedPage("overview");
+      // Store "users" in localStorage to indicate we want to show user content
+      localStorage.setItem("where", "users");
+      setFinalSearchTerm(searchTerm);
+      if (id) {
+        setId("");
+      }
 
-    // Force localStorage event for same-window updates
-    window.dispatchEvent(new Event("storage"));
+      // Force localStorage event for same-window updates
+      window.dispatchEvent(new Event("storage"));
+    }
   };
 
   const handleClick = (userId) => {
@@ -47,8 +43,8 @@ const Header = ({ setSelectedPage }) => {
     // Force localStorage event for same-window updates
     window.dispatchEvent(new Event("storage"));
   };
-
-  const layoutDropdown = <Dropdown handleSubmit={handleClick} />;
+  
+  const layoutDropdown = location.search === "?page=overview" ?<Dropdown handleSubmit={handleClick} /> : <div></div>;
 
   return (
     <header className="bg-blue-500 text-white px-4 py-2 flex items-center justify-between shadow">
@@ -70,7 +66,10 @@ const Header = ({ setSelectedPage }) => {
         </button>
         <button
           className="relative bg-white text-black rounded-full px-4 py-1 transition-all duration-300 hover:bg-blue-100 hover:scale-105"
-          onClick={() => setSelectedPage("request")}
+          onClick={() => {
+            setSelectedPage("request")
+            setSearchTerm("")
+          }}
         >
           Request
           <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">

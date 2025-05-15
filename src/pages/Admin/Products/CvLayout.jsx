@@ -77,7 +77,7 @@ export default function CvLayout({ data, refetch }) {
             <TemplateCv data={cv} hoverContent={
               <button
                 onClick={() => handCVDisplayClick(cv.templateUrl)}
-                className="bg-green-500 text-white px-4 py-2 rounded-full hover:bg-green-400"
+                className="text-white hover:text-green-400 font-bold px-4 py-2 rounded-full w-[10rem] border-2 border-white hover:bg-white"
               >
                 Xem mẫu
               </button>

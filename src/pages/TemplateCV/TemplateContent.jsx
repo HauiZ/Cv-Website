@@ -72,9 +72,9 @@ export default function TemplateContent() {
                 <div className="absolute inset-0 flex flex-col gap-y-2 justify-center items-center bg-black/30 h-[30rem]">
                   <button
                     onClick={() => handCVDisplayClick(cv.templateUrl)}
-                    className="text-white hover:text-green-400 px-4 py-2 rounded-full w-[10rem] absolute top-0 left-78"
+                    className="text-white hover:text-green-400 px-4 py-2 rounded-full w-[10rem] border-2 border-white hover:bg-white"
                   >
-                    <FaEye size={25}/>
+                    Xem trước CV
                   </button>
                   <button
                     onClick={() => navigate(`/createCV`)}

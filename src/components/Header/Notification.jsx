@@ -65,7 +65,13 @@ const Notification = () => {
           style={{ borderBottom: "1px solid #f0f0f0", padding: "12px 8px" }}
         >
           <List.Item.Meta
-            avatar={<Avatar>{getAvatarText(item?.sender)}</Avatar>}
+            avatar={
+              item.senderAvatar ? (
+                <Avatar src={item.senderAvatar} />
+              ) : (
+                <Avatar>{getAvatarText(item?.sender)}</Avatar>
+              )
+            }
             title={
               <>
                 <Text strong>{item?.title || ""}</Text>
@@ -119,12 +125,12 @@ const Notification = () => {
               <Avatar
                 shape="circle"
                 size="large"
-                style={{ backgroundColor: "#D9D9D9" }}
+                style={{ backgroundColor: "#E0E0E0" }}
               />
             </Badge>
           </Space>
         </Space>
-        <IoNotifications className="z-10 absolute top-2 left-2 size-6 text-[#0C8E5E]" />
+        <IoNotifications className="z-10 absolute top-2 left-2 size-6 text-green-600" />
       </button>
     </Dropdown>
   );

@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import AppLayout from "../layouts/AppLayout";
 import HomeLayout from "../layouts/HomeLayout";
+import BusinessLayout from "../layouts/BusinessLayOut";
 
 // Pages
 import Home from "../pages/home/Home";
@@ -15,6 +16,8 @@ import ChangeProfilePage from "../pages/InfomationPage/ChangeProfilePage";
 import SearchPage from "../pages/Search/SearchPage";
 import TemplateCV from "../pages/TemplateCV/TemplateCV";
 import ToolFormat from "../pages/ToolsPage/ToolFormat";
+import EditJob from "../pages/NewsManerment/EditJob";
+import RenderContent from "../components/BussinessContent/RenderContent"; // Fixed import path
 
 // Route nhóm
 import { adminRoutes } from "./adminRoutes";
@@ -23,7 +26,6 @@ import { authRoutes } from "./authRoutes";
 // ✅ RequireAuth
 import RequireAuth from "../components/RequireAuth";
 import ApplicationManerment from "../pages/ApplicationManerment/ApplicationManerment";
-import BusinessLayout from "../layouts/BusinessLayOut";
 
 // ✅ Các route cần đăng nhập trong HomeLayout
 const protectedRoutes = [
@@ -56,7 +58,7 @@ const protectedRoutes = [
     element: <TemplateCV />,
   },
   { path: "/candidate-application", element: <ApplicationManerment /> },
-  { path: "/tools", element: <ToolFormat />}
+  { path: "/tools", element: <ToolFormat /> }
 ];
 
 const router = createBrowserRouter([
@@ -66,14 +68,39 @@ const router = createBrowserRouter([
     errorElement: <Page500 />,
     children: [
       ...authRoutes,
-      ...adminRoutes,
-      {
-        path: "/recruiter",
+      ...adminRoutes,      {
+        path: "recruiter",
         element: (
           <RequireAuth>
             <BusinessLayout />
           </RequireAuth>
         ),
+        children: [
+          { 
+            index: true,  // This will match exact /recruiter path
+            element: <RenderContent contentKey="bang-tin" /> 
+          },
+          { 
+            path: "tin-tuyen-dung", 
+            element: <RenderContent contentKey="tin-tuyen-dung" /> 
+          },
+          { 
+            path: "quan-ly-cv", 
+            element: <RenderContent contentKey="quan-ly-cv" /> 
+          },
+          { 
+            path: "thong-bao", 
+            element: <RenderContent contentKey="thong-bao" /> 
+          },
+          { 
+            path: "trang-ca-nhan", 
+            element: <RenderContent contentKey="trang-ca-nhan" /> 
+          },
+          { 
+            path: "edit-job", 
+            element: <EditJob /> 
+          }
+        ],
       },
 
       { path: "/authsuccess", element: <AuthSuccess /> },

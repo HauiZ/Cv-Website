@@ -132,9 +132,15 @@ const getDashBoardApi = async () => {
   const res = await axios.get("/recruiter/getDataDashBoard");
   return res.data;
 };
+
+const getJobByIdApi = async (id) => {
+  const URL_API = `/recruiter/getJobById/${id}`;
+  const res = await axios.get(URL_API);
+  return res.data;
+};
+
 export {
   fetchCompanyInfoApi, fetchAllCompanyApi, postRecruitmentNewsApi,
   changeLogo, changeProfileBusinessApi, getApplicantApi, approveApplicationApi, fetchAllNewsApi,
-  getNotificationApi, getApplicantForNewsApi, getDashBoardApi,
-
+  getNotificationApi, getApplicantForNewsApi, getDashBoardApi, getJobByIdApi
 };

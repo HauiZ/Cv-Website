@@ -15,8 +15,7 @@ export default function NewsCard({ job, setFilterWithNews, setNewsId }) {
     `${job.salaryMin} - ${job.salaryMax}`
   );
   const navigate = useNavigate();
-  const path = `/recruiter?tab=quan-ly-cv`;
-
+  const path = `/recruiter?tab=quan-ly-cv`; 
   // Hàm xác định màu sắc cho status
   const statusMap = {
     PENDING: {
@@ -57,6 +56,19 @@ export default function NewsCard({ job, setFilterWithNews, setNewsId }) {
       <div className="flex flex-col flex-grow gap-y-5">
         <div className="flex justify-between font-bold text-sm group-hover:text-[#1b8e0c] transition-colors duration-300">
           <div>{job.jobTitle}</div>
+
+          {job.status === "APPROVED" && (
+            <button
+              className="ml-4 px-3 py-1 bg-[#01c951] text-white rounded-full text-sm hover:opacity-90 relative z-10"
+              onClick={(e) => {
+                e.stopPropagation();
+                navigate('/recruiter/edit-job');
+              }}
+            >
+              Chỉnh sửa
+            </button>
+          )}
+          
           <p className="text-[#5DDA33]">Bài đăng số: {job.id}</p>
           <div className="flex flex-col md:items-end gap-2">
             <span
@@ -86,6 +98,8 @@ export default function NewsCard({ job, setFilterWithNews, setNewsId }) {
           </div>
         </div>
       </div>
+
+      
     </div>
   );
 }

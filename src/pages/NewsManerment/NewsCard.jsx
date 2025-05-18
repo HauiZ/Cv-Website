@@ -82,14 +82,14 @@ export default function NewsCard({ job, setFilterWithNews, setNewsId }) {
         </div>
       </div>
 
-      {/* DIV MỚI CHỨA CẢ HAI NÚT - ĐỊNH VỊ TUYỆT ĐỐI (VÍ DỤ: GÓC TRÊN BÊN PHẢI) - ĐÃ ĐỔI VỊ TRÍ 2 NÚT */}
+      
       <div className="absolute bottom-3 right-3 z-10 flex items-center gap-2">
-        {/* Nút Đơn ứng tuyển (ĐÃ CHUYỂN XUỐNG SAU) */}
+        
         <button className="px-3 py-1 bg-[#5DDA33] text-white rounded-full text-sm hover:opacity-90 hover:cursor-pointer">
           Đơn ứng tuyển: {job?.numberApplicant || 0}
         </button>
         
-        {/* Nút Chỉnh sửa (ĐÃ CHUYỂN LÊN TRƯỚC) */}
+        
         {job.status === "APPROVED" && (
           <button
             className="px-3 py-1 bg-[#01c951] text-white rounded-full text-sm hover:bg-[#01a341] transition-colors"

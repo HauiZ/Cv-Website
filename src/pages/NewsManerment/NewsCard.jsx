@@ -15,7 +15,7 @@ export default function NewsCard({ job, setFilterWithNews, setNewsId }) {
     `${job.salaryMin} - ${job.salaryMax}`
   );
   const navigate = useNavigate();
-  const path = `/recruiter?tab=quan-ly-cv`; 
+  const path = `/recruiter?tab=quan-ly-cv`;
   // Hàm xác định màu sắc cho status
   const statusMap = {
     PENDING: {
@@ -57,18 +57,6 @@ export default function NewsCard({ job, setFilterWithNews, setNewsId }) {
         <div className="flex justify-between font-bold text-sm group-hover:text-[#1b8e0c] transition-colors duration-300">
           <div>{job.jobTitle}</div>
 
-          {job.status === "APPROVED" && (
-            <button
-              className="ml-4 px-3 py-1 bg-[#01c951] text-white rounded-full text-sm hover:opacity-90 relative z-10"
-              onClick={(e) => {
-                e.stopPropagation();
-                navigate('/recruiter/edit-job');
-              }}
-            >
-              Chỉnh sửa
-            </button>
-          )}
-          
           <p className="text-[#5DDA33]">Bài đăng số: {job.id}</p>
           <div className="flex flex-col md:items-end gap-2">
             <span
@@ -91,15 +79,31 @@ export default function NewsCard({ job, setFilterWithNews, setNewsId }) {
               {salaryRange || "Thương lượng"}
             </div>
           </div>
-          <div className="xl:absolute xl:right-5">
-            <button className=" px-3 py-1 bg-[#5DDA33] text-white rounded-full text-sm hover:opacity-90 hover:cursor-pointer">
-              Đơn ứng tuyển: {job?.numberApplicant || 0}
-            </button>
-          </div>
         </div>
       </div>
 
-      
+      {/* DIV MỚI CHỨA CẢ HAI NÚT - ĐỊNH VỊ TUYỆT ĐỐI (VÍ DỤ: GÓC TRÊN BÊN PHẢI) - ĐÃ ĐỔI VỊ TRÍ 2 NÚT */}
+      <div className="absolute bottom-3 right-3 z-10 flex items-center gap-2">
+        {/* Nút Đơn ứng tuyển (ĐÃ CHUYỂN XUỐNG SAU) */}
+        <button className="px-3 py-1 bg-[#5DDA33] text-white rounded-full text-sm hover:opacity-90 hover:cursor-pointer">
+          Đơn ứng tuyển: {job?.numberApplicant || 0}
+        </button>
+        
+        {/* Nút Chỉnh sửa (ĐÃ CHUYỂN LÊN TRƯỚC) */}
+        {job.status === "APPROVED" && (
+          <button
+            className="px-3 py-1 bg-[#01c951] text-white rounded-full text-sm hover:bg-[#01a341] transition-colors"
+            onClick={(e) => {
+              e.stopPropagation();
+              navigate(`/recruiter/edit-job`); // Đảm bảo job.id được truyền vào
+            }}
+          >
+            Chỉnh sửa
+          </button>
+        )}
+
+        
+      </div>
     </div>
   );
 }

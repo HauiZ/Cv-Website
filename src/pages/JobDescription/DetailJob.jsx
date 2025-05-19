@@ -19,17 +19,15 @@ export default function DetailJob({ data }) {
     videoUrl,
   } = data;
 
-  const renderSection = (title, content) => (
-    <div className="space-y-2 pl-2">
-      <div className="flex items-center space-x-2">
-        <div className="w-2 h-5 bg-green-500 "></div>
-        <h2 className="text-[1.425rem] font-semibold text-[#212f3f]">{title}</h2>
+  const renderSection = (title, content) => (    <div className="space-y-2 pl-2">      <div className="flex items-center space-x-2">
+        <div className="w-1.5 h-4 bg-green-500 "></div>
+        <h2 className="text-[1.2rem] font-semibold text-[#212f3f]">{title}</h2>
       </div>
       {Array.isArray(content)
         ? content.map((item, idx) => (
-            <p key={idx} className="text-[#333] ml-7">- {item}</p>
+            <p key={idx} className="text-[#333] ml-5 text-sm whitespace-pre-wrap break-words">- {item}</p>
           ))
-        : <pre className="text-[#333] font-sans ml-7">{content || "Không có thông tin"}</pre>}
+        : <pre className="text-[#333] text-sm font-sans ml-5 whitespace-pre-wrap break-words">{content || "Không có thông tin"}</pre>}
     </div>
   );
 
@@ -40,15 +38,14 @@ export default function DetailJob({ data }) {
         <h1 className="text-white text-2xl">Chi tiết tin tuyển dụng</h1>
       </div>
 
-      {/* Nội dung */}
-      <div className="p-10 p-x-15 text-[0.95rem] space-y-5 leading-relaxed">
+      {/* Nội dung */}      <div className="p-6 p-x-10 text-[0.95rem] space-y-4 leading-relaxed">
         {/* {renderSection("Giới thiệu", introduction)} */}
         {renderSection("Yêu cầu công việc", jobRequirements)}
         {renderSection("Chi tiết công việc", workDetail)}
         {renderSection("Quyền lợi", benefits)}
         {renderSection("Bằng cấp yêu cầu", degree)}
         {renderSection("Địa điểm làm việc", jobAddress)}
-        {renderSection("Ngày bắt đầu", moment(workDateIn).format("YYYY-MM-DD HH:mm"))}
+        {renderSection("Ngày bắt đầu", data.workDateInDisplay || moment(workDateIn).format("DD/MM/YYYY"))}
 
         <div className="space-y-2 pl-2">
           <div className="flex items-center space-x-2">

@@ -9,7 +9,7 @@ import {
 } from "react-icons/fa";
 import ApplyPopUp from "./ApplyPopUp";
 
-export default function JobIntroduction({data, jobId}) {
+export default function JobIntroduction({data, jobId, isPreviewMode}) {
   const [isApplyOpen, setIsApplyOpen] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   const salaryRanges = formatSalaryRangeToVND(data?.salaryRange || "Thương lượng");
@@ -30,7 +30,9 @@ export default function JobIntroduction({data, jobId}) {
             <FaDollarSign />
           </div>
           <div className="text-gray-700 text-sm">Thu nhập</div>
-          <div className="font-semibold text-[15px] mt-1">{ salaryRanges || "Thương lượng"}</div>
+          <div className="font-semibold text-[15px] mt-1">
+            {salaryRanges || "Thương lượng"}
+          </div>
         </div>
 
         {/* Địa điểm */}
@@ -50,7 +52,9 @@ export default function JobIntroduction({data, jobId}) {
             <FaHourglassHalf />
           </div>
           <div className="text-gray-700 text-sm">Kinh nghiệm</div>
-          <div className="font-semibold text-[15px] mt-1">{data?.experience || "Không yêu cầu kinh nghiệm"}</div>
+          <div className="font-semibold text-[15px] mt-1">
+            {data?.experience || "Không yêu cầu kinh nghiệm"}
+          </div>
         </div>
       </div>
 
@@ -60,9 +64,14 @@ export default function JobIntroduction({data, jobId}) {
       </div>
 
       <div className="flex items-center justify-between gap-3">
-        <button className="bg-lime-500 text-white font-semibold py-2 w-[25rem] px-6 rounded-full hover:bg-lime-600 transition" onClick={() => setIsApplyOpen(true)}>
-          Ứng tuyển ngay
-        </button>
+        {!isPreviewMode && (
+          <button
+            className="bg-lime-500 text-white font-semibold py-2 w-[25rem] px-6 rounded-full hover:bg-lime-600 transition"
+            onClick={() => setIsApplyOpen(true)}
+          >
+            Ứng tuyển ngay
+          </button>
+        )}
 
         <button
           onClick={handleSaveClick}
@@ -76,7 +85,11 @@ export default function JobIntroduction({data, jobId}) {
           {isSaved ? "Đã lưu" : "Lưu tin"}
         </button>
       </div>
-      <ApplyPopUp isOpen={isApplyOpen} onClose={() => setIsApplyOpen(false)} jobId={jobId}/>
+      <ApplyPopUp
+        isOpen={isApplyOpen}
+        onClose={() => setIsApplyOpen(false)}
+        jobId={jobId}
+      />
     </div>
   );
 }

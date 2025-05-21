@@ -19,8 +19,15 @@ const createTemplateCVApi = async (formData) => {
     },
   });
 };
+const updateTemplateCVApi = async (formData, id) => {
+  return await instance.patch(`/admin/updateCvTemplate/${id}`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};
 const deleteTemplateCVApi = async (idTemplate) =>{
   const res = await axios.delete(`/admin/deleteTemplate/${idTemplate}`);
   return res.data;
 }
-export {fetchTemplateAdminApi,fetchTemplateUserApi, createTemplateCVApi, deleteTemplateCVApi}
+export {fetchTemplateAdminApi,fetchTemplateUserApi, createTemplateCVApi, deleteTemplateCVApi, updateTemplateCVApi}

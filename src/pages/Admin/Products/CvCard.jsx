@@ -8,13 +8,19 @@ import React, {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage } from "@fortawesome/free-regular-svg-icons";
 import { faPlus, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { get } from "react-hook-form";
 
 const CvCard = forwardRef((props, ref) => {
-  const { onAddToCategory, imageUrl: initialImageUrl } = props;
-  const [imageUrl, setImageUrl] = useState(initialImageUrl || null);
-  const [imageFile, setImageFile] = useState(null);
-  const [name, setName] = useState("Tên mẫu CV");
-  const [tags, setTags] = useState([]);
+  const { onAddToCategory, imageUrl: initialImageUrl, data } = props;
+  const [imageUrl, setImageUrl] = useState(initialImageUrl || data?.displayUrl || null);
+  const [imageFile, setImageFile] = useState(data?.displayUrl || null);
+  const [imageChange, setImageChange] = useState(false);
+  const [name, setName] = useState(data?.name ||"Tên mẫu CV");
+  const nameChange = useRef(false);
+  const [tags, setTags] = useState(
+    typeof data?.propoties === "string" ? data.propoties.split(",") : []
+  );
+  const tagChange = useRef(false);
   const [isEditing, setIsEditing] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [editingTagIndex, setEditingTagIndex] = useState(null);
@@ -23,6 +29,8 @@ const CvCard = forwardRef((props, ref) => {
   const fileInputRef = useRef();
   const inputRef = useRef();
   const tagInputRef = useRef();
+  console.log(">>>>>>>>", data);
+  console.log(typeof data.propoties, data.propoties);
 
   useEffect(() => {
     if (initialImageUrl) {
@@ -35,6 +43,9 @@ const CvCard = forwardRef((props, ref) => {
     getTags: () => tags,
     getImageUrl: () => imageUrl, // Return the URL string
     getImageFile: () => imageFile, // Return the File object itself
+    getImageChange: () => imageChange, // Return the image change reference
+    getNameChange: () => nameChange.current, // Return the name change reference
+    getTagChange: () => tagChange.current, // Return the tag change reference
   }));
 
   const handleImageClick = () => {
@@ -53,6 +64,7 @@ const CvCard = forwardRef((props, ref) => {
         const url = URL.createObjectURL(file);
         setImageUrl(url);
         setImageFile(file); // Store the actual file object
+        setImageChange(true); // Set the image change reference
       }
     }
   };
@@ -68,6 +80,7 @@ const CvCard = forwardRef((props, ref) => {
 
   const handleNameChange = (e) => {
     setName(e.target.value);
+    nameChange.current = true;
   };
 
   const handleNameBlur = () => {
@@ -92,7 +105,7 @@ const CvCard = forwardRef((props, ref) => {
     setTags([...tags, newTag]);
     setEditingTagIndex(tags.length);
     setEditingTagValue(newTag);
-
+    
     setTimeout(() => {
       if (tagInputRef.current) {
         tagInputRef.current.focus();
@@ -114,6 +127,7 @@ const CvCard = forwardRef((props, ref) => {
 
   const handleTagChange = (e) => {
     setEditingTagValue(e.target.value);
+    tagChange.current = true;
   };
 
   const handleTagBlur = () => {

@@ -19,7 +19,6 @@ const AdminHome = () => {
         </HeaderProduct> */}
         <main className="flex justify-center my-20">
           <CvLayout data={data || []} refetch={refetch}></CvLayout>
-          {/* <MainContent selectedPage={selectedPage} /> */}
         </main>
       </div>
     </SearchProvider>

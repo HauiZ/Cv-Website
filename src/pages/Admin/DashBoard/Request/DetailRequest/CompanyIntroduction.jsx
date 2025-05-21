@@ -1,7 +1,7 @@
 import React from "react";
 import defaultLogo from "../../../../../assets/image/logoNoBg.png";
 export default function CompanyIntroduction({ data }) {
-  const logoImage = data?.logoUrl || defaultLogo;
+  const logoImage = data?.companyLogo || defaultLogo;
   const path = `/companyprofile/${data?.id}`;
   return (
     <div>

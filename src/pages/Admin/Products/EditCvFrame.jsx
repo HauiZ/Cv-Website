@@ -100,7 +100,6 @@ export default function EditCvFrame({ request, onClose, refetch, data }) {
 
       try {
         await updateCvTemplate(formData, data.id);
-        showToast("Tạo CV thành công!", "success");
         onClose();
       } catch (error) {
         // Error is already handled by useCustomMutation

@@ -90,7 +90,6 @@ export default function CreateCvFrame({ request, onClose, refetch }) {
 
     try {
       await uploadCvTemplate(formData);
-      showToast("Tạo CV thành công!", "success");
       onClose();
     } catch (error) {
       // Error is already handled by useCustomMutation

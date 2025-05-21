@@ -20,7 +20,7 @@ const createTemplateCVApi = async (formData) => {
   });
 };
 const updateTemplateCVApi = async (formData, id) => {
-  return await instance.post(`/admin/updateCvTemplate/${id}`, formData, {
+  return await instance.patch(`/admin/updateCvTemplate/${id}`, formData, {
     headers: {
       "Content-Type": "multipart/form-data",
     },

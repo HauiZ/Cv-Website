@@ -6,23 +6,26 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CvCard from "./CvCard";
-import { createTemplateCVApi } from "../../../services/CvApi";
+import { updateTemplateCVApi } from "../../../services/CvApi";
 import useCustomMutation from "../../../hooks/useCustomMutation";
 import Loader from "../../../components/Loader";
-
-export default function CreateCvFrame({ request, onClose, refetch }) {
+import { useToast } from "../../../contexts/ToastContext";
+export default function EditCvFrame({ request, onClose, refetch, data }) {
   if (!request) return null;
-
-  const [file, setFile] = useState(null);
+  const { showToast } = useToast();
+  const [file, setFile] = useState(data?.templateUrl || null);
+  const fileChange = useRef(false);
   const [isDragging, setIsDragging] = useState(false);
-  const fileInputRef = useRef(null);
+  const fileInputRef = useRef(data?.displayUrl || null);
   const cvCardRef = useRef(null);
-  const { mutate: uploadCvTemplate, loading } =
-    useCustomMutation(createTemplateCVApi);
-
+  const { mutate: updateCvTemplate, loading } =
+    useCustomMutation(updateTemplateCVApi);
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
-    if (selectedFile) setFile(selectedFile);
+    if (selectedFile) {
+      setFile(selectedFile);
+      fileChange.current = true;
+    }
   };
 
   const handleDragOver = (e) => {
@@ -53,51 +56,60 @@ export default function CreateCvFrame({ request, onClose, refetch }) {
   };
 
   const handleApply = async () => {
-    if (!file) {
-      showToast("Vui lòng đính kèm file CV trước khi tạo!", "error");
-      return;
-    }
-
-    if (!cvCardRef.current) {
-      showToast("Không thể lấy thông tin từ CV Card!", "error");
-      return;
-    }
-
-    // Get data from the cvCardRef
-    const name = cvCardRef.current.getName() || "";
-    const tags = cvCardRef.current.getTags() || [];
     const imageFile = cvCardRef.current.getImageFile();
+    const imageChange = cvCardRef.current.getImageChange();
+    const nameChange = cvCardRef.current.getNameChange();
+    const tagChange = cvCardRef.current.getTagChange();
+    if (nameChange || tagChange || imageChange || fileChange.current) {
+      if (!file) {
+        showToast("Vui lòng đính kèm file CV trước khi tạo!", "error");
+        return;
+      }
 
-    console.log('Submitting CV data:', { name, tags, hasImage: !!imageFile });
+      if (!cvCardRef.current) {
+        showToast("Không thể lấy thông tin từ CV Card!", "error");
+        return;
+      }
 
-    const formData = new FormData();
+      // Get data from the cvCardRef
+      const name = cvCardRef.current.getName() || "";
+      const tags = cvCardRef.current.getTags() || [];
+      console.log("Submitting CV data:", { name, tags, hasImage: !!imageFile });
 
-    // Add the CV url as a string
-    const pdfFile = file // Update this to your actual URL
-    formData.append("pdf", pdfFile)
+      const formData = new FormData();
 
-    // Add name
-    formData.append("name", name);
+      // Add the CV url as a string
+      const pdfFile = file; // Update this to your actual URL
+      if (fileChange.current) {
+        formData.append("pdf", pdfFile);
+      }
+      // Add name
+      if (nameChange) {
+        formData.append("name", name);
+      }
 
-    // Add tags - send as a comma-separated string instead of JSON string with brackets
-    formData.append("propoties", tags.join(", "));
+      // Add tags - send as a comma-separated string instead of JSON string with brackets
+      if (tagChange) {
+        formData.append("propoties", tags.join(", "));
+      }
 
+      // Add image file if available
+      if (imageFile && imageChange) {
+        formData.append("image", imageFile);
+      }
 
-    // Add image file if available
-    if (imageFile) {
-      formData.append("image", imageFile);
-    }
-
-    try {
-      await uploadCvTemplate(formData);
-      showToast("Tạo CV thành công!", "success");
-      onClose();
-    } catch (error) {
-      // Error is already handled by useCustomMutation
-    }
-    finally {
-      onClose();
-      refetch();
+      try {
+        await updateCvTemplate(formData, data.id);
+        showToast("Tạo CV thành công!", "success");
+        onClose();
+      } catch (error) {
+        // Error is already handled by useCustomMutation
+      } finally {
+        onClose();
+        refetch();
+      }
+    }else{
+      showToast("Không có thay đổi nào để cập nhật!", "error");
     }
   };
 
@@ -121,12 +133,13 @@ export default function CreateCvFrame({ request, onClose, refetch }) {
         <div className="flex items-center justify-center w-fit h-fit">
           {/* Upload area */}
           <div
-            className={`w-[38rem] h-[28rem] border-2 border-dashed rounded-xl p-6 flex flex-col items-center justify-center cursor-pointer transition-all duration-200 ${isDragging
-              ? "border-blue-500 bg-blue-50"
-              : file
-                ? "border-green-500 bg-green-50"
-                : "border-gray-300 hover:border-blue-400 hover:bg-blue-50"
-              }`}
+            className={`w-[38rem] h-[28rem] border-2 border-dashed rounded-xl p-6 flex flex-col items-center justify-center cursor-pointer transition-all duration-200 ${
+              isDragging
+                ? "border-blue-500 bg-blue-50"
+                : file
+                  ? "border-green-500 bg-green-50"
+                  : "border-gray-300 hover:border-blue-400 hover:bg-blue-50"
+            }`}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
@@ -142,28 +155,13 @@ export default function CreateCvFrame({ request, onClose, refetch }) {
 
             {file ? (
               <div className="flex flex-col items-center">
-                {/* Show file preview if it's an image */}
-                {file.type.startsWith("image/") && (
-                  <div
-                    className="mb-4 border border-gray-200 rounded-lg overflow-hidden"
-                    style={{ maxWidth: "200px", maxHeight: "200px" }}
-                  >
-                    <img
-                      src={URL.createObjectURL(file)}
-                      alt="Preview"
-                      className="w-full h-auto object-contain"
-                    />
-                  </div>
-                )}
-
-                {/* File info and clear option */}
                 <div className="flex items-center mt-2">
                   <FontAwesomeIcon
                     icon={faCheck}
                     className="text-green-600 text-xl mr-2"
                   />
                   <p className="font-medium text-green-700 text-sm">
-                    {file.name}
+                    {file?.name || file}
                   </p>
                   <button
                     onClick={handleClearFile}
@@ -191,10 +189,7 @@ export default function CreateCvFrame({ request, onClose, refetch }) {
 
           {/* Preview Card - Always visible */}
           <div className="w-fit flex justify-end ml-10">
-            <CvCard
-              ref={cvCardRef}
-              data={{}}
-            />
+            <CvCard ref={cvCardRef} data={data || {}} />
           </div>
         </div>
 
@@ -205,7 +200,7 @@ export default function CreateCvFrame({ request, onClose, refetch }) {
             onClick={handleApply}
             disabled={loading}
           >
-            {loading ? "Đang tạo..." : "Tạo"}
+            {loading ? "Đang chỉnh sửa..." : "Chỉnh sửa"}
           </button>
           <button
             className="bg-red-600 text-white px-8 py-2 rounded-lg font-bold hover:bg-red-700"

@@ -6,12 +6,16 @@ import { FaEllipsisH } from "react-icons/fa";
 import { useLocation } from "react-router-dom";
 import useCustomMutation from "../../../hooks/useCustomMutation";
 import { deleteTemplateCVApi } from "../../../services/CvApi";
+import EditCvFrame from "./EditCvFrame";
+import { set } from "react-hook-form";
 
 export default function CvLayout({ data, refetch }) {
-  data = [...data].reverse()
+  data = [...data].reverse();
   const [currentPage, setCurrentPage] = useState(1);
   const [showModal, setShowModal] = useState(false);
   const [selectedCvId, setSelectedCvId] = useState(null);
+  const [selectedRequest, setSelectedRequest] = useState(null);
+  const [selectedCv, setSelectedCv] = useState(null);
   const location = useLocation();
   const { mutate: deleteTemplate, loading } =
     useCustomMutation(deleteTemplateCVApi);
@@ -74,14 +78,29 @@ export default function CvLayout({ data, refetch }) {
       <div className="animate-scaleIn grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-5 gap-y-10 w-fit">
         {paginatedData?.map((cv) => (
           <div key={cv.id} className="relative">
-            <TemplateCv data={cv} hoverContent={
-              <button
-                onClick={() => handCVDisplayClick(cv.templateUrl)}
-                className="text-white hover:text-green-400 font-bold px-4 py-2 rounded-full w-[10rem] border-2 border-white hover:bg-white"
-              >
-                Xem mẫu
-              </button>
-            } />
+            <TemplateCv
+              data={cv}
+              hoverContent={
+                <div className="flex flex-col gap-y-2">
+                  <button
+                    onClick={() => handCVDisplayClick(cv.templateUrl)}
+                    className="text-white hover:text-green-400 font-bold px-4 py-2 rounded-full w-[10rem] border-2 border-white hover:bg-white"
+                  >
+                    Xem mẫu
+                  </button>
+                  <button
+                    onClick={() => {
+                      setSelectedCv(cv);
+                      setSelectedRequest(true);
+                      
+                    }}
+                    className="text-white hover:text-green-400 font-bold px-4 py-2 rounded-full w-[10rem] border-2 border-white hover:bg-white"
+                  >
+                    Chỉnh sửa
+                  </button>
+                </div>
+              }
+            />
 
             {canDelete && (
               <button
@@ -120,13 +139,21 @@ export default function CvLayout({ data, refetch }) {
               <button
                 onClick={handleCancel}
                 className="px-4 py-2 border rounded hover:bg-gray-100"
-                disabled = {loading? true: false}
+                disabled={loading ? true : false}
               >
                 Huỷ
               </button>
             </div>
           </div>
         </div>
+      )}
+      {selectedRequest && (
+        <EditCvFrame
+          request={selectedRequest}
+          onClose={() => setSelectedRequest(null)}
+          refetch={refetch}
+          data = {selectedCv}
+        />
       )}
     </div>
   );

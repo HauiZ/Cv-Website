@@ -3,7 +3,7 @@ import LoginBannerPersonal from "../../components/LoginBannerPersonal";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema } from "../../utils/ValidationSchemas";
 import Input from "../../components/BttnInput";
-import BttnSignIn from "../../components/BttnSignIn";
+import BttnSignIn from "../../components/BttnGoogleISignIn";
 import useLoading from "../../hooks/useLoading";
 import Loader from "../../components/Loader";
 import { useNavigate } from "react-router-dom";  // Make sure to import from react-router-dom

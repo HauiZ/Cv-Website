@@ -5,6 +5,7 @@ import useCustomMutation from "../../../hooks/useCustomMutation";
 import { changePassword } from '../../../services/userApi';
 import Loader from "../../../components/Loader";
 import useLoading from "../../../hooks/useLoading";
+import { Eye, EyeOff } from 'lucide-react';
 
 export default function SecurityPage() {
     const { user } = useAuthContext();
@@ -26,6 +27,19 @@ export default function SecurityPage() {
         newPassword: false,
         confirmPassword: false,
     });
+
+    const [showPassword, setShowPassword] = useState({
+        currentPassword: false,
+        newPassword: false,
+        confirmPassword: false,
+    });
+
+    const togglePasswordVisibility = (fieldName) => {
+        setShowPassword(prev => ({
+            ...prev,
+            [fieldName]: !prev[fieldName]
+        }));
+    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -142,6 +156,11 @@ export default function SecurityPage() {
                 newPassword: '',
                 confirmPassword: '',
             });
+            setShowPassword({
+                currentPassword: false,
+                newPassword: false,
+                confirmPassword: false,
+            });
         });
     };
     return (
@@ -178,15 +197,24 @@ export default function SecurityPage() {
                                 <div className="mb-4">
                                     <div className="flex items-center mb-1">
                                         <label className="w-40 text-gray-700">Mật khẩu hiện tại:</label>
-                                        <div className="flex-1">
+                                        <div className="flex-1 relative">
                                             <input
-                                                type="password"
+                                                type={showPassword.currentPassword ? "text" : "password"}
                                                 name="currentPassword"
-                                                className={`w-full px-3 py-2 border rounded-md ${touched.currentPassword && errors.currentPassword ? 'border-red-500' : ''}`}
+                                                className={`w-full px-3 py-2 pr-10 border rounded-md ${touched.currentPassword && errors.currentPassword ? 'border-red-500' : ''}`}
                                                 placeholder="Nhập mật khẩu hiện tại"
                                                 value={formData.currentPassword}
                                                 onChange={handleChange}
                                             />
+                                            {formData.currentPassword && (
+                                                <button
+                                                    type="button"
+                                                    onClick={() => togglePasswordVisibility('currentPassword')}
+                                                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none"
+                                                >
+                                                    {showPassword.currentPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                                </button>
+                                            )}
                                             {touched.currentPassword && errors.currentPassword && (
                                                 <p className="text-red-500 text-sm mt-1">{errors.currentPassword}</p>
                                             )}
@@ -197,15 +225,24 @@ export default function SecurityPage() {
                                 <div className="mb-4">
                                     <div className="flex items-center mb-1">
                                         <label className="w-40 text-gray-700">Mật khẩu mới:</label>
-                                        <div className="flex-1">
+                                        <div className="flex-1 relative">
                                             <input
-                                                type="password"
+                                                type={showPassword.newPassword ? "text" : "password"}
                                                 name="newPassword"
-                                                className={`w-full px-3 py-2 border rounded-md ${touched.newPassword && errors.newPassword ? 'border-red-500' : ''}`}
+                                                className={`w-full px-3 py-2 pr-10 border rounded-md ${touched.newPassword && errors.newPassword ? 'border-red-500' : ''}`}
                                                 placeholder="Nhập mật khẩu mới"
                                                 value={formData.newPassword}
                                                 onChange={handleChange}
                                             />
+                                            {formData.newPassword && (
+                                                <button
+                                                    type="button"
+                                                    onClick={() => togglePasswordVisibility('newPassword')}
+                                                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none"
+                                                >
+                                                    {showPassword.newPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                                </button>
+                                            )}
                                             {touched.newPassword && errors.newPassword && (
                                                 <p className="text-red-500 text-sm mt-1">{errors.newPassword}</p>
                                             )}
@@ -216,15 +253,24 @@ export default function SecurityPage() {
                                 <div className="mb-4">
                                     <div className="flex items-center mb-1">
                                         <label className="w-40 text-gray-700">Nhập lại mật khẩu mới:</label>
-                                        <div className="flex-1">
+                                        <div className="flex-1 relative">
                                             <input
-                                                type="password"
+                                                type={showPassword.confirmPassword ? "text" : "password"}
                                                 name="confirmPassword"
-                                                className={`w-full px-3 py-2 border rounded-md ${touched.confirmPassword && errors.confirmPassword ? 'border-red-500' : ''}`}
+                                                className={`w-full px-3 py-2 pr-10 border rounded-md ${touched.confirmPassword && errors.confirmPassword ? 'border-red-500' : ''}`}
                                                 placeholder="Nhập lại mật khẩu mới"
                                                 value={formData.confirmPassword}
                                                 onChange={handleChange}
                                             />
+                                            {formData.confirmPassword && (
+                                                <button
+                                                    type="button"
+                                                    onClick={() => togglePasswordVisibility('confirmPassword')}
+                                                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none"
+                                                >
+                                                    {showPassword.confirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                                </button>
+                                            )}
                                             {touched.confirmPassword && errors.confirmPassword && (
                                                 <p className="text-red-500 text-sm mt-1">{errors.confirmPassword}</p>
                                             )}
@@ -235,8 +281,9 @@ export default function SecurityPage() {
                                 <div className="flex">
                                     <div className="w-40"></div>
                                     <button
-                                        className="px-6 py-2 bg-[#212F3F] font-semibold text-white rounded-md hover:text-green-600 hover:bg-gray-300"
-                                        type="submit"
+                                        className="px-6 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
+                                        type="button"
+                                        onClick={handleSubmit}
                                     >
                                         Cập nhật
                                     </button>

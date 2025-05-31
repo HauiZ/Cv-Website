@@ -47,13 +47,20 @@ const RequestDetailModal = ({ request, onClose, onApprove, onReject }) => {
               ✓
             </button>
           )}
+
           {!isRejected && (
-            <button className="px-4 py-1 border rounded hover:bg-gray-200 text-sm" onClick={() => {
-                navigate(`/admin/job/${request.recruitmentNewsId}`)
-            }}>
+            <button
+              className="px-4 py-1 border rounded hover:bg-gray-200 text-sm"
+              onClick={() => {
+                const base = `/admin/job/${request.recruitmentNewsId}`;
+                const path = request.typeOf !== 'CẬP NHẬT TIN TUYỂN DỤNG' ? base : `${base}/update`;
+                navigate(path);
+              }}
+            >
               detail
             </button>
           )}
+
           {isPending && (
             <button
               onClick={() => onReject(request.id)}

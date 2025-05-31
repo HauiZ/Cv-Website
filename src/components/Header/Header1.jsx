@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import { ImProfile } from "react-icons/im";
 import { TbLockPassword } from "react-icons/tb";
+import { MdManageAccounts } from "react-icons/md";
 
 const Header1 = () => {
   const { user } = useAuthContext();
@@ -45,7 +46,7 @@ const Header1 = () => {
     {
       key: "4",
       label: <a href="/candidate-application">Quản lý đơn ứng tuyển</a>,
-      icon: <SettingOutlined />,
+      icon: <MdManageAccounts />,
       extra: "⌘",
     },
     {
@@ -70,7 +71,7 @@ const Header1 = () => {
       <a onClick={(e) => e.preventDefault()}>
         <Space >
           <Avatar size={40} src={avatar} icon={!avatar && <UserOutlined />} />
-          <span className="font-medium">{displayName}</span>
+          <span className="font-medium cursor-default">{displayName}</span>
           <DownOutlined className="size-3" />
         </Space>
       </a>

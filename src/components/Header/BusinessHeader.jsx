@@ -21,6 +21,10 @@ const BusinessHeader = () => {
   const displayName =  user?.businessName || "User";
   const email = user?.email || "";
 
+  const handleLogOut = () => {
+    logOut((path) => navigate(path));
+  };
+
   const items = [
     {
       key: "1",
@@ -51,11 +55,7 @@ const BusinessHeader = () => {
     {
       key: "5",
       label: (
-        <button
-          onClick={() => {
-            logOut();
-          }}
-        >
+        <button onClick={handleLogOut}>
           Đăng xuất
         </button>
       ),
@@ -75,32 +75,30 @@ const BusinessHeader = () => {
     </Dropdown>
   );
 
-  return (
-    <div className="w-full h-[75px] bg-[#212F3F] fixed top-0 left-0 z-50 object-contain">
-      <div className="flex justify-between items-center max-h-[75px]">
-        <div className="flex w-[8vw] h-[75px] justify-between items-center ml-5 ">
+  return (    <div className="w-full h-[75px] bg-[#212F3F] shadow-md">
+      <div className="flex justify-between items-center h-full max-w-[1400px] mx-auto px-4">
+        <div className="flex items-center">
           <img
             src="/src/assets/image/logoNoBg.png"
-            className="object-contain hover:cursor-pointer"
+            className="h-12 w-auto object-contain hover:cursor-pointer mr-8"
             alt="Logo"
             onClick={() => navigate("/recruiter")}
-
           />
+          <div className="flex items-center space-x-4">
+            <a href="/recruiter/tin-tuyen-dung" className="menu bg-[#3B546F] text-white px-4 py-2 rounded-lg hover:bg-[#4B647F] transition-colors">
+              Tin đã đăng tuyển
+            </a>
+            <a href="/recruiter/quan-ly-cv" className="menu bg-[#3B546F] text-white px-4 py-2 rounded-lg hover:bg-[#4B647F] transition-colors">
+              Quản lý CV
+            </a>
+            <a href="/recruiter/profile" className="menu bg-[#3B546F] text-white px-4 py-2 rounded-lg hover:bg-[#4B647F] transition-colors">
+              Hồ sơ cá nhân
+            </a>
+          </div>
         </div>
-        <div className="flex gap-x-20 px-6 py-2 mt-4 mb-4">
-          <a href="/recruiter?tab=tin-tuyen-dung" className="menu bg-[#3B546F] text-white px-4 py-2 rounded-full hover:text-[#5DDA33]" >
-            Tin đã đăng tuyển
-          </a>
-          <a href="/recruiter?tab=quan-ly-cv" className="menu bg-[#3B546F] text-white px-4 py-2 rounded-full hover:text-[#5DDA33]">
-            Quản lý CV
-          </a>
-          <a href="/recruiter?tab=profile" className="menu bg-[#3B546F] text-white px-4 py-2 rounded-full hover:text-[#5DDA33]">
-            Hồ sơ cá nhân
-          </a>
-        </div>
-        <div className="flex gap-x-10 justify-end max-h-[50] mr-5">
-          <span className="text-2xl text-white">{"|"}</span>
-          <Notification></Notification>
+        <div className="flex items-center space-x-6">
+          <Notification />
+          <div className="h-6 w-px bg-gray-400/50" />
           <UserDropdown />
         </div>
       </div>

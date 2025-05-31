@@ -66,6 +66,8 @@ export default function PreviewNews({
   videoFileForPreview,
   isPreviewMode = false
 }) {
+  console.log("Giá trị của isPreviewMode trong PreviewNews:", isPreviewMode);
+
   const { user } = useAuthContext();
 
   if (!formDataForPreview) {
@@ -173,7 +175,7 @@ export default function PreviewNews({
               <DetailJob data={detailRecruitment} isPreviewMode={isPreviewMode} />
             </div>
           </div>
-          {!isPreviewMode && detailRecruitment?.profession && (
+          {detailRecruitment?.profession && (
             <div className="max-w-[59rem] mx-auto">
               <p className="text-center text-gray-500">Tin tuyển dụng liên quan sẽ được hiển thị khi đăng tin.</p>
             </div>

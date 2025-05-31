@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import AppLayout from "../layouts/AppLayout";
 import HomeLayout from "../layouts/HomeLayout";
-import BusinessLayout from "../layouts/BusinessLayOut";
 
 // Pages
 import Home from "../pages/home/Home";
@@ -16,8 +15,13 @@ import ChangeProfilePage from "../pages/InfomationPage/ChangeProfilePage";
 import SearchPage from "../pages/Search/SearchPage";
 import TemplateCV from "../pages/TemplateCV/TemplateCV";
 import ToolFormat from "../pages/ToolsPage/ToolFormat";
+import DashBoard from "../pages/DashBoardRecruiter/DashBoard";
+import NewsManerment from "../pages/NewsManerment/NewsManerment";
+import JobPostingForm from "../pages/JobPosting/JobPostingForm";
 import EditJob from "../pages/NewsManerment/EditJob";
-import RenderContent from "../components/BussinessContent/RenderContent"; // Fixed import path
+import ProfileSettingPage from "../pages/InfomationPage/BusinessInfomation/ProfileSettingPage";
+import SecurityPage from "../pages/InfomationPage/BusinessInfomation/SecurityPage";
+import ApplicantLayout from "../pages/CVManagement/ApplicantLayout";
 
 // Route nhóm
 import { adminRoutes } from "./adminRoutes";
@@ -26,6 +30,8 @@ import { authRoutes } from "./authRoutes";
 // ✅ RequireAuth
 import RequireAuth from "../components/RequireAuth";
 import ApplicationManerment from "../pages/ApplicationManerment/ApplicationManerment";
+import BusinessLayout from "../layouts/BusinessLayout";
+import { getApplicantApi } from "../services/recruiterApi";
 
 // ✅ Các route cần đăng nhập trong HomeLayout
 const protectedRoutes = [
@@ -69,37 +75,26 @@ const router = createBrowserRouter([
     children: [
       ...authRoutes,
       ...adminRoutes,      {
-        path: "recruiter",
+        path: "/recruiter",
         element: (
           <RequireAuth>
             <BusinessLayout />
           </RequireAuth>
-        ),
-        children: [
+        ),        children: [
+          { path: "bang-tin", element: <DashBoard /> },
           { 
-            index: true,  // This will match exact /recruiter path
-            element: <RenderContent contentKey="bang-tin" /> 
+            path: "tin-tuyen-dung",
+            children: [
+              { index: true, element: <NewsManerment /> },
+              { path: "edit", element: <EditJob /> }
+            ]
           },
-          { 
-            path: "tin-tuyen-dung", 
-            element: <RenderContent contentKey="tin-tuyen-dung" /> 
-          },
-          { 
-            path: "quan-ly-cv", 
-            element: <RenderContent contentKey="quan-ly-cv" /> 
-          },
-          { 
-            path: "thong-bao", 
-            element: <RenderContent contentKey="thong-bao" /> 
-          },
-          { 
-            path: "trang-ca-nhan", 
-            element: <RenderContent contentKey="trang-ca-nhan" /> 
-          },
-          { 
-            path: "edit-job", 
-            element: <EditJob /> 
-          }
+          { path: "dang-tin", element: <JobPostingForm /> },
+          { path: "cv-de-xuat", element: <div className='flex text-center text-green-400 justify-center font-bold text-4xl animate-pulse'>COMING SOON</div> },
+          { path: "quan-ly-cv", element: <ApplicantLayout funcApi={getApplicantApi} /> },
+          { path: "profile", element: <ProfileSettingPage /> },
+          { path: "security", element: <SecurityPage /> },
+          { path: "", element: <DashBoard /> }, // Default route
         ],
       },
 

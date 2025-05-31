@@ -44,7 +44,7 @@ export default function SearchPage() {
             order = "DESC";
         } else if (value === "experience") {
             sortBy = "experience";
-            order = "ASC";
+            order = "DESC";
         } else if (value === "date") {
             sortBy = "datePosted";
             order = "DESC";

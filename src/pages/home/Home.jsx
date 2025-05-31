@@ -10,53 +10,58 @@ import Search from "../../components/Search/Search";
 import { useNavigate } from "react-router-dom";
 
 import background_ColorGreen from "../../assets/image/background_ColorGreen.png";
+import { useState } from "react";
 
 const Mix = () => {
   const navigate = useNavigate();
-
+  const [filters, setFilters] = useState();
   const handleProfessionClick = (keyword) => {
-      navigate(`/search?profession=${encodeURIComponent(keyword)}`);
+    navigate(`/search?profession=${encodeURIComponent(keyword)}`);
+  };
+  const handleFilterChange = (newFilters) => {
+    setFilters((prev) => ({ ...prev, ...newFilters }));
   };
 
   return (
-      <div className="flex flex-col justify-center items-center gap-y-1">
-          <h1 className="text-2xl text-white font-semibold mt-2 mb-2 animate-pulse">
-              Tìm việc làm nhanh, việc làm mới nhất trên toàn quốc
-          </h1>
-          <Search onSearch={null}/>
-          <div className="flex justify-center mt-2 gap-x-10">
-              <div className="w-[300px] h-[240px] bg-white rounded-2xl shadow-md">
-                  <ul className="space-y-3 ml-3 pr-3 py-4">
-                      {[
-                          { title: "Công nghệ thông tin", keyword: "Công nghệ thông tin" },
-                          { title: "Kinh doanh - Bán hàng", keyword: "Thương mại" },
-                          { title: "Truyền hình - Viễn Thông", keyword: "Viễn thông" },
-                          { title: "Tài chính - Ngân hàng", keyword: "Ngân hàng" },
-                          { title: "Marketing - Quảng cáo", keyword: "Marketing" },
-                          { title: "Nhân sự - Hành chính", keyword: "Nhân sự" }
-                      ].map((items, index) => (
-                          <li key={index}>
-                              <div
-                                  className="hover:text-[#5DDA33] flex justify-between cursor-pointer"
-                                  onClick={() => handleProfessionClick(items.keyword)}
-                              >
-                                  <span className="font-semibold">{items.title}</span>
-                                  <FaAngleRight className="text-[#D9D9D9]" />
-                              </div>
-                          </li>
-                      ))}
-                  </ul>
-              </div>
-              <div className="w-[600px] h-[240px] relative rounded-2xl shadow-md">
-                  <Slider />
-              </div>
-          </div>
+    <div className="flex flex-col justify-center items-center gap-y-1">
+      <h1 className="text-2xl text-white font-semibold mt-2 mb-2 animate-pulse">
+        Tìm việc làm nhanh, việc làm mới nhất trên toàn quốc
+      </h1>
+      <Search onSearch={handleFilterChange} 
+      initialValues={{
+        keyword: filters}}/>
+      <div className="flex justify-center mt-2 gap-x-10">
+        <div className="w-[300px] h-[240px] bg-white rounded-2xl shadow-md">
+          <ul className="space-y-3 ml-3 pr-3 py-4">
+            {[
+              { title: "Công nghệ thông tin", keyword: "Công nghệ thông tin" },
+              { title: "Kinh doanh - Bán hàng", keyword: "Thương mại" },
+              { title: "Truyền hình - Viễn Thông", keyword: "Viễn thông" },
+              { title: "Tài chính - Ngân hàng", keyword: "Ngân hàng" },
+              { title: "Marketing - Quảng cáo", keyword: "Marketing" },
+              { title: "Nhân sự - Hành chính", keyword: "Nhân sự" },
+            ].map((items, index) => (
+              <li key={index}>
+                <div
+                  className="hover:text-[#5DDA33] flex justify-between cursor-pointer"
+                  onClick={() => handleProfessionClick(items.keyword)}
+                >
+                  <span className="font-semibold">{items.title}</span>
+                  <FaAngleRight className="text-[#D9D9D9]" />
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="w-[600px] h-[240px] relative rounded-2xl shadow-md">
+          <Slider />
+        </div>
       </div>
+    </div>
   );
 };
 
 function Home() {
-
   return (
     <>
       <div

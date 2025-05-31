@@ -1,30 +1,25 @@
-// src/layouts/adminLayout.jsx
+// src/layouts/BusinessLayout.jsx
 import React from "react";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, Outlet } from "react-router-dom";
 import BusinessHeader from "../components/Header/BusinessHeader";
 import Sidebar from "../components/BussinessContent/SideBarLayout";
 
 export default function BusinessLayout() {
   const location = useLocation();
-  const navigate = useNavigate();
-  const currentPath = location.pathname.split('/').pop() || 'bang-tin';
-
-  // Function to update the path
-  const handleTabChange = (newTab) => {
-    navigate(`/recruiter/${newTab}`);
-  };
+  const pathSegments = location.pathname.split('/');
+  const activeTab = pathSegments[2] || "bang-tin"; // Default to bang-tin if no path
   return (
-    <div className="pt-[75px]">
-      <BusinessHeader />
-      <div className="flex bg-gray-100">
+    <div className="min-h-screen flex flex-col">
+      <BusinessHeader className="fixed top-0 w-full z-50" />
+      <div className="flex flex-1 pt-[75px]">
         {/* Sidebar */}
-        <div className="w-[15rem] h-[40rem] bg-white shadow fixed">
-          <Sidebar activeTab={currentPath} setActiveTab={handleTabChange} />
-        </div>
-
-        {/* Content */}
-        <div className="flex-1 p-9 ml-[15rem]">
-          <Outlet />
+        <div className="w-[15rem] fixed left-0 top-[75px] bottom-0 bg-white shadow-md overflow-y-auto">
+          <Sidebar activeTab={activeTab} />
+        </div>        {/* Main Content */}
+        <div className="flex-1 ml-[15rem] bg-gray-100 min-h-full">
+          <div className="p-8">
+            <Outlet />
+          </div>
         </div>
       </div>
     </div>

@@ -3,7 +3,7 @@ import { useState } from "react";
 export default function CvCard({ data, hoverContent }) {
   const [isHovered, setIsHovered] = useState(false);
 
-  const { id, name, propoties, url, displayUrl } = data || {};
+  const { id, name, propoties, templateUrl, displayUrl } = data || {};
 
   // Parse the propoties properly, handling different formats
   let tags = [];
@@ -79,7 +79,7 @@ export default function CvCard({ data, hoverContent }) {
         </div>
       </div>
       {isHovered && hoverContent && (
-        <div className="absolute inset-0 flex justify-center items-center bg-black/30 h-[30rem]">
+        <div className="absolute inset-0 flex justify-center items-center bg-black/65 h-[30rem]">
           {hoverContent}
         </div>
       )}

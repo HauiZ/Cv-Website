@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { FaUpload } from 'react-icons/fa';
 import TextAreaForm from './TextAreaForm';
-import { DatePicker } from 'antd';
+import { DatePicker, Modal } from 'antd';
 import useCustomMutation from '../../hooks/useCustomMutation';
 import { postRecruitmentNewsApi } from '../../services/recruiterApi';
 import Loader from "../../components/Loader";
@@ -64,18 +64,6 @@ const JobPostingForm = () => {
         },
     });
 
-    // const TextareaWrapper = ({ value, onChange, placeholder }) => {
-    //   return (
-    //     <div className="textarea-wrapper">
-    //       <textarea
-    //         className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors bg-white min-h-[150px]"
-    //         value={value || ''}
-    //         onChange={(e) => onChange(e.target.value)}
-    //         placeholder={placeholder}
-    //       />
-    //     </div>
-    //   );
-    // };
 
     const onChangeWorkDateIn = (date, dateString) => {
         setFormData({
@@ -131,81 +119,164 @@ const JobPostingForm = () => {
     };
 
     const validateForm = () => {
-        const requiredFields = [
+        if (!formData.workDetail || formData.workDetail.trim() === '' || formData.workDetail === '<p><br></p>') {
+            Modal.error({
+                title: 'Thông tin không hợp lệ',
+                content: 'Vui lòng điền Mô tả công việc',
+            });
+            return false;
+        }
+        if (!formData.benefits || formData.benefits.trim() === '' || formData.benefits === '<p><br></p>') {
+            Modal.error({
+                title: 'Thông tin không hợp lệ',
+                content: 'Vui lòng điền Quyền lợi được hưởng',
+            });
+            return false;
+        }
+
+        const generalRequiredFields = [
             'jobTitle', 'profession', 'candidateNumber', 'workType', 'jobLevel', 'degree',
-            'jobAddress', 'salary', 'workDetail',
-            'experience', 'jobRequirements', 'benefits', 'applicationDeadline'
+            'jobAddress', 'experience', 'applicationDeadline'
         ];
 
+        const fieldLabels = {
+            jobTitle: "Vị trí đăng tuyển",
+            profession: "Ngành nghề",
+            candidateNumber: "Số lượng cần tuyển",
+            workType: "Hình thức làm việc",
+            jobLevel: "Cấp bậc",
+            degree: "Yêu cầu bằng cấp",
+            jobAddress: "Địa điểm làm việc",
+            experience: "Kinh nghiệm",
+            jobRequirements: "Yêu cầu công việc",
+            applicationDeadline: "Hạn nộp hồ sơ"
+        };
+
+        for (const field of generalRequiredFields) {
+            if (!formData[field] || (typeof formData[field] === 'string' && formData[field].trim() === '') || formData[field] === '<p><br></p>') {
+                Modal.error({
+                    title: 'Thông tin không hợp lệ',
+                    content: `Vui lòng điền đầy đủ thông tin: ${fieldLabels[field] || field}`,
+                });
+                return false;
+            }
+        }
+
+        if (!formData.salary.negotiable && (!formData.salary.min || formData.salary.min.trim() === '' || !formData.salary.max || formData.salary.max.trim() === '')) {
+            Modal.error({
+                title: 'Thông tin không hợp lệ',
+                content: 'Vui lòng điền đầy đủ mức lương (tối thiểu và tối đa), hoặc chọn Thỏa thuận.',
+            });
+            return false;
+        }
+
+        if (!selectedProvince?.value) {
+            Modal.error({
+                title: 'Thông tin không hợp lệ',
+                content: 'Vui lòng chọn Tỉnh/Thành phố',
+            });
+            return false;
+        }
+        if (!selectedDistrict?.value) {
+            Modal.error({
+                title: 'Thông tin không hợp lệ',
+                content: 'Vui lòng chọn Quận/Huyện',
+            });
+            return false;
+        }
+
         const contactRequiredFields = ['name', 'address', 'phone', 'email'];
+        const contactFieldLabels = {
+            name: 'Tên người liên hệ',
+            address: 'Địa chỉ liên hệ',
+            phone: 'Số điện thoại liên hệ',
+            email: 'Email liên hệ'
+        };
 
-        // Check basic fields
-        for (const field of requiredFields) {
-            if (!formData[field]) {
-                return `Vui lòng điền đầy đủ thông tin ${field}`;
-            }
-        }
-
-        // Check contact info
         for (const field of contactRequiredFields) {
-            if (!formData.contactInfo[field]) {
-                return `Vui lòng điền đầy đủ thông tin liên hệ ${field}`;
+            if (!formData.contactInfo[field] || (typeof formData.contactInfo[field] === 'string' && formData.contactInfo[field].trim() === '')) {
+                Modal.error({
+                    title: 'Thông tin không hợp lệ',
+                    content: `Vui lòng điền đầy đủ thông tin: ${contactFieldLabels[field]}`,
+                });
+                return false;
             }
         }
 
-        // Email validation
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(formData.contactInfo.email)) {
-            return 'Email liên hệ không hợp lệ';
+            Modal.error({
+                title: 'Thông tin không hợp lệ',
+                content: 'Email liên hệ không hợp lệ',
+            });
+            return false;
         }
 
-        // Phone validation (Vietnamese phone number)
         const phoneRegex = /(84|0[3|5|7|8|9])+([0-9]{8})\b/;
         if (!phoneRegex.test(formData.contactInfo.phone)) {
-            return 'Số điện thoại liên hệ không hợp lệ';
+            Modal.error({
+                title: 'Thông tin không hợp lệ',
+                content: 'Số điện thoại liên hệ không hợp lệ',
+            });
+            return false;
         }
 
-        return null;
+        return true;
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Validate form
-        const validationError = validateForm();
-        if (validationError) {
-            window.alert(validationError);
+        if (!validateForm()) {
             return;
         }
 
         await withLoading(async () => {
-            await mutate({
-                jobTitle: formData.jobTitle,
-                profession: formData.profession,
-                candidateNumber: formData.candidateNumber,
-                jobLevel: formData.jobLevel,
-                workType: formData.workType,
-                degree: formData.degree,
-                province: selectedProvince.label,
-                district: selectedDistrict.label,
-                jobAddress: formData.jobAddress,
-                salaryMin: formData.salary.min,
-                salaryMax: formData.salary.max,
-                salaryNegotiable: formData.salary.negotiable,
-                experience: formData.experience,
-                workDateIn: formData.workDateIn,
-                workDetail: formData.workDetail,
-                jobRequirements: formData.jobRequirements,
-                benefits: formData.benefits,
-                applicationDeadline: formData.applicationDeadline,
-                contactInfo: formData.contactInfo.name,
-                contactAddress: formData.contactInfo.address,
-                contactPhone: formData.contactInfo.phone,
-                contactEmail: formData.contactInfo.email,
-                videoUrl: formData.videoUrl,
-            });
+            try {
+                await mutate({
+                    jobTitle: formData.jobTitle,
+                    profession: formData.profession,
+                    candidateNumber: formData.candidateNumber,
+                    jobLevel: formData.jobLevel,
+                    workType: formData.workType,
+                    degree: formData.degree,
+                    province: selectedProvince?.label,
+                    district: selectedDistrict?.label,
+                    jobAddress: formData.jobAddress,
+                    salaryMin: formData.salary.min,
+                    salaryMax: formData.salary.max,
+                    salaryNegotiable: formData.salary.negotiable,
+                    experience: formData.experience,
+                    workDateIn: formData.workDateIn,
+                    workDetail: formData.workDetail,
+                    jobRequirements: formData.jobRequirements,
+                    benefits: formData.benefits,
+                    applicationDeadline: formData.applicationDeadline,
+                    contactInfo: formData.contactInfo.name,
+                    contactAddress: formData.contactInfo.address,
+                    contactPhone: formData.contactInfo.phone,
+                    contactEmail: formData.contactInfo.email,
+                    videoUrl: formData.videoUrl,
+                });
+                Modal.success({
+                    title: 'Thành công!',
+                    content: 'Đăng tin thành công.',
+                });
+                resetForm();
+            } catch (error) {
+                console.error("Error submitting form:", error);
+                let errorMessage = "Đã có lỗi xảy ra khi đăng tin. Vui lòng thử lại.";
+                if (error.response && error.response.data && error.response.data.message) {
+                    errorMessage = error.response.data.message;
+                } else if (error.message) {
+                    errorMessage = error.message;
+                }
+                Modal.error({
+                    title: 'Lỗi đăng tin',
+                    content: errorMessage,
+                });
+            }
         });
-        // resetForm();
     };
 
     const resetForm = () => {
@@ -239,13 +310,20 @@ const JobPostingForm = () => {
         });
         setVideoFile(null);
         setSelectedProvince(null);
-        selectedDistrict(null);
-    };
-
-    const handleCancel = () => {
-        if (window.confirm('Bạn có chắc muốn hủy tạo tin? Tất cả thông tin sẽ bị mất.')) {
-            resetForm();
-        }
+        setSelectedDistrict(null);
+    };    const handleCancel = () => {
+        Modal.confirm({
+            title: 'Xác nhận hủy',
+            content: 'Bạn có chắc muốn hủy tạo tin? Tất cả thông tin sẽ bị mất.',
+            okText: 'Đồng ý',
+            cancelText: 'Hủy',
+            okButtonProps: {
+                className: 'bg-red-500 hover:bg-red-600',
+            },
+            onOk() {
+                resetForm();
+            }
+        });
     };
 
     // Custom input style
@@ -262,6 +340,11 @@ const JobPostingForm = () => {
                     <div className="backdrop-blur-md bg-white/30 p-6 rounded-2xl shadow-xl">
                         <Loader />
                     </div>
+                </div>
+            )}
+            {notification && (
+                <div className={`notification-popup ${notification.type}`}>
+                    <p>{notification.message}</p>
                 </div>
             )}
             <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-sm">
@@ -346,8 +429,6 @@ const JobPostingForm = () => {
                                 <option value="Trưởng nhóm">Trưởng nhóm</option>
                                 <option value="Quản lý / Giám sát">Quản lý / Giám sát</option>
                                 <option value="Trưởng chi nhánh">Trưởng chi nhánh</option>
-                                <option value="Giám đốc / Phó giám đốc">Giám đốc / Phó giám đốc</option>
-                                <option value="Thực tập sinh">Thực tập sinh</option>
                             </select>
                         </div>
 

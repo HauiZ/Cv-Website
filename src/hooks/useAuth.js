@@ -67,7 +67,10 @@ export default function useAuth(navigationCallback = null) {
             showToast("Token không hợp lệ!", "error");
           }
         } catch (err) {
-          const msg = err?.response?.data?.message || "Đăng nhập thất bại!";
+          const msg =
+            err?.err?.response?.data?.message ||
+            err?.message ||
+            "Đăng nhập thất bại!";
           showToast(msg, "error");
         }
       });

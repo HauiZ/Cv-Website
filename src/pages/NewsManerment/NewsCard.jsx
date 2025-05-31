@@ -1,22 +1,22 @@
 import React from "react";
 import formatSalaryRangeToVND from "../../utils/formatSalaryRangeToVND";
 import { useNavigate } from "react-router-dom";
-import { FaCheckCircle, FaTimesCircle, FaClock } from "react-icons/fa";
+import { FaCheckCircle, FaTimesCircle, FaClock, FaTrashAlt } from "react-icons/fa";
 import dayjs from "dayjs";
 import "dayjs/locale/vi";
 import relativeTime from "dayjs/plugin/relativeTime";
-import { getApplicantForNewsApi } from "../../services/recruiterApi";
+import { useSpring, animated } from 'react-spring';
+import { useDrag } from 'react-use-gesture';
 
 dayjs.extend(relativeTime);
 dayjs.locale("vi");
 
-export default function NewsCard({ job, setFilterWithNews, setNewsId }) {
+export default function NewsCard({ job, onDeleteNews }) {
+  const navigate = useNavigate();
   const salaryRange = formatSalaryRangeToVND(
     `${job.salaryMin} - ${job.salaryMax}`
   );
-  const navigate = useNavigate();
-  const path = `/recruiter?tab=quan-ly-cv`;
-  // Hàm xác định màu sắc cho status
+
   const statusMap = {
     PENDING: {
       icon: <FaClock className="text-black" />,
@@ -24,86 +24,141 @@ export default function NewsCard({ job, setFilterWithNews, setNewsId }) {
     },
     APPROVED: {
       icon: <FaCheckCircle className="text-white" />,
-      class: "bg-green-500 text-white ",
+      class: "bg-green-500 text-white",
     },
     REJECTED: {
       icon: <FaTimesCircle className="text-red-600" />,
-      class: "bg-red-500 text-red-800",
+      class: "bg-red-500 text-white",
     },
   };
 
+  const statusData = statusMap[job?.status?.toUpperCase() || "PENDING"] || statusMap["PENDING"];
   const handleOnclick = () => {
-    setFilterWithNews(true);
-    setNewsId(job.id);
-    navigate(path);
+    if (job?.status === "APPROVED") {
+      navigate(`/recruiter/quan-ly-cv`);
+    }
   };
 
-  const statusData =
-    statusMap[job?.status.toUpperCase() || ""] || statusMap["PENDING"];
+  const [{ x }, api] = useSpring(() => ({ x: 0 }));
+  const SWIPE_THRESHOLD = -80;
+  const DELETE_AREA_WIDTH = 80;
+
+  const bind = useDrag(
+    ({ down, movement: [mx], cancel }) => {
+      if (mx >= 0) {
+        api.start({ x: 0, immediate: true });
+        return;
+      }
+
+      if (down) {
+        api.start({ x: mx, immediate: true });
+      } else {
+        if (mx < SWIPE_THRESHOLD) {          api.start({ 
+            x: -(DELETE_AREA_WIDTH + 200), 
+            immediate: false,
+            onRest: () => onDeleteNews(job.id, () => api.start({ x: 0 }))
+          });
+        } else {
+          api.start({ x: 0, immediate: false });
+        }
+      }
+    },
+    {
+      axis: 'x',
+      filterTaps: true,
+      rubberband: 0.1,
+      preventDefault: true,
+    }
+  );
 
   return (
-    <div
-      className={`flex gap-4 border p-3 rounded-lg shadow-sm transition-all duration-300 group relative hover:shadow-[0_0_10px_rgba(12,142,94,0.5)] hover:border-[#0C8E5E]
-    ${job?.status === "APPROVED" ? "cursor-pointer " : "cursor-default"}
-  `}
-      onClick={job?.status === "APPROVED" ? handleOnclick : undefined}
-    >
-      <img
-        src={job?.logoUrl || "/src/assets/image/logoNoBg.png"}
-        alt="logo"
-        className="w-[5rem] h-[5rem] object-contain"
-      />
-      <div className="flex flex-col flex-grow gap-y-5">
-        <div className="flex justify-between font-bold text-sm group-hover:text-[#1b8e0c] transition-colors duration-300">
-          <div>{job.jobTitle}</div>
-
-          <p className="text-[#5DDA33]">Bài đăng số: {job.id}</p>
-          <div className="flex flex-col md:items-end gap-2">
-            <span
-              className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-[0.75rem] font-medium ${statusData.class}`}
-            >
-              {statusData.icon}
-              {job?.status || ""}
-            </span>
-          </div>
-        </div>
-        <div className="flex justify-between  xl:gap-x-5 text-sm text-black mt-1">
-          <div className="flex gap-4">
-            <div className="bg-gray-300 h-fit w-fit text-center p-1.5 rounded-[.5em] hover:bg-gray-200 transition-colors duration-200">
-              {job?.companyAddress || "ha noi"}
-            </div>
-            <div className="bg-gray-300 h-fit w-fit text-center p-1.5 rounded-[.5em] hover:bg-gray-200 transition-colors duration-200 ">
-              Ngày đăng: {dayjs(job.datePosted).format("DD/MM/YYYY")}
-            </div>
-            <div className="bg-gray-300 h-fit w-fit text-center p-1.5 rounded-[.5em] hover:bg-gray-200 transition-colors duration-200 ">
-              {salaryRange || "Thương lượng"}
-            </div>
-          </div>
-        </div>
+    <div className="relative rounded-lg overflow-hidden my-1">
+      {/* Delete background */}
+      <div
+        className="absolute top-0 right-0 h-full bg-red-500 flex items-center justify-center text-white cursor-pointer"
+        style={{ width: `${DELETE_AREA_WIDTH}px`, transform: `translateX(${DELETE_AREA_WIDTH}px)` }}
+        onClick={(e) => {
+          e.stopPropagation();
+          onDeleteNews(job.id);
+        }}
+      >
+        <FaTrashAlt size={24} />
       </div>
 
-      
-      <div className="absolute bottom-3 right-3 z-10 flex items-center gap-2">
-        
-        <button className="px-3 py-1 bg-[#5DDA33] text-white rounded-full text-sm hover:opacity-90 hover:cursor-pointer">
-          Đơn ứng tuyển: {job?.numberApplicant || 0}
-        </button>
-        
-        
-        {job.status === "APPROVED" && (
-          <button
-            className="px-3 py-1 bg-[#01c951] text-white rounded-full text-sm hover:bg-[#01a341] transition-colors"
+      {/* Main card */}        <animated.div
+        {...bind()}
+        style={{
+          x,
+          touchAction: 'pan-y',
+          backgroundColor: 'white',
+          userSelect: 'none',
+          WebkitUserSelect: 'none',
+          MozUserSelect: 'none',
+          msUserSelect: 'none',
+        }}className={`flex flex-col border border-gray-200 p-3 rounded-lg shadow-sm transition-all duration-300 group relative max-w-4xl mx-auto
+          ${job?.status === "APPROVED" ? "cursor-pointer" : "cursor-default"}
+          hover:shadow-[0_0_10px_rgba(12,142,94,0.5)] hover:border-[#0C8E5E]`}
+        onClick={handleOnclick}
+      >
+        <div className="flex gap-3">
+          <img
+            src={job?.logoUrl || "/src/assets/image/logoNoBg.png"}
+            alt="logo"
+            className="w-16 h-16 object-contain flex-shrink-0"
+          />
+
+          <div className="flex flex-col flex-grow gap-y-1">
+            <div className="flex flex-col sm:flex-row sm:justify-between font-bold text-sm group-hover:text-[#1b8e0c] transition-colors duration-300">
+              <div className="truncate max-w-[180px] sm:max-w-xs md:max-w-sm">
+                {job.jobTitle}
+              </div>
+              <div className="flex flex-row items-center justify-between gap-2">
+                <p className="text-[#5DDA33] text-xs whitespace-nowrap">
+                  Bài đăng số: {job.id}
+                </p>
+                <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[0.7rem] font-medium ${statusData.class}`}>
+                  {statusData.icon}
+                  {job?.status || ""}
+                </span>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap gap-2 text-xs text-black mt-1">
+              <div className="bg-gray-200 h-fit w-fit text-center px-2 py-1 rounded hover:bg-gray-300 transition-colors duration-200 truncate">
+                {job?.companyAddress || "Chưa cập nhật"}
+              </div>
+              <div className="bg-gray-200 h-fit w-fit text-center px-2 py-1 rounded hover:bg-gray-300 transition-colors duration-200">
+                Đăng: {dayjs(job.datePosted).format("DD/MM/YYYY")}
+              </div>
+              <div className="bg-gray-200 h-fit w-fit text-center px-2 py-1 rounded hover:bg-gray-300 transition-colors duration-200 truncate">
+                {salaryRange || "Thương lượng"}
+              </div>
+            </div>
+          </div>        </div>        
+        <div className="flex flex-row justify-end items-center gap-2">
+          <button 
+            className="px-3 py-1 bg-[#5DDA33] text-white rounded-full text-xs hover:opacity-90 whitespace-nowrap"
             onClick={(e) => {
               e.stopPropagation();
-              navigate(`/recruiter/edit-job`); // Đảm bảo job.id được truyền vào
+              if (job?.id) {
+                navigate(`/recruiter/tin-tuyen-dung/edit`, {
+                  state: { jobId: job.id }
+                });
+              }
             }}
           >
-            Chỉnh sửa
+            Sửa tin
+          </button>          <button 
+            className="px-3 py-1 bg-[#5DDA33] text-white rounded-full text-xs hover:opacity-90 whitespace-nowrap"
+            onClick={(e) => {
+              e.stopPropagation();
+              navigate('/recruiter/quan-ly-cv');
+            }}
+          >
+            Đơn ứng tuyển: {job?.numberApplicant || 0}
           </button>
-        )}
-
-        
-      </div>
+        </div>
+      </animated.div>
     </div>
   );
 }

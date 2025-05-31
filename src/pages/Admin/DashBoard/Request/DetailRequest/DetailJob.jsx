@@ -69,8 +69,8 @@ export default function DetailJob({ data }) {
             </div>
             <iframe
               width="100%"
-              height="200"
-              src={videoUrl}
+              height="300"
+              src={`${videoUrl}?rel=0&modestbranding=1&showinfo=0&cc_load_policy=0&iv_load_policy=3&autohide=1&controls=1&disablekb=1&playsinline=1`}
               title="Video"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen

@@ -76,6 +76,7 @@ const EditJob = () => {
             email: '',
         },
         videoUrl: '',
+        uploadMethod: 'link',
     });
 
     useEffect(() => {
@@ -87,43 +88,44 @@ const EditJob = () => {
 
         if (jobData) {
             setFormData({
-                jobTitle: jobData.jobTitle || '',
-                profession: jobData.profession || '',
-                candidateNumber: String(jobData.candidateNumber || ''),
-                jobLevel: jobData.jobLevel || '',
-                workType: jobData.workType || '',
-                degree: jobData.degree || '',
-                jobAddress: jobData.jobAddress || '',
+                jobTitle: jobData.introduce?.jobTitle || '',
+                profession: jobData.detailRecruitment?.profession || '',
+                candidateNumber: jobData.general?.candidateNumber || '',
+                jobLevel: jobData.general?.jobLevel || '',
+                workType: jobData.general?.workType || '',
+                degree: jobData.detailRecruitment?.degree || '',
+                jobAddress: jobData.detailRecruitment?.jobAddress || '',
                 salary: {
-                    min: jobData.salaryMin || '',
-                    max: jobData.salaryMax || '',
-                    negotiable: Boolean(jobData.salaryNegotiable),
+                    min: jobData.introduce?.salaryMin || '',
+                    max: jobData.introduce?.salaryMax || '',
+                    negotiable: jobData.detailRecruitment?.salaryNegotiable,
                 },
-                experience: jobData.experience || '',
-                workDateIn: jobData.workDateIn || '',
-                workDetail: jobData.workDetail || '',
-                jobRequirements: jobData.jobRequirements || '',
-                benefits: jobData.benefits || '',
-                applicationDeadline: jobData.applicationDeadlineDate || '',
+                experience: jobData.introduce?.experience || '',
+                workDateIn: jobData.detailRecruitment?.workDateIn || '',
+                workDetail: jobData.detailRecruitment?.workDetail || '',
+                jobRequirements: jobData.detailRecruitment?.jobRequirements || '',
+                benefits: jobData.detailRecruitment?.benefits || '',
+                applicationDeadline: jobData.introduce?.applicationDeadlineDate || '',
                 contactInfo: {
-                    name: jobData.contactInfo || '',
-                    address: jobData.contactAddress || '',
-                    phone: jobData.contactPhone || '',
-                    email: jobData.contactEmail || '',
+                    name: jobData.detailRecruitment?.contactInfo || '',
+                    address: jobData.detailRecruitment?.contactAddress || '',
+                    phone: jobData.detailRecruitment?.contactPhone || '',
+                    email: jobData.detailRecruitment?.contactEmail || '',
                 },
-                videoUrl: jobData.videoUrl || '',
+                videoUrl: jobData.detailRecruitment?.videoUrl || '',
+                uploadMethod: 'link',
             });
 
-            if (jobData.province) {
+            if (jobData.introduce?.address) {
                 setSelectedProvince({
-                    label: jobData.province,
-                    value: jobData.province
+                    label: jobData.introduce?.address,
+                    value: jobData.introduce?.address
                 });
 
-                if (jobData.district) {
+                if (jobData.introduce?.district) {
                     setSelectedDistrict({
-                        label: jobData.district,
-                        value: jobData.district
+                        label: jobData.introduce?.district,
+                        value: jobData.introduce?.district
                     });
                 }
             }
@@ -145,17 +147,17 @@ const EditJob = () => {
                 // Lưu trữ dữ liệu job response
                 setJobData(jobResponse);
 
-                if (jobResponse.province) {
+                if (jobResponse.introduce.address) {
                     const provinceOption = {
-                        label: jobResponse.province,
-                        value: jobResponse.province
+                        label: jobResponse.introduce.address,
+                        value: jobResponse.introduce.address,
                     };
                     setSelectedProvince(provinceOption);
 
-                    if (jobResponse.district) {
+                    if (jobResponse.introduce.district) {
                         const districtOption = {
-                            label: jobResponse.district,
-                            value: jobResponse.district
+                            label: jobResponse.introduce.district,
+                            value: jobResponse.introduce.district
                         };
                         setSelectedDistrict(districtOption);
                     }
@@ -170,6 +172,10 @@ const EditJob = () => {
     }, [jobId, navigate]); // Only depend on jobId and navigate
 
     const handleInputChange = (field, value) => {
+        if (field === 'videoUrl') {
+            const embedUrl = convertToYouTubeEmbed(value);
+            value = embedUrl || value; 
+        }
         setFormData(prev => ({
             ...prev,
             [field]: value,
@@ -185,6 +191,59 @@ const EditJob = () => {
             },
         }));
     };
+
+    function convertToYouTubeEmbed(url) {
+        try {
+            const videoId = extractYouTubeVideoId(url);
+
+            if (!videoId) {
+                throw new Error('Không tìm thấy Video ID hợp lệ');
+            }
+
+            return `https://www.youtube.com/embed/${videoId}`;
+
+        } catch (error) {
+            console.error('Lỗi convert URL:', error.message);
+            return null;
+        }
+    }
+
+    function extractYouTubeVideoId(url) {
+        url = url.trim();
+
+        // Trường hợp 1: Tìm vị trí của "v=" trong URL
+        const vIndex = url.indexOf('v=');
+
+        if (vIndex !== -1) {
+            // Lấy 11 ký tự sau "v="
+            const videoId = url.substring(vIndex + 2, vIndex + 13);
+
+            // Kiểm tra xem có đủ 11 ký tự không
+            if (videoId.length === 11) {
+                return videoId;
+            }
+        }
+
+        // Trường hợp 2: URL embed - tìm "/embed/" hoặc "/v/"
+        const embedIndex = url.indexOf('/embed/');
+        const vSlashIndex = url.indexOf('/v/');
+
+        let startIndex = -1;
+        if (embedIndex !== -1) {
+            startIndex = embedIndex + 7; // "/embed/".length = 7
+        } else if (vSlashIndex !== -1) {
+            startIndex = vSlashIndex + 3; // "/v/".length = 3
+        }
+
+        if (startIndex !== -1) {
+            const videoId = url.substring(startIndex, startIndex + 11);
+            if (videoId.length === 11) {
+                return videoId;
+            }
+        }
+
+        return null;
+    }
 
     const handleSave = async () => {
         try {
@@ -207,7 +266,6 @@ const EditJob = () => {
                 });
                 return;
             }
-
             await withLoading(async () => {
                 const data = {
                     jobTitle: formData.jobTitle.trim(),
@@ -711,7 +769,7 @@ const EditJob = () => {
                                     <label className="block text-sm font-medium text-gray-700 mb-1">
                                         Hạn nộp hồ sơ
                                         <span className="text-red-500 ml-1">*</span>
-                                    </label>                                    
+                                    </label>
                                     <DatePicker
                                         onChange={onChangeApplicationDeadline}
                                         className="w-full"
@@ -781,6 +839,84 @@ const EditJob = () => {
                                     onChange={(value) => handleInputChange('benefits', value)}
                                     placeholder="Nhập quyền lợi dành cho ứng viên"
                                 />
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Video and Contact Information Section - Third Image */}
+                    <div className="form-section mb-8">
+                        <h2 className="section-title flex items-center mb-6">
+                            <span className="w-1 h-6 bg-green-500 mr-2"></span>
+                            <span className="text-green-500 font-medium">Video giới thiệu về tin đăng</span>
+                        </h2>
+
+                        <div className="form-group">
+                            <div className="radio-group mb-4 flex items-center">
+                                <div className="radio-item flex items-center">
+                                    <input
+                                        type="radio"
+                                        id="upload"
+                                        name="uploadMethod"
+                                        value="file"
+                                        checked={formData.uploadMethod === 'file'}
+                                        onChange={() => handleInputChange('uploadMethod', 'file')}
+                                        className="mr-2"
+                                    />
+                                    <label htmlFor="upload" className="text-sm select-none">Tập tin lên</label>
+                                </div>
+                                <div className="text-sm mx-4 text-gray-500">Hoặc</div>
+                                <div className="radio-item flex items-center">
+                                    <input
+                                        type="radio"
+                                        id="link"
+                                        name="uploadMethod"
+                                        value="link"
+                                        checked={formData.uploadMethod === 'link'}
+                                        onChange={() => handleInputChange('uploadMethod', 'link')}
+                                        className="mr-2"
+                                    />
+                                    <label htmlFor="link" className="text-sm select-none">Link liên kết</label>
+                                </div>
+                            </div>
+
+                            {formData.uploadMethod === 'file' ? (
+                                <div className="mb-4">
+                                    <input
+                                        type="file"
+                                        id="video-upload"
+                                        className="hidden"
+                                        accept="video/*"
+                                        onChange={handleVideoUpload}
+                                    />
+                                    <label htmlFor="video-upload" className="block">
+                                        <div className="border border-dashed border-gray-300 rounded-md p-8 text-center text-sm text-gray-500 cursor-pointer hover:bg-gray-50 transition-colors">
+                                            <FaUpload className="mx-auto mb-2 text-gray-400" size={24} />
+                                            <p className="text-gray-500">Tải ảnh hoặc video (Tối đa 5 ảnh và 1 video dung lượng tối đa 10MB)</p>
+                                        </div>
+                                    </label>
+                                    {videoFile && (
+                                        <div className="mt-2 text-sm text-green-600">
+                                            Đã chọn: {videoFile.name}
+                                        </div>
+                                    )}
+                                </div>
+                            ) : (
+                                <div className="mb-4">
+                                    <input
+                                        type="text"
+                                        className={inputFieldClass}
+                                        placeholder="Nhập URL video (YouTube, Vimeo,...)"
+                                        value={formData.videoUrl}
+                                        onChange={(e) => handleInputChange('videoUrl', e.target.value)}
+                                    />
+                                </div>
+                            )}
+
+                            <div className="flex mt-4">
+                                <div className="bg-gray-50 border border-dashed border-gray-300 rounded flex flex-col items-center justify-center w-40 h-40 cursor-pointer hover:bg-gray-100 transition-colors">
+                                    <FaUpload size={24} className="mb-2 text-gray-400" />
+                                    <span className="text-sm text-gray-500">Thêm ảnh/video</span>
+                                </div>
                             </div>
                         </div>
                     </div>

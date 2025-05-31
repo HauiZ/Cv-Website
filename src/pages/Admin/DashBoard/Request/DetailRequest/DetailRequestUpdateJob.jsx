@@ -11,16 +11,13 @@ import { useParams } from "react-router-dom";
 
 const isDifferent = (a, b) => JSON.stringify(a) !== JSON.stringify(b);
 
-// Hàm để tìm ra các thay đổi chi tiết
 const getDetailedChanges = (newData, oldData) => {
     const changes = [];
     
     if (!newData || !oldData) return changes;
     
-    // So sánh từng field
     Object.keys(newData).forEach(key => {
         if (JSON.stringify(newData[key]) !== JSON.stringify(oldData[key])) {
-            // Nếu là object, so sánh chi tiết hơn
             if (typeof newData[key] === 'object' && newData[key] !== null && oldData[key] !== null) {
                 Object.keys(newData[key]).forEach(subKey => {
                     if (JSON.stringify(newData[key][subKey]) !== JSON.stringify(oldData[key][subKey])) {
@@ -44,7 +41,6 @@ const getDetailedChanges = (newData, oldData) => {
     return changes;
 };
 
-// Component hiển thị tooltip với thay đổi chi tiết
 const ChangeTooltip = ({ changes, visible, onMouseEnter, onMouseLeave }) => {
     if (!visible || !changes || changes.length === 0) return null;
     
@@ -92,7 +88,6 @@ const Highlight = ({ children, changed, newData = null, oldData = null }) => {
     const changes = changed && newData && oldData ? getDetailedChanges(newData, oldData) : [];
 
     const handleMouseEnter = () => {
-        // Clear timeout nếu có
         if (timeoutId) {
             clearTimeout(timeoutId);
             setTimeoutId(null);
@@ -101,7 +96,7 @@ const Highlight = ({ children, changed, newData = null, oldData = null }) => {
     };
 
     const handleMouseLeave = () => {
-        // Delay 1 giây trước khi ẩn tooltip
+        // Delay 0.5 giây 
         const id = setTimeout(() => {
             setShowTooltip(false);
             setTimeoutId(null);

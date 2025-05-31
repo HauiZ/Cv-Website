@@ -51,7 +51,6 @@ const EditJob = () => {
 
     // Form state
     const [formData, setFormData] = useState({
-        companyId: '', // Add companyId field
         jobTitle: '',
         profession: '',
         candidateNumber: '',
@@ -105,7 +104,7 @@ const EditJob = () => {
                 workDetail: jobData.workDetail || '',
                 jobRequirements: jobData.jobRequirements || '',
                 benefits: jobData.benefits || '',
-                applicationDeadline: jobData.applicationDeadline || '',
+                applicationDeadline: jobData.applicationDeadlineDate || '',
                 contactInfo: {
                     name: jobData.contactInfo || '',
                     address: jobData.contactAddress || '',
@@ -125,7 +124,8 @@ const EditJob = () => {
                     setSelectedDistrict({
                         label: jobData.district,
                         value: jobData.district
-                    });                }
+                    });
+                }
             }
         }
     }, [jobId, jobData, navigate]);
@@ -138,8 +138,8 @@ const EditJob = () => {
                     setNotification({ type: 'error', message: 'ID tin tuyển dụng không hợp lệ' });
                     navigate('/recruiter/tin-tuyen-dung');
                     return;
-                }                
-                    const jobResponse = await fetchRecruitmentNewsDetailApi(jobId);
+                }
+                const jobResponse = await fetchRecruitmentNewsDetailApi(jobId);
                 console.log('Job Response:', jobResponse);
 
                 // Lưu trữ dữ liệu job response
@@ -208,9 +208,8 @@ const EditJob = () => {
                 return;
             }
 
-            await withLoading(async () => {                
-                const updateData = {
-                    recruitmentNewsId: jobId,
+            await withLoading(async () => {
+                const data = {
                     jobTitle: formData.jobTitle.trim(),
                     profession: formData.profession,
                     candidateNumber: parseInt(formData.candidateNumber) || 0,
@@ -220,9 +219,9 @@ const EditJob = () => {
                     province: selectedProvince.value,
                     district: selectedDistrict.value,
                     jobAddress: formData.jobAddress.trim(),
-                    salaryMin: parseInt(String(formData.salary.min).replace(/\D/g, '')) || 0,
-                    salaryMax: parseInt(String(formData.salary.max).replace(/\D/g, '')) || 0,
-                    salaryNegotiable: Boolean(formData.salary.negotiable),
+                    salaryMin: formData.salary.min,
+                    salaryMax: formData.salary.max,
+                    salaryNegotiable: formData.salary.negotiable,
                     experience: formData.experience,
                     workDateIn: formData.workDateIn,
                     workDetail: formData.workDetail.trim(),
@@ -231,12 +230,13 @@ const EditJob = () => {
                     applicationDeadline: formData.applicationDeadline,
                     contactInfo: formData.contactInfo.name.trim(),
                     contactAddress: formData.contactInfo.address.trim(),
-                    contactPhone: formData.contactInfo.phone.trim(), 
+                    contactPhone: formData.contactInfo.phone.trim(),
                     contactEmail: formData.contactInfo.email.trim(),
                     videoUrl: formData.videoUrl?.trim() || ""
                 };
-
-                await mutate(updateData,jobId);})
+                console.log('Saving job with data:', data);
+                await mutate(data, jobId);
+            });
         } catch (error) {
             console.error('Error saving job:', error);
             Modal.error({
@@ -399,28 +399,11 @@ const EditJob = () => {
         return true;
     };
 
-    const handleSubmit = async (values) => {
-        try {
-          const payload = {
-            jobTitle: values.title,
-            recruitmentNewsId: values.id,
-            companyId: user.companyId,
-            profession: values.profession,
-            jobAddress: values.jobAddress,
-            // ...remaining payload properties
-          };
-          await updateRecruitmentNewsApi(payload);
-          navigate("/manager-recruitment");
-        } catch (error) {
-          console.error("Error updating job:", error);
-        }
-      };
-
     return (
         <div className="container mx-auto p-4">
             <h2 className="text-2xl font-bold mb-4">Chỉnh sửa tin tuyển dụng</h2>
             {/* Form content */}
-            
+
             {/* Preview Modal using Ant Design Modal */}
             <Modal
                 visible={showPreviewModal}
@@ -484,7 +467,7 @@ const EditJob = () => {
                         ID tin tuyển dụng: {jobId}
                     </div>
                 </div>
-                
+
                 <form className="space-y-6">
                     {/* Thông tin công việc */}
                     <div className="section mb-8">
@@ -492,7 +475,7 @@ const EditJob = () => {
                             <span className="w-1 h-6 bg-green-500 mr-2"></span>
                             <span className="text-green-500 font-medium">Thông tin công việc</span>
                         </h2>
-                        
+
                         <div className="space-y-4">
                             <div className="form-group">
                                 <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -589,7 +572,7 @@ const EditJob = () => {
                             <span className="w-1 h-6 bg-green-500 mr-2"></span>
                             <span className="text-green-500 font-medium">Địa điểm và yêu cầu công việc</span>
                         </h2>
-                        
+
                         <div className="space-y-4">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div className="form-group">
@@ -721,31 +704,21 @@ const EditJob = () => {
                             <span className="w-1 h-6 bg-green-500 mr-2"></span>
                             <span className="text-green-500 font-medium">Thông tin thời gian</span>
                         </h2>
-                        
+
                         <div className="space-y-4">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div className="form-group">
                                     <label className="block text-sm font-medium text-gray-700 mb-1">
                                         Hạn nộp hồ sơ
                                         <span className="text-red-500 ml-1">*</span>
-                                    </label>                                    <DatePicker
-                                        onChange={(date) => {
-                                            // Nếu date là null (người dùng xóa ngày), cập nhật state thành null
-                                            if (!date) {
-                                                handleInputChange('applicationDeadline', null);
-                                                return;
-                                            }
-                                            // Format ngày theo định dạng YYYY-MM-DD trước khi lưu vào state
-                                            const formattedDate = date.format('YYYY-MM-DD');
-                                            handleInputChange('applicationDeadline', formattedDate);
-                                        }}
+                                    </label>                                    
+                                    <DatePicker
+                                        onChange={onChangeApplicationDeadline}
                                         className="w-full"
                                         size="large"
                                         locale={locale}
-                                        format="DD/MM/YYYY"
                                         placeholder="Chọn hạn nộp hồ sơ"
-                                        value={formatDate(formData.applicationDeadline)}
-                                        disabledDate={(current) => current && current < dayjs().endOf('day')}
+                                        value={formData.applicationDeadline ? dayjs(formData.applicationDeadline) : null}
                                     />
                                 </div>
 
@@ -772,7 +745,7 @@ const EditJob = () => {
                             <span className="w-1 h-6 bg-green-500 mr-2"></span>
                             <span className="text-green-500 font-medium">Mô tả chi tiết</span>
                         </h2>
-                        
+
                         <div className="space-y-4">
                             <div className="form-group">
                                 <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -789,7 +762,7 @@ const EditJob = () => {
                             <div className="form-group">
                                 <label className="block text-sm font-medium text-gray-700 mb-1">
                                     Yêu cầu công việc
-                                    
+
                                 </label>
                                 <TextAreaForm
                                     value={formData.jobRequirements}
@@ -818,7 +791,7 @@ const EditJob = () => {
                             <span className="w-1 h-6 bg-green-500 mr-2"></span>
                             <span className="text-green-500 font-medium">Thông tin liên hệ</span>
                         </h2>
-                        
+
                         <div className="space-y-4">
                             <div className="form-group">
                                 <label className="block text-sm font-medium text-gray-700 mb-1">

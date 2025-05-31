@@ -53,8 +53,9 @@ export default function NewsCard({ job, onDeleteNews }) {
       if (down) {
         api.start({ x: mx, immediate: true });
       } else {
-        if (mx < SWIPE_THRESHOLD) {          api.start({ 
-            x: -(DELETE_AREA_WIDTH + 200), 
+        if (mx < SWIPE_THRESHOLD) {
+          api.start({
+            x: -(DELETE_AREA_WIDTH + 200),
             immediate: false,
             onRest: () => onDeleteNews(job.id, () => api.start({ x: 0 }))
           });
@@ -95,7 +96,7 @@ export default function NewsCard({ job, onDeleteNews }) {
           WebkitUserSelect: 'none',
           MozUserSelect: 'none',
           msUserSelect: 'none',
-        }}className={`flex flex-col border border-gray-200 p-3 rounded-lg shadow-sm transition-all duration-300 group relative max-w-4xl mx-auto
+        }} className={`flex flex-col border border-gray-200 p-3 rounded-lg shadow-sm transition-all duration-300 group relative max-w-4xl mx-auto
           ${job?.status === "APPROVED" ? "cursor-pointer" : "cursor-default"}
           hover:shadow-[0_0_10px_rgba(12,142,94,0.5)] hover:border-[#0C8E5E]`}
         onClick={handleOnclick}
@@ -134,21 +135,26 @@ export default function NewsCard({ job, onDeleteNews }) {
                 {salaryRange || "Thương lượng"}
               </div>
             </div>
-          </div>        </div>        
+          </div>        </div>
         <div className="flex flex-row justify-end items-center gap-2">
-          <button 
-            className="px-3 py-1 bg-[#5DDA33] text-white rounded-full text-xs hover:opacity-90 whitespace-nowrap"
+          <button
+            className={`px-3 py-1 text-white rounded-full text-xs whitespace-nowrap transition-colors ${job?.status === 'APPROVED'
+              ? 'bg-[#5DDA33] hover:opacity-90 cursor-pointer'
+              : 'bg-gray-400 cursor-not-allowed opacity-60'
+              }`}
             onClick={(e) => {
               e.stopPropagation();
-              if (job?.id) {
+              if (job?.status === 'APPROVED' && job?.id) {
                 navigate(`/recruiter/tin-tuyen-dung/edit`, {
                   state: { jobId: job.id }
                 });
               }
             }}
+            disabled={job?.status !== 'APPROVED'}
+            title={job?.status !== 'APPROVED' ? 'Chỉ có thể sửa tin đã được duyệt' : 'Sửa tin tuyển dụng'}
           >
             Sửa tin
-          </button>          <button 
+          </button>          <button
             className="px-3 py-1 bg-[#5DDA33] text-white rounded-full text-xs hover:opacity-90 whitespace-nowrap"
             onClick={(e) => {
               e.stopPropagation();

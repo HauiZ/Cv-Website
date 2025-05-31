@@ -1,3 +1,4 @@
+import { a } from "react-spring";
 import axios from "../utils/axios.customize";
 
 const fetchRecruitmentNewsDetailApi = async (newsId) => {
@@ -35,11 +36,12 @@ const fetchRecruitmentNewsDetailApi = async (newsId) => {
       experience: job.introduce?.experience || "",
       workDateIn: job.detailRecruitment?.workDateIn || "",
       applicationDeadline: job.introduce?.applicationDeadline || "",
+      applicationDeadlineDate: job.introduce?.applicationDeadlineDate || "",
       datePosted: job.detailRecruitment?.datePosted || "",
 
       // Location information
-      province: job.Area?.province || "",
-      district: "",  // Add if available in backend
+      province: job.introduce.address || "",
+      district: job.introduce.district || "",  // Add if available in backend
 
       // Job details
       workDetail: processTextArray(job.detailRecruitment?.workDetail),

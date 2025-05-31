@@ -132,12 +132,11 @@ const getDashBoardApi = async () => {
   const res = await axios.get("/recruiter/getDataDashBoard");
   return res.data;
 };
-const updateRecruitmentNewsApi = async ({
-  recruitmentNewsId,
+const updateRecruitmentNewsApi = async ( {
   jobTitle,
   profession,
   candidateNumber,
-  jobLevel,  
+  jobLevel,
   workType,
   degree,
   province,
@@ -157,41 +156,36 @@ const updateRecruitmentNewsApi = async ({
   contactPhone,
   contactEmail,
   videoUrl
-}) => {
-    
-    
+}, recruitmentNewsId) => {
+  const data = {
+    jobTitle,
+    profession,
+    candidateNumber,
+    jobLevel,
+    workType,
+    degree,
+    province,
+    district,
+    jobAddress,
+    salaryMin,
+    salaryMax,
+    salaryNegotiable,
+    experience,
+    workDateIn,
+    workDetail,
+    jobRequirements,
+    benefits,
+    applicationDeadline,
+    contactInfo,
+    contactAddress,
+    contactPhone,
+    contactEmail,
+    videoUrl
+  };
 
-    const data = {
-      jobTitle,
-      profession,
-      candidateNumber,
-      jobLevel,
-      workType,
-      degree,
-      province,
-      district,
-      jobAddress,
-      salaryMin,
-      salaryMax,
-      salaryNegotiable,
-      experience, 
-      workDateIn,
-      workDetail,
-      jobRequirements,
-      benefits,
-      applicationDeadline,
-      contactInfo,
-      contactAddress,
-      contactPhone,
-      contactEmail,
-      videoUrl,
-      status: 'PENDING'
-    };    
-  
+  return await axios.post(`/recruiter/updateRecruitmentNews/${recruitmentNewsId}`, data);
+}
 
-    return await axios.post(`/recruiter/updateRecruitmentNews/${recruitmentNewsId}`, data);
-  }
-    
 const deleteRecruitmentNewsApi = async (recruitmentNewsId) => {
   return await axios.post(`/recruiter/deleteRecruitmentNews/${recruitmentNewsId}`);
 };
@@ -205,7 +199,7 @@ export {
   getApplicantApi,
   approveApplicationApi,
   fetchAllNewsApi,
-  getNotificationApi,  getApplicantForNewsApi,
+  getNotificationApi, getApplicantForNewsApi,
   getDashBoardApi,
   updateRecruitmentNewsApi,
   deleteRecruitmentNewsApi,

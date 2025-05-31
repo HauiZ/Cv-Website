@@ -9,7 +9,7 @@ import {
 } from "react-icons/fa";
 import ApplyPopUp from "./ApplyPopUp";
 
-export default function JobIntroduction({data, jobId}) {
+export default function JobIntroduction({data, jobId, isPreviewMode = false}) {
   const [isApplyOpen, setIsApplyOpen] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   const salaryRanges = formatSalaryRangeToVND(data?.salaryRange || "Thương lượng");
@@ -59,23 +59,26 @@ export default function JobIntroduction({data, jobId}) {
         Hạn nộp hồ sơ: {data?.applicationDeadline || "Chưa có thông tin"}
       </div>
 
-      <div className="flex items-center justify-between gap-3">
-        <button className="bg-lime-500 text-white font-semibold py-2 w-[25rem] px-6 rounded-full hover:bg-lime-600 transition" onClick={() => setIsApplyOpen(true)}>
-          Ứng tuyển ngay
-        </button>
+      {!isPreviewMode && (
+        <div className="flex items-center justify-between gap-3">
+          <button className="bg-lime-500 text-white font-semibold py-2 w-[25rem] px-6 rounded-full hover:bg-lime-600 transition" onClick={() => setIsApplyOpen(true)}>
+            Ứng tuyển ngay
+          </button>
 
-        <button
-          onClick={handleSaveClick}
-          className={`flex items-center gap-1 border ${
-            isSaved
-              ? "bg-lime-100 border-lime-500 text-lime-600"
-              : "border-lime-500 text-lime-500"
-          } px-4 py-2 rounded-full hover:bg-lime-50 transition text-sm`}
-        >
-          {isSaved ? <FaHeart className="text-lime-600" /> : <FaRegHeart />}
-          {isSaved ? "Đã lưu" : "Lưu tin"}
-        </button>
-      </div>
+          <button
+            onClick={handleSaveClick}
+            className={`flex items-center gap-1 border ${
+              isSaved
+                ? "bg-lime-100 border-lime-500 text-lime-600"
+                : "border-lime-500 text-lime-500"
+            } px-4 py-2 rounded-full hover:bg-lime-50 transition text-sm`}
+          >
+            {isSaved ? <FaHeart className="text-lime-600" /> : <FaRegHeart />}
+            {isSaved ? "Đã lưu" : "Lưu tin"}
+          </button>
+        </div>
+      )}
+      
       <ApplyPopUp isOpen={isApplyOpen} onClose={() => setIsApplyOpen(false)} jobId={jobId}/>
     </div>
   );

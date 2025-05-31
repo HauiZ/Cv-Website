@@ -11,23 +11,33 @@ export default function RenderContent({ activeTab }) {
     const [filterWithNews, setFilterWithNews] = useState(false);
     const [newsId, setNewsId] = useState(null);
     const funcApi = filterWithNews ? getApplicantForNewsApi : getApplicantApi;
+    
     switch (activeTab) {
         case 'bang-tin':
-            return (<DashBoard/>);
+            return <DashBoard />;
         case 'tin-tuyen-dung':
-            return (<NewsManerment setFilterWithNews={setFilterWithNews} setNewsId={setNewsId}/>);
+            return (
+                <NewsManerment 
+                    setFilterWithNews={setFilterWithNews} 
+                    setNewsId={setNewsId}
+                />
+            );
         case 'dang-tin':
-            return (<JobPostingForm />);
+            return <JobPostingForm />;
         case 'cv-de-xuat':
-            return (<div className='flex text-center text-green-400 justify-center font-bold text-4xl animate-pulse'>COMING SOON</div>);
+            return (
+                <div className='flex text-center text-green-400 justify-center font-bold text-4xl animate-pulse'>
+                    COMING SOON
+                </div>
+            );
         case 'profile':
-            return (<ProfileSettingPage />);
+            return <ProfileSettingPage />;
         case 'quan-ly-cv':
-            return (<ApplicantLayout funcApi={funcApi} newsId={newsId}/>);
+            return <ApplicantLayout funcApi={funcApi} newsId={newsId}/>;
         case 'security':
-            return (<SecurityPage />);
+            return <SecurityPage />;
         default:
-            return (<ProfileSettingPage />);
+            return <DashBoard />; // Default to dashboard instead of profile
     }
 };
 

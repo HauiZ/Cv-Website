@@ -28,6 +28,11 @@ export default function JobDescription() {
     [detailRecruitment]
   );
   const { data: jobs } = useCustomFetch(fetchAllNewsFilterApi, [filterParams]);
+
+  const isPreviewMode = false; // Set this dynamically if needed
+
+  console.log("isPreviewMode value:", isPreviewMode); // Debugging log
+
   return (
     <div>
       {/* Search bar */}
@@ -54,7 +59,7 @@ export default function JobDescription() {
               <CompanyIntroduction data={company} />
             </div>
             <div>
-              <JobIntroduction data={introduce} jobId={jobId} />
+              <JobIntroduction data={introduce} jobId={jobId} isPreviewMode={isPreviewMode} />
             </div>
           </div>
           <div className="flex justify-center gap-x-5 mb-10">
@@ -62,16 +67,23 @@ export default function JobDescription() {
               <GeneralInformation
                 data={general}
                 degree={detailRecruitment?.degree || "Đại Học"}
+                isPreviewMode={isPreviewMode}
               />
             </div>
             <div>
-              <DetailJob data={detailRecruitment} />
+              <DetailJob data={detailRecruitment} isPreviewMode={isPreviewMode} />
             </div>
           </div>
-          <div className="max-w-[59rem] mx-auto">
-            <RelativeNews data={jobs} />
+          {detailRecruitment?.profession && (
+            <div className="max-w-[59rem] mx-auto">
+              <p className="text-center text-gray-500">Tin tuyển dụng liên quan sẽ được hiển thị khi đăng tin.</p>
+            </div>
+          )}
+          <div className="flex justify-center gap-4 mt-4">
+            <button className="btn-save" disabled={isPreviewMode}>Lưu tin</button>
+            <button className="btn-apply" disabled={isPreviewMode}>Ứng tuyển ngay</button>
+            <button className="btn-view-company" disabled={isPreviewMode}>Xem trang công ty</button>
           </div>
-          <div></div>
         </div>
       </div>
     </div>

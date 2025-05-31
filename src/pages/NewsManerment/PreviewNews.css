@@ -1,0 +1,10 @@
+.preview-news-container {
+  /* Các style hiện có của bạn cho preview-news-container */
+  background-color: white; /* ví dụ */
+  padding: 1rem; /* ví dụ */
+  max-height: 80vh; /* ví dụ */
+  overflow-y: auto; /* ví dụ */
+
+  transform: scale(1); /* Hiển thị kích thước gốc */
+  /* transform-origin:top; */ /* Có thể không cần thiết nếu scale là 1 */
+}

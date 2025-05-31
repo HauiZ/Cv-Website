@@ -1,53 +1,25 @@
-// src/layouts/adminLayout.jsx
-import React, { useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+// src/layouts/BusinessLayout.jsx
+import React from "react";
+import { useLocation, Outlet } from "react-router-dom";
 import BusinessHeader from "../components/Header/BusinessHeader";
 import Sidebar from "../components/BussinessContent/SideBarLayout";
-import RenderContent from "../components/BussinessContent/RenderContent";
 
 export default function BusinessLayout() {
-  // Use search params to get and set the active tab
-  const [searchParams, setSearchParams] = useSearchParams();
-  const activeTab = searchParams.get("tab") || "bang-tin";
-  const [settingsTab, setSettingsTab] = useState("");
-
-  // Function to update the activeTab via URL
-  const handleTabChange = (newTab) => {
-    setSearchParams({ tab: newTab }, { replace: true });
-  };
-
-  useEffect(() => {
-    const handleSettingsTabChange = () => {
-      if (window && window.settingsTab) {
-        setSettingsTab(window.settingsTab);
-      }
-    };
-
-    // Set up listener
-    window.addEventListener("storage", handleSettingsTabChange);
-
-    // Check if it's already set
-    if (window && window.settingsTab) {
-      setSettingsTab(window.settingsTab);
-    }
-
-    return () => {
-      window.removeEventListener("storage", handleSettingsTabChange);
-    };
-  }, []);
-
+  const location = useLocation();
+  const pathSegments = location.pathname.split('/');
+  const activeTab = pathSegments[2] || "bang-tin"; // Default to bang-tin if no path
   return (
-    <div className="pt-[75px]">
-      <BusinessHeader />
-      <div className="flex bg-gray-100">
+    <div className="min-h-screen flex flex-col">
+      <BusinessHeader className="fixed top-0 w-full z-50" />
+      <div className="flex flex-1 pt-[75px]">
         {/* Sidebar */}
-        <div className="w-[15rem] h-[40rem] bg-white shadow fixed">
-          <Sidebar activeTab={activeTab} setActiveTab={handleTabChange} />
-        </div>
-
-        {/* Content */}
-        <div className="flex-1 p-9 ml-[15rem]">
-          <RenderContent activeTab={activeTab} />
+        <div className="w-[15rem] fixed left-0 top-[75px] bottom-0 bg-white shadow-md overflow-y-auto">
+          <Sidebar activeTab={activeTab} />
+        </div>        {/* Main Content */}
+        <div className="flex-1 ml-[15rem] bg-gray-100 min-h-full">
+          <div className="p-8">
+            <Outlet />
+          </div>
         </div>
       </div>
     </div>

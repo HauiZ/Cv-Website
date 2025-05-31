@@ -2,9 +2,12 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 import defaultLogo from "../../assets/image/logoNoBg.png";
-export default function CompanyIntroduction({ data }) {
+export default function CompanyIntroduction({ data, isPreviewMode = false }) {
   const logoImage = data?.companyLogo || defaultLogo;
   const path = `/companyprofile/${data?.id}`;
+
+  console.log("isPreviewMode in CompanyIntroduction:", isPreviewMode);
+
   return (
     <div>
       {/* content left */}
@@ -34,17 +37,19 @@ export default function CompanyIntroduction({ data }) {
             {data?.companyAddress || "Chưa có thông tin"}
           </h1>
         </div>
-        <div className="flex justify-center gap-x-2">
-          <h1>
-            <a href={path} className="text-green-500">
-              Xem trang công ty
-            </a>
-          </h1>
-          <FontAwesomeIcon
-            icon={faArrowUpRightFromSquare}
-            className="text-green-500 mt-[.25rem]"
-          />
-        </div>
+        {!isPreviewMode && (
+          <div className="flex justify-center gap-x-2">
+            <h1>
+              <a href={path} className="text-green-500">
+                Xem trang công ty
+              </a>
+            </h1>
+            <FontAwesomeIcon
+              icon={faArrowUpRightFromSquare}
+              className="text-green-500 mt-[.25rem]"
+            />
+          </div>
+        )}
       </div>
     </div>
   );

@@ -132,9 +132,75 @@ const getDashBoardApi = async () => {
   const res = await axios.get("/recruiter/getDataDashBoard");
   return res.data;
 };
-export {
-  fetchCompanyInfoApi, fetchAllCompanyApi, postRecruitmentNewsApi,
-  changeLogo, changeProfileBusinessApi, getApplicantApi, approveApplicationApi, fetchAllNewsApi,
-  getNotificationApi, getApplicantForNewsApi, getDashBoardApi,
+const updateRecruitmentNewsApi = async ( {
+  jobTitle,
+  profession,
+  candidateNumber,
+  jobLevel,
+  workType,
+  degree,
+  province,
+  district,
+  jobAddress,
+  salaryMin,
+  salaryMax,
+  salaryNegotiable,
+  experience,
+  workDateIn,
+  workDetail,
+  jobRequirements,
+  benefits,
+  applicationDeadline,
+  contactInfo,
+  contactAddress,
+  contactPhone,
+  contactEmail,
+  videoUrl
+}, recruitmentNewsId) => {
+  const data = {
+    jobTitle,
+    profession,
+    candidateNumber,
+    jobLevel,
+    workType,
+    degree,
+    province,
+    district,
+    jobAddress,
+    salaryMin,
+    salaryMax,
+    salaryNegotiable,
+    experience,
+    workDateIn,
+    workDetail,
+    jobRequirements,
+    benefits,
+    applicationDeadline,
+    contactInfo,
+    contactAddress,
+    contactPhone,
+    contactEmail,
+    videoUrl
+  };
 
+  return await axios.post(`/recruiter/updateRecruitmentNews/${recruitmentNewsId}`, data);
+}
+
+const deleteRecruitmentNewsApi = async (recruitmentNewsId) => {
+  return await axios.post(`/recruiter/deleteRecruitmentNews/${recruitmentNewsId}`);
+};
+
+export {
+  fetchCompanyInfoApi,
+  fetchAllCompanyApi,
+  postRecruitmentNewsApi,
+  changeLogo,
+  changeProfileBusinessApi,
+  getApplicantApi,
+  approveApplicationApi,
+  fetchAllNewsApi,
+  getNotificationApi, getApplicantForNewsApi,
+  getDashBoardApi,
+  updateRecruitmentNewsApi,
+  deleteRecruitmentNewsApi,
 };

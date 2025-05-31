@@ -30,16 +30,18 @@ instance.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
+    const accessToken = localStorage.getItem("access_token");
 
+    // ❗ Chỉ refresh nếu có accessToken
     if (
       error.response &&
       error.response.status === 401 &&
-      !originalRequest._retry
+      !originalRequest._retry &&
+      accessToken
     ) {
       originalRequest._retry = true;
 
       if (isRefreshing) {
-        // Chờ đến khi refresh xong
         return new Promise((resolve, reject) => {
           failedQueue.push({
             resolve: (token) => {
@@ -65,13 +67,13 @@ instance.interceptors.response.use(
       } catch (err) {
         processQueue(err, null);
         localStorage.removeItem("access_token");
-        // Optional: logout logic hoặc chuyển hướng
         return Promise.reject(err);
       } finally {
         isRefreshing = false;
       }
     }
 
+    // Không đủ điều kiện refresh → trả lỗi gốc
     return Promise.reject(error);
   }
 );

@@ -7,18 +7,14 @@ import {
   faUser,
   faBuildingUser,
   faPhone,
+  faEye,
+  faEyeSlash,
   faSearch,
   faUsersRectangle,
 } from "@fortawesome/free-solid-svg-icons";
 
 // Thêm icon vào thư viện một lần
-library.add(faEnvelope, faLock, faUser, faBuildingUser, faPhone);
+library.add(faEnvelope, faLock, faUser, faBuildingUser, faPhone, faEye, faEyeSlash);
 
 // Export icon để dùng khi cần
-export {
-  faEnvelope,
-  faLock,
-  faUser,
-  faBuildingUser,
-  faPhone,
-};
+export { faEnvelope, faLock, faUser, faBuildingUser, faPhone, faEye, faEyeSlash };

@@ -68,7 +68,7 @@ export default function useAuth(navigationCallback = null) {
           }
         } catch (err) {
           const msg =
-            err?.err?.response?.data?.message ||
+            err?.response?.data?.message ||
             err?.message ||
             "Đăng nhập thất bại!";
           showToast(msg, "error");

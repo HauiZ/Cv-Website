@@ -277,6 +277,8 @@ const JobPostingForm = () => {
                 });
             }
         });
+
+        resetForm();
     };
 
     const resetForm = () => {

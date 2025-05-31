@@ -1,6 +1,19 @@
 import { ChevronDown, ChevronUp, CheckCircle, File, FileText, Briefcase, Award, Mail, Phone, User, Book, Clock, Target, Coffee, ArrowRight, Calendar, Download, MessageCircle, Clipboard, Star, BookOpen, Zap, Gift, PenTool } from 'lucide-react';
 
 export default function CVGuide () {
+    const handleClick = (n) => {
+        switch (n) {
+            case 1:
+                window.open("https://drive.google.com/uc?export=download&id=1FOyR7sFF9ajeh8yk44dm45KbZ75deG5S", "_blank");
+                break;
+            case 2:
+                window.open("https://drive.google.com/uc?export=download&id=1CbDEOrMwsSbgQndnIDQrY1yu-MW8R9rW", "_blank");
+                break;  
+            case 3:
+                window.open("https://drive.google.com/uc?export=download&id=1jBkQG6MdCyRXLVzBCixN1R_ugZSy7lhQ", "_blank");
+                break;
+        }
+    };
     return (
         <div className="animate-fadeIn">
             <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
@@ -111,12 +124,13 @@ export default function CVGuide () {
                     <div className="grid md:grid-cols-3 gap-4">
                         <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow transition-transform hover:shadow-lg hover:scale-105">
                             <div className="h-48 bg-green-100 flex items-center justify-center">
-                                <img src="/api/placeholder/210/297" alt="CV Template 1" className="h-full object-contain" />
+                                <img src="https://res.cloudinary.com/dsokd4mmb/image/upload/v1748658762/CV3_lz6b7c.png" alt="CV Template 1" className="h-full object-contain hover:scale-115 transition-transform" />
                             </div>
                             <div className="p-4">
                                 <h4 className="font-medium">CV Cơ Bản</h4>
                                 <p className="text-sm text-gray-500">Mẫu đơn giản, rõ ràng cho mọi vị trí</p>
-                                <button className="mt-2 bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm transition-colors">
+                                <button className="mt-2 bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm transition-colors"
+                                    onClick={() => handleClick(3)}>
                                     Tải về
                                 </button>
                             </div>
@@ -124,12 +138,13 @@ export default function CVGuide () {
 
                         <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow transition-transform hover:shadow-lg hover:scale-105">
                             <div className="h-48 bg-green-100 flex items-center justify-center">
-                                <img src="/api/placeholder/210/297" alt="CV Template 2" className="h-full object-contain" />
+                                <img src="https://res.cloudinary.com/dsokd4mmb/image/upload/v1748658762/CV2_bsqwtz.png" alt="CV Template 2" className="h-full object-contain hover:scale-115 transition-transform" />
                             </div>
                             <div className="p-4">
                                 <h4 className="font-medium">CV Sáng Tạo</h4>
                                 <p className="text-sm text-gray-500">Phù hợp với ngành thiết kế, marketing</p>
-                                <button className="mt-2 bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm transition-colors">
+                                <button className="mt-2 bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm transition-colors"
+                                    onClick={() => handleClick(2)}>
                                     Tải về
                                 </button>
                             </div>
@@ -137,12 +152,13 @@ export default function CVGuide () {
 
                         <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow transition-transform hover:shadow-lg hover:scale-105">
                             <div className="h-48 bg-green-100 flex items-center justify-center">
-                                <img src="/api/placeholder/210/297" alt="CV Template 3" className="h-full object-contain" />
+                                <img src="https://res.cloudinary.com/dsokd4mmb/image/upload/v1748658761/CV1_pvmxfv.png" alt="CV Template 3" className="h-full object-contain hover:scale-115 transition-transform" />
                             </div>
                             <div className="p-4">
                                 <h4 className="font-medium">CV Chuyên Nghiệp</h4>
                                 <p className="text-sm text-gray-500">Dành cho vị trí quản lý, chuyên gia</p>
-                                <button className="mt-2 bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm transition-colors">
+                                <button className="mt-2 bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-sm transition-colors"
+                                    onClick={() => handleClick(1)}>
                                     Tải về
                                 </button>
                             </div>

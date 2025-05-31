@@ -54,7 +54,7 @@ const JobPostingForm = () => {
         jobRequirements: '',
         benefits: '',
         applicationDeadline: '',
-        uploadMethod: 'file',
+        uploadMethod: 'link',
         videoUrl: '',
         contactInfo: {
             name: '',
@@ -224,6 +224,59 @@ const JobPostingForm = () => {
         return true;
     };
 
+    function convertToYouTubeEmbed(url) {
+        try {
+            const videoId = extractYouTubeVideoId(url);
+
+            if (!videoId) {
+                throw new Error('Không tìm thấy Video ID hợp lệ');
+            }
+
+            return `https://www.youtube.com/embed/${videoId}`;
+
+        } catch (error) {
+            console.error('Lỗi convert URL:', error.message);
+            return null;
+        }
+    }
+
+    function extractYouTubeVideoId(url) {
+        url = url.trim();
+
+        // Trường hợp 1: Tìm vị trí của "v=" trong URL
+        const vIndex = url.indexOf('v=');
+
+        if (vIndex !== -1) {
+            // Lấy 11 ký tự sau "v="
+            const videoId = url.substring(vIndex + 2, vIndex + 13);
+
+            // Kiểm tra xem có đủ 11 ký tự không
+            if (videoId.length === 11) {
+                return videoId;
+            }
+        }
+
+        // Trường hợp 2: URL embed - tìm "/embed/" hoặc "/v/"
+        const embedIndex = url.indexOf('/embed/');
+        const vSlashIndex = url.indexOf('/v/');
+
+        let startIndex = -1;
+        if (embedIndex !== -1) {
+            startIndex = embedIndex + 7; // "/embed/".length = 7
+        } else if (vSlashIndex !== -1) {
+            startIndex = vSlashIndex + 3; // "/v/".length = 3
+        }
+
+        if (startIndex !== -1) {
+            const videoId = url.substring(startIndex, startIndex + 11);
+            if (videoId.length === 11) {
+                return videoId;
+            }
+        }
+
+        return null;
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -231,6 +284,12 @@ const JobPostingForm = () => {
             return;
         }
 
+        if (formData.uploadMethod === 'link' && formData.videoUrl) {
+            const embedUrl = convertToYouTubeEmbed(formData.videoUrl);
+            if (embedUrl) {
+                formData.videoUrl = embedUrl;
+            }
+        }
         await withLoading(async () => {
             try {
                 await mutate({
@@ -301,7 +360,7 @@ const JobPostingForm = () => {
             jobRequirements: '',
             benefits: '',
             applicationDeadline: '',
-            uploadMethod: 'file',
+            uploadMethod: 'link',
             videoUrl: '',
             contactInfo: {
                 name: '',
@@ -313,7 +372,7 @@ const JobPostingForm = () => {
         setVideoFile(null);
         setSelectedProvince(null);
         setSelectedDistrict(null);
-    };    const handleCancel = () => {
+    }; const handleCancel = () => {
         Modal.confirm({
             title: 'Xác nhận hủy',
             content: 'Bạn có chắc muốn hủy tạo tin? Tất cả thông tin sẽ bị mất.',

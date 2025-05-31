@@ -6,7 +6,7 @@ import JobIntroduction from "./JobIntroduction";
 import GeneralInformation from "./GeneralInformation";
 import DetailJob from "./DetailJob";
 import RelativeNews from "./RelativeNews";
-import { useMemo,useState } from "react";
+import { useMemo, useState } from "react";
 import useCustomFetch from "../../hooks/useCustomFetch";
 import {
   fetchRecruitmentNewsDetailApi,
@@ -74,15 +74,8 @@ export default function JobDescription() {
               <DetailJob data={detailRecruitment} isPreviewMode={isPreviewMode} />
             </div>
           </div>
-          {detailRecruitment?.profession && (
-            <div className="max-w-[59rem] mx-auto">
-              <p className="text-center text-gray-500">Tin tuyển dụng liên quan sẽ được hiển thị khi đăng tin.</p>
-            </div>
-          )}
-          <div className="flex justify-center gap-4 mt-4">
-            <button className="btn-save" disabled={isPreviewMode}>Lưu tin</button>
-            <button className="btn-apply" disabled={isPreviewMode}>Ứng tuyển ngay</button>
-            <button className="btn-view-company" disabled={isPreviewMode}>Xem trang công ty</button>
+          <div className="max-w-[59rem] mx-auto">
+            <RelativeNews data={jobs} />
           </div>
         </div>
       </div>

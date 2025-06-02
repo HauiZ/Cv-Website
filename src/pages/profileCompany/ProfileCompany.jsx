@@ -5,7 +5,7 @@ import ContractInfo from "./ContractInfo";
 import Recruitments from "./Recruitments";
 import BrandList from "../home/component/BrandList/BrandList";
 import useCustomFetch from "../../hooks/useCustomFetch";
-import {fetchCompanyInfoApi} from "../../services/recruiterApi"; // Import the fetch function
+import { fetchCompanyInfoApi } from "../../services/recruiterApi"; // Import the fetch function
 import { useParams } from "react-router-dom";
 
 export default function ProfileCompany() {
@@ -23,13 +23,13 @@ export default function ProfileCompany() {
         <div className="flex justify-center gap-x-15 ">
           <div>
             <ProfileIntroduction data={companyData}></ProfileIntroduction>
+            <div className="w-[35rem]">
+              <Recruitments data={jobs} />
+            </div>
           </div>
           <div>
             <ContractInfo data={companyData}></ContractInfo>
           </div>
-        </div>
-        <div className="w-[35rem]">
-          <Recruitments data={jobs}  />
         </div>
         <div className="w-full h-fit mb-15">
           <BrandList />

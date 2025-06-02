@@ -26,7 +26,6 @@ const Header = () => {
             className=" object-contain hover:cursor-pointer"
             alt="Logo"
             onClick={() => navigate("/")}
-
           />
         </div>
         <div className="flex gap-x-20 px-6 py-2 mt-4 mb-4">

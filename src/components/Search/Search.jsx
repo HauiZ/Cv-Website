@@ -5,6 +5,7 @@ import { IoLocationSharp } from "react-icons/io5";
 import { useNavigate, useLocation } from "react-router-dom";
 import useCustomFetch from "../../hooks/useCustomFetch";
 import { fetchAreaApi } from "../../services/userApi";
+import  jobCategories  from "../JobCategories";
 
 function Search({ onSearch, initialValues = {} }) {
   const [keyword, setKeyword] = useState(initialValues.keyword || "");
@@ -45,56 +46,7 @@ function Search({ onSearch, initialValues = {} }) {
       style={{ width: 200 }}
       value={profession || undefined}
       onChange={setProfession}
-      options={[
-        {
-          label: <span>Công nghệ & Kỹ thuật</span>,
-          options: [
-            {
-              value: "Công nghệ thông tin",
-              label: <span>Công nghệ thông tin</span>,
-            },
-          ],
-        },
-        {
-          label: <span>Kinh doanh & Dịch vụ</span>,
-          options: [
-            {
-              value: "Kinh doanh/Bán hàng",
-              label: <span>Kinh doanh/Bán hàng</span>,
-            },
-            {
-              value: "Chăm sóc khách hàng",
-              label: <span>Chăm sóc khách hàng</span>,
-            },
-            {
-              value: "Marketing/Quảng cáo",
-              label: <span>Marketing/Quảng cáo</span>,
-            },
-          ],
-        },
-        {
-          label: <span>Tài chính & Quản lý</span>,
-          options: [
-            {
-              value: "Tài chính/Ngân hàng",
-              label: <span>Tài chính/Ngân hàng</span>,
-            },
-            {
-              value: "Kế toán/Kiểm toán",
-              label: <span>Kế toán/Kiểm toán</span>,
-            },
-          ],
-        },
-        {
-          label: <span>Xây dựng & Bất động sản</span>,
-          options: [
-            {
-              value: "Bất động sản/Xây dựng",
-              label: <span>Bất động sản/Xây dựng</span>,
-            },
-          ],
-        },
-      ]}
+      options={jobCategories}
     />
   );
 

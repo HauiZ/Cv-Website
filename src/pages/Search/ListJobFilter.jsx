@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ListNews from "../profileCompany/ListNews";
 import Pagination from "../home/component/ListJob/Pagination";
-const ITEMS_PER_PAGE = 15;
+const ITEMS_PER_PAGE = 30;
 
 export default function ListJobFilter({ data }) {
   const [currentPage, setCurrentPage] = useState(1);
@@ -11,7 +11,6 @@ export default function ListJobFilter({ data }) {
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE
   );
-  console.log(">>>>>>>>>>", currentJobs)
 
   return (
     <div className=" mb-10 rounded-[.5em] bg-white shadow-md h-fit">

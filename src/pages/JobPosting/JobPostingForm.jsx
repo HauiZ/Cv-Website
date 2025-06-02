@@ -9,6 +9,7 @@ import useLoading from "../../hooks/useLoading";
 import useCustomFetch from "../../hooks/useCustomFetch";
 import { fetchAreaApi } from "../../services/userApi";
 import Select from "react-select";
+import jobCategories  from '../../components/JobCategories';
 
 const JobPostingForm = () => {
 
@@ -442,12 +443,18 @@ const JobPostingForm = () => {
                                 value={formData.profession}
                                 onChange={(e) => handleInputChange('profession', e.target.value)}
                                 required
+                                options={jobCategories}
                             >
                                 <option value="" disabled>Ngành nghề</option>
-                                <option value="it">Công nghệ thông tin</option>
-                                <option value="marketing">Marketing</option>
-                                <option value="sales">Bán hàng</option>
-                                <option value="finance">Tài chính</option>
+                                {jobCategories.map((category) => (
+                                    <optgroup key={category.label} label={category.label}>
+                                        {category.options.map((option) => (
+                                            <option key={option.value} value={option.value}>
+                                                {option.label}
+                                            </option>
+                                        ))}
+                                    </optgroup>
+                                ))}
                             </select>
                         </div>
 
@@ -490,6 +497,8 @@ const JobPostingForm = () => {
                                 <option value="Trưởng nhóm">Trưởng nhóm</option>
                                 <option value="Quản lý / Giám sát">Quản lý / Giám sát</option>
                                 <option value="Trưởng chi nhánh">Trưởng chi nhánh</option>
+                                <option value="Giám đốc / Phó giám đốc">Giám đốc / Phó giám đốc</option>
+                                <option value="Thực tập sinh">Thực tập sinh</option>
                             </select>
                         </div>
 

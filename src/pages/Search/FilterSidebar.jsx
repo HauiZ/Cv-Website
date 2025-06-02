@@ -149,7 +149,7 @@ const FilterSidebar = ({ onFilterChange, totalJobs, initialFilters = {} }) => {
           Xóa bộ lọc
         </button>
       </div>
-      <div className="w-full bg-white p-4 rounded-lg shadow-md border border-gray-100 max-h-[80vh] overflow-y-auto">
+      <div className="w-full bg-white p-4 rounded-lg shadow-md border border-gray-100">
         {/* Profession Filter */}
         <div className="filter-container mb-3">
           <button

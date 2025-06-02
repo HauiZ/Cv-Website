@@ -15,6 +15,8 @@ export default function SearchPage() {
     const initialProfession = queryParams.get('profession') || '';
     const initialKeyword = queryParams.get('keyword') || '';
     const initialArea = queryParams.get('area') || '';
+    const [filterHovered, setFilterHovered] = useState(false);
+    const [jobListHovered, setJobListHovered] = useState(false);
 
     const [filters, setFilters] = useState({
         keyword: initialKeyword ? initialKeyword : '',
@@ -102,7 +104,10 @@ export default function SearchPage() {
             {/* Bộ lọc và danh sách job */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mx-30 relative">
                 {/* Sidebar lọc */}
-                <div className="col-span-1 sticky top-0 h-full">
+                <div className="col-span-1 sticky top-0 h-[100vh] 
+                    overflow-hidden hover:overflow-y-scroll 
+                    hover:scrollbar hover:scrollbar-w-1 hover:scrollbar-thumb-green-600 hover:scrollbar-track-transparent
+                    transition-all duration-500 ease-out scroll-smooth">
                     <FilterSidebar
                         onFilterChange={handleFilterChange}
                         totalJobs={jobs?.length || 0}
@@ -111,24 +116,35 @@ export default function SearchPage() {
                 </div>
 
                 {/* List job */}
-                <div className="col-span-1 md:col-span-3 ">
+                <div className="col-span-1 md:col-span-3">
                     {/* Sort select */}
-                    <div className="flex justify-end mt-2 mb-2">
-                        <Select
-                            value={filters.sortBy === "datePosted" ? "date" :
-                                filters.sortBy === "salary" ? "salary" :
-                                    filters.sortBy === "experience" ? "experience" : "date"}
-                            size="large"
-                            style={{ width: 250 }}
-                            onChange={handleSortChange}
-                            options={[
-                                { value: "salary", label: "Lương cao đến thấp" },
-                                { value: "experience", label: "Kinh nghiệm" },
-                                { value: "date", label: "Ngày đăng tuyển" },
-                            ]}
-                        />
+                    <div className="flex items-center justify-between mt-4">
+                        <h2 className="text-xl font-semibold text-gray-600 ml-5">
+                            Đã tìm thấy
+                            <span className="font-semibold text-green-400 underline"> {jobs?.length} </span>
+                            việc làm liên quan
+                        </h2>
+                        <div className="flex justify-end sticky top-0 bg-white z-10 pb-2">
+                            <Select
+                                value={filters.sortBy === "datePosted" ? "date" :
+                                    filters.sortBy === "salary" ? "salary" :
+                                        filters.sortBy === "experience" ? "experience" : "date"}
+                                size="large"
+                                style={{ width: 250 }}
+                                onChange={handleSortChange}
+                                options={[
+                                    { value: "salary", label: "Lương cao đến thấp" },
+                                    { value: "experience", label: "Kinh nghiệm" },
+                                    { value: "date", label: "Ngày đăng tuyển" },
+                                ]}
+                            />
+                        </div>
                     </div>
-                    <div className="overflow-auto h-fit">
+
+                    <div className="overflow-hidden hover:overflow-y-scroll 
+                        hover:scrollbar hover:scrollbar-w-1 hover:scrollbar-thumb-green-600 hover:scrollbar-track-transparent
+                        transition-all duration-500 ease-out scroll-smooth
+                        pb-5">
                         {loading ? (
                             <div className="flex justify-center items-center h-[400px]">
                                 <Loader2 size={48} className="animate-spin text-[#00875a]" />
@@ -142,7 +158,6 @@ export default function SearchPage() {
                         )}
                     </div>
                 </div>
-
             </div>
         </div>
     );

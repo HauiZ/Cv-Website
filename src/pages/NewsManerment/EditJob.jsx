@@ -294,7 +294,8 @@ const EditJob = () => {
                 };
                 console.log('Saving job with data:', data);
                 await mutate(data, jobId);
-                navigate('/recruiter/tin-tuyen-dung')
+                navigate('/recruiter/tin-tuyen-dung');
+
             });
         } catch (error) {
             console.error('Error saving job:', error);

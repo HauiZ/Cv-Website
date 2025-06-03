@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuthContext } from "../../contexts/AuthContext";
 import useCustomMutation from "../../hooks/useCustomMutation";
 import { changePassword } from '../../services/userApi';
@@ -7,10 +7,17 @@ import useLoading from "../../hooks/useLoading";
 import { Eye, EyeOff } from 'lucide-react';
 
 export default function PasswordChangeInterface() {
-    const { user } = useAuthContext();
+    const { user, fetchUser } = useAuthContext();
     const email = user?.email;
+    const type = user?.typeAccount;
+    const [typeAccount, setTypeAccount] = useState(type);
     const { mutate } = useCustomMutation(changePassword);
     const { loading, withLoading } = useLoading();
+    useEffect(() => {
+        if (type) {
+            setTypeAccount(type);
+        }
+    }, [type]);
     const [formData, setFormData] = useState({
         currentPassword: '',
         newPassword: '',
@@ -89,9 +96,11 @@ export default function PasswordChangeInterface() {
         const newErrors = {};
         let isValid = true;
 
-        if (!formData.currentPassword.trim()) {
-            newErrors.currentPassword = 'Vui lòng nhập mật khẩu hiện tại';
-            isValid = false;
+        if (typeAccount === 'LOCAL') {
+            if (!formData.currentPassword.trim()) {
+                newErrors.currentPassword = 'Vui lòng nhập mật khẩu hiện tại';
+                isValid = false;
+            }
         }
 
         if (!formData.newPassword.trim()) {
@@ -160,6 +169,7 @@ export default function PasswordChangeInterface() {
                 newPassword: false,
                 confirmPassword: false,
             });
+            fetchUser();
         });
     };
 
@@ -192,12 +202,23 @@ export default function PasswordChangeInterface() {
                                 <input
                                     type={showPassword.currentPassword ? "text" : "password"}
                                     name="currentPassword"
-                                    className={`w-full px-3 py-2 pr-10 border rounded-md ${touched.currentPassword && errors.currentPassword ? 'border-red-500' : ''}`}
-                                    placeholder="Nhập mật khẩu hiện tại"
+                                    className={`w-full px-3 py-2 pr-10 border rounded-md ${touched.currentPassword && errors.currentPassword
+                                        ? 'border-red-500'
+                                        : ''
+                                        } ${typeAccount === 'GOOGLE'
+                                            ? 'bg-gray-100 cursor-not-allowed'
+                                            : ''
+                                        }`}
+                                    placeholder={
+                                        typeAccount === 'GOOGLE'
+                                            ? "Tài khoản Google"
+                                            : "Nhập mật khẩu hiện tại"
+                                    }
                                     value={formData.currentPassword}
                                     onChange={handleChange}
+                                    disabled={typeAccount === 'GOOGLE'}
                                 />
-                                {formData.currentPassword && (
+                                {formData.currentPassword && typeAccount !== 'GOOGLE' && (
                                     <button
                                         type="button"
                                         onClick={() => togglePasswordVisibility('currentPassword')}
@@ -206,7 +227,7 @@ export default function PasswordChangeInterface() {
                                         {showPassword.currentPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                                     </button>
                                 )}
-                                {touched.currentPassword && errors.currentPassword && (
+                                {touched.currentPassword && errors.currentPassword && typeAccount !== 'GOOGLE' && (
                                     <p className="text-red-500 text-sm mt-1">{errors.currentPassword}</p>
                                 )}
                             </div>

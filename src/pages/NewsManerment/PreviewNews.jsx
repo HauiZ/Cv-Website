@@ -147,7 +147,6 @@ export default function PreviewNews({
             backgroundImage: `url(${background})`,
           }}
         >
-          <Search />
         </div>
       )}
 

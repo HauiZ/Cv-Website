@@ -1,10 +1,17 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import ApplicantCard from "./ApplicantCard";
 import useCustomFetch from "../../hooks/useCustomFetch";
 import Pagination from "../home/component/ListJob/Pagination";
+import { getApplicantApi, getApplicantForNewsApi } from "../../services/recruiterApi";
 
-export default function ApplicantLayout({ funcApi , newsId}) {
-    const { data, loading, refetch } = useCustomFetch(funcApi, [newsId]);
+export default function ApplicantLayout() {
+    const { newsId } = useParams(); 
+    const selectedApi = newsId 
+        ? getApplicantForNewsApi
+        : getApplicantApi;
+
+    const { data, loading, refetch } = useCustomFetch(selectedApi, newsId ? [newsId] : []);
     const applicants = Array.isArray(data) ? data : [];
 
     const [statusFilter, setStatusFilter] = useState("all");

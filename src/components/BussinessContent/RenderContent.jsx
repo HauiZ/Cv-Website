@@ -8,19 +8,13 @@ import { getApplicantApi, getApplicantForNewsApi } from "../../services/recruite
 import DashBoard from "../../pages/DashBoardRecruiter/DashBoard"
 
 export default function RenderContent({ activeTab }) {
-    const [filterWithNews, setFilterWithNews] = useState(false);
-    const [newsId, setNewsId] = useState(null);
-    const funcApi = filterWithNews ? getApplicantForNewsApi : getApplicantApi;
     
     switch (activeTab) {
         case 'bang-tin':
             return <DashBoard />;
         case 'tin-tuyen-dung':
             return (
-                <NewsManerment 
-                    setFilterWithNews={setFilterWithNews} 
-                    setNewsId={setNewsId}
-                />
+                <NewsManerment />
             );
         case 'dang-tin':
             return <JobPostingForm />;
@@ -33,7 +27,7 @@ export default function RenderContent({ activeTab }) {
         case 'profile':
             return <ProfileSettingPage />;
         case 'quan-ly-cv':
-            return <ApplicantLayout funcApi={funcApi} newsId={newsId}/>;
+            return <ApplicantLayout />;
         case 'security':
             return <SecurityPage />;
         default:

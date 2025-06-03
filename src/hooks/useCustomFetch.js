@@ -1,8 +1,8 @@
 import { useEffect, useState, useCallback } from "react";
 import { useToast } from "../contexts/ToastContext";
-import useAuth from "./useAuth"
+import useAuth from "./useAuth";
 export default function useCustomFetch(fetchFunction, params = []) {
-  const {logOut} = useAuth();
+  const { logOut } = useAuth();
   const { showToast } = useToast();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -23,7 +23,6 @@ export default function useCustomFetch(fetchFunction, params = []) {
         if (isMounted) {
           setData(result);
           setError(null);
-       
         }
       } catch (err) {
         if (isMounted) {
@@ -31,9 +30,12 @@ export default function useCustomFetch(fetchFunction, params = []) {
             err?.response?.data?.message ||
             err?.message ||
             "Data fetching failed!";
-            if(localStorage.getItem("access_token") && msg === "INVALID OR EXPIRED ACCESS TOKEN"){
-              logOut()
-            }
+          if (
+            localStorage.getItem("access_token") &&
+            msg === "MÃ TRUY CẬP KHÔNG HỢP LỆ HOẶC HẾT HẠN"
+          ) {
+            logOut();
+          }
           showToast(msg, "error");
           setData(null);
           setError(err);

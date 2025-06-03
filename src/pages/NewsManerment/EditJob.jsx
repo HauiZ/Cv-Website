@@ -17,6 +17,7 @@ import locale from 'antd/es/date-picker/locale/vi_VN';
 import PreviewNews from './PreviewNews';
 import { fetchUserApi } from '../../services/userApi';
 import { useAuthContext } from '../../contexts/AuthContext';
+import jobCategories  from '../../components/JobCategories';
 
 const EditJob = () => {
     const navigate = useNavigate();
@@ -174,7 +175,7 @@ const EditJob = () => {
     const handleInputChange = (field, value) => {
         if (field === 'videoUrl') {
             const embedUrl = convertToYouTubeEmbed(value);
-            value = embedUrl || value; 
+            value = embedUrl || value;
         }
         setFormData(prev => ({
             ...prev,
@@ -551,9 +552,9 @@ const EditJob = () => {
                                 />
                             </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                                 <div className="form-group">
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                                    <label className="form-label block mb-1 font-medium">
                                         Ngành nghề
                                         <span className="text-red-500 ml-1">*</span>
                                     </label>
@@ -561,12 +562,19 @@ const EditJob = () => {
                                         className={selectFieldClass}
                                         value={formData.profession}
                                         onChange={(e) => handleInputChange('profession', e.target.value)}
+                                        required
+                                        options={jobCategories}
                                     >
-                                        <option value="">Chọn ngành nghề</option>
-                                        <option value="it">Công nghệ thông tin</option>
-                                        <option value="marketing">Marketing</option>
-                                        <option value="sales">Bán hàng</option>
-                                        <option value="finance">Tài chính</option>
+                                        <option value="" disabled>Ngành nghề</option>
+                                        {jobCategories.map((category) => (
+                                            <optgroup key={category.label} label={category.label}>
+                                                {category.options.map((option) => (
+                                                    <option key={option.value} value={option.value}>
+                                                        {option.label}
+                                                    </option>
+                                                ))}
+                                            </optgroup>
+                                        ))}
                                     </select>
                                 </div>
 

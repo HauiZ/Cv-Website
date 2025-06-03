@@ -27,7 +27,7 @@ export default function HintNews() {
           <div>Có lỗi: {error}</div>
         ) : (
           <div className="flex flex-col gap-4">
-            {jobs?.slice(0, 7).map((job) => (
+            {jobs?.slice(0, 3).map((job) => (
               <JobItem key={job.id} job={job} />
             ))}
           </div>

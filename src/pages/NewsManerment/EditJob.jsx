@@ -209,7 +209,7 @@ const EditJob = () => {
     }
 
     function extractYouTubeVideoId(url) {
-        url = url.trim();
+        url = url;
 
         // Trường hợp 1: Tìm vị trí của "v=" trong URL
         const vIndex = url.indexOf('v=');
@@ -268,7 +268,7 @@ const EditJob = () => {
             }
             await withLoading(async () => {
                 const data = {
-                    jobTitle: formData.jobTitle.trim(),
+                    jobTitle: formData.jobTitle,
                     profession: formData.profession,
                     candidateNumber: parseInt(formData.candidateNumber) || 0,
                     jobLevel: formData.jobLevel,
@@ -276,24 +276,25 @@ const EditJob = () => {
                     degree: formData.degree,
                     province: selectedProvince.value,
                     district: selectedDistrict.value,
-                    jobAddress: formData.jobAddress.trim(),
+                    jobAddress: formData.jobAddress,
                     salaryMin: formData.salary.min,
                     salaryMax: formData.salary.max,
                     salaryNegotiable: formData.salary.negotiable,
                     experience: formData.experience,
                     workDateIn: formData.workDateIn,
-                    workDetail: formData.workDetail.trim(),
-                    jobRequirements: formData.jobRequirements.trim(),
-                    benefits: formData.benefits.trim(),
+                    workDetail: formData.workDetail,
+                    jobRequirements: formData.jobRequirements,
+                    benefits: formData.benefits,
                     applicationDeadline: formData.applicationDeadline,
-                    contactInfo: formData.contactInfo.name.trim(),
-                    contactAddress: formData.contactInfo.address.trim(),
-                    contactPhone: formData.contactInfo.phone.trim(),
-                    contactEmail: formData.contactInfo.email.trim(),
-                    videoUrl: formData.videoUrl?.trim() || ""
+                    contactInfo: formData.contactInfo.name,
+                    contactAddress: formData.contactInfo.address,
+                    contactPhone: formData.contactInfo.phone,
+                    contactEmail: formData.contactInfo.email,
+                    videoUrl: formData.videoUrl || ""
                 };
                 console.log('Saving job with data:', data);
                 await mutate(data, jobId);
+                navigate('/recruiter/tin-tuyen-dung');
             });
         } catch (error) {
             console.error('Error saving job:', error);
@@ -352,14 +353,14 @@ const EditJob = () => {
     };
 
     const validateForm = () => {
-        if (!formData.workDetail || formData.workDetail.trim() === '' || formData.workDetail === '<p><br></p>') {
+        if (!formData.workDetail || formData.workDetail === '' || formData.workDetail === '<p><br></p>') {
             Modal.error({
                 title: 'Thông tin không hợp lệ',
                 content: 'Vui lòng điền Mô tả công việc',
             });
             return false;
         }
-        if (!formData.benefits || formData.benefits.trim() === '' || formData.benefits === '<p><br></p>') {
+        if (!formData.benefits || formData.benefits === '' || formData.benefits === '<p><br></p>') {
             Modal.error({
                 title: 'Thông tin không hợp lệ',
                 content: 'Vui lòng điền Quyền lợi được hưởng',
@@ -386,7 +387,7 @@ const EditJob = () => {
         };
 
         for (const field of generalRequiredFields) {
-            if (!formData[field] || (typeof formData[field] === 'string' && formData[field].trim() === '') || formData[field] === '<p><br></p>') {
+            if (!formData[field] || (typeof formData[field] === 'string' && formData[field] === '') || formData[field] === '<p><br></p>') {
                 Modal.error({
                     title: 'Thông tin không hợp lệ',
                     content: `Vui lòng điền đầy đủ thông tin: ${fieldLabels[field] || field}`,
@@ -395,7 +396,7 @@ const EditJob = () => {
             }
         }
 
-        if (!formData.salary.negotiable && (!formData.salary.min || formData.salary.min.trim() === '' || !formData.salary.max || formData.salary.max.trim() === '')) {
+        if (!formData.salary.negotiable && (!formData.salary.min || formData.salary.min === '' || !formData.salary.max || formData.salary.max === '')) {
             Modal.error({
                 title: 'Thông tin không hợp lệ',
                 content: 'Vui lòng điền đầy đủ mức lương (tối thiểu và tối đa), hoặc chọn Thỏa thuận.',
@@ -427,7 +428,7 @@ const EditJob = () => {
         };
 
         for (const field of contactRequiredFields) {
-            if (!formData.contactInfo[field] || (typeof formData.contactInfo[field] === 'string' && formData.contactInfo[field].trim() === '')) {
+            if (!formData.contactInfo[field] || (typeof formData.contactInfo[field] === 'string' && formData.contactInfo[field] === '')) {
                 Modal.error({
                     title: 'Thông tin không hợp lệ',
                     content: `Vui lòng điền đầy đủ thông tin: ${contactFieldLabels[field]}`,

@@ -91,7 +91,7 @@ const router = createBrowserRouter([
           },
           { path: "dang-tin", element: <JobPostingForm /> },
           { path: "cv-de-xuat", element: <div className='flex text-center text-green-400 justify-center font-bold text-4xl animate-pulse'>COMING SOON</div> },
-          { path: "quan-ly-cv", element: <ApplicantLayout funcApi={getApplicantApi} /> },
+          { path: "quan-ly-cv/:newsId", element: <ApplicantLayout funcApi={getApplicantApi} /> },
           { path: "profile", element: <ProfileSettingPage /> },
           { path: "security", element: <SecurityPage /> },
           { path: "", element: <DashBoard /> }, // Default route

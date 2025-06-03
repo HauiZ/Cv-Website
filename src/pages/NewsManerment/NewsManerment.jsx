@@ -8,7 +8,7 @@ import { fetchAllNewsApi, deleteRecruitmentNewsApi } from "../../services/recrui
 import { useAuthContext } from "../../contexts/AuthContext";
 
 const ITEMS_PER_PAGE = 4;
-export default function NewsManerment({ setFilterWithNews, setNewsId }) {
+export default function NewsManerment() {
   const { user } = useAuthContext();
   const { data: fetchedData, loading: fetchLoading, refetch } = useCustomFetch(
     fetchAllNewsApi
@@ -58,8 +58,6 @@ export default function NewsManerment({ setFilterWithNews, setNewsId }) {
             <div className="">
               <ListNews
                 jobs={currentJobs}
-                setFilterWithNews={setFilterWithNews}
-                setNewsId={setNewsId}
                 onDeleteNews={handleDeleteNews}
               />
             </div>

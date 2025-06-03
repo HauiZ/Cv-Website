@@ -5,7 +5,7 @@ export default function ListNews({ jobs, setFilterWithNews, setNewsId, onDeleteN
   return (
     <div className="space-y-0.5">
       {jobs.map((job) => (
-        <NewsItem key={job.id} job={job} setFilterWithNews={setFilterWithNews} setNewsId={setNewsId} onDeleteNews={onDeleteNews}/>
+        <NewsItem key={job.id} job={job} onDeleteNews={onDeleteNews}/>
       ))}
     </div>
   );

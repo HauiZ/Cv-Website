@@ -70,7 +70,7 @@ export default function useAuth(navigationCallback = null) {
           const msg =
             err?.response?.data?.message ||
             err?.message ||
-            "Đăng nhập thất bại!";
+              "Đăng nhập thất bại!";
           showToast(msg, "error");
         }
       });

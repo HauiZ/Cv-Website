@@ -4,7 +4,7 @@ import Pagination from "../home/component/ListJob/Pagination";
 
 const ITEMS_PER_PAGE = 5;
 
-export default function RecruitmentNews({ data }) {
+export default function RecruitmentNews({ data, logo }) {
   // Use destructuring to get data
   const [currentPage, setCurrentPage] = useState(1);
   useEffect(() => {
@@ -31,7 +31,7 @@ export default function RecruitmentNews({ data }) {
       <div className="p-5 h-fit ">
         {jobs.length > 0 ? (
           <>
-            <ListNews jobs={currentJobs}  />
+            <ListNews jobs={currentJobs} logo={logo}  />
             <div className="absolute bottom-2 left-0 right-0 flex justify-center items-center">
               {totalPages > 1 && (
                 <Pagination

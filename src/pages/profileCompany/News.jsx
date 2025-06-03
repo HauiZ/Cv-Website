@@ -2,7 +2,7 @@ import React from "react";
 import formatSalaryRangeToVND from "../../utils/formatSalaryRangeToVND";
 import { useNavigate } from "react-router-dom";
 
-export default function News({ job, companyName }) {
+export default function News({ job, companyName, logo }) {
   const salaryRange = formatSalaryRangeToVND(
     `${job.salaryMin} - ${job.salaryMax}`
   );
@@ -16,7 +16,7 @@ export default function News({ job, companyName }) {
       }}
     >
       <img
-        src={job?.logoUrl || "/src/assets/image/logoNoBg.png"}
+        src={logo || "/src/assets/image/logoNoBg.png"}
         alt="logo"
         className="w-[5rem] h-[5rem] object-contain"
       />

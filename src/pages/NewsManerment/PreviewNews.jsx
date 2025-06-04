@@ -139,7 +139,7 @@ export default function PreviewNews({
   const { company, general, introduce, detailRecruitment } = previewData;
 
   return (
-    <div className="preview-news-container bg-white p-4 md:p-6">
+    <div className="preview-news-container bg-[#F5F5F5] p-4 md:p-6">
       {!isPreviewMode && (
         <div
           className="flex justify-center items-center h-[10rem]"
@@ -150,7 +150,7 @@ export default function PreviewNews({
         </div>
       )}
 
-      <div className={`flex justify-center ${isPreviewMode ? '' : 'bg-[#F5F5F5]'}`}>
+      <div className={`flex justify-center ${isPreviewMode ? 'bg-[#F5F5F5]' : ''}`}>
         <div className={`${isPreviewMode ? 'w-full' : 'w-[80vw]'}`}>
           <div className="flex flex-col md:flex-row justify-center gap-x-5 mt-5 md:mt-10 mb-5 md:mb-10">
             {company && (

@@ -8,3 +8,14 @@
   transform: scale(1); /* Hiển thị kích thước gốc */
   /* transform-origin:top; */ /* Có thể không cần thiết nếu scale là 1 */
 }
+.preview-news-container::-webkit-scrollbar {
+  width: 6px;
+  z-index: -1;
+}
+.preview-news-container::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 4px;
+}
+.preview-news-container::-webkit-scrollbar-track {
+  margin-top: 20px;
+}

@@ -13,8 +13,8 @@ import useLoading from "../../../hooks/useLoading";
 export default function ProfileSettingPage() {
     const { user, fetchUser } = useAuthContext();
     const email = user?.email || '';
-    const [selectedProvince, setSelectedProvince] = useState(null);
-    const [selectedDistrict, setSelectedDistrict] = useState(null);
+    const [selectedProvince, setSelectedProvince] = useState(user?.province ||null);
+    const [selectedDistrict, setSelectedDistrict] = useState(user?.district||null);
     const { loading, withLoading } = useLoading();
     const { data } = useCustomFetch(fetchAreaApi);
     const { mutate } = useCustomMutation(changeProfileBusinessApi);

@@ -1,0 +1,23 @@
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cv-website-dev
+    ports:
+      - "5173:5173"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    env_file:
+      - .env.development
+    command: npm run dev -- --host 0.0.0.0
+    networks:
+      - cv-network
+
+networks:
+  cv-network:
+    driver: bridge 

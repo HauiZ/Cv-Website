@@ -16,7 +16,7 @@ import { useDrag } from "react-use-gesture";
 dayjs.extend(relativeTime);
 dayjs.locale("vi");
 
-export default function NewsCard({ job, onDeleteNews }) {
+export default function NewsCard({ job, onDeleteNews}) {
   const navigate = useNavigate();
   const salaryRange = formatSalaryRangeToVND(
     `${job.salaryMin} - ${job.salaryMax}`
@@ -41,7 +41,7 @@ export default function NewsCard({ job, onDeleteNews }) {
     statusMap[job?.status?.toUpperCase() || "PENDING"] || statusMap["PENDING"];
   const handleOnclick = () => {
     if (job?.status === "APPROVED") {
-      navigate(`/recruiter/quan-ly-cv`);
+      navigate(`/recruiter/quan-ly-cv/${job.id}`);
     }
   };
 

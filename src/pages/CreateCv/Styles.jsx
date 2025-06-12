@@ -25,7 +25,7 @@ const styles = (color) => StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: '#EEEEEE',
         borderBottomStyle: 'solid',
-        flexWrap: 'wrap', // Allow wrapping if needed
+        flexWrap: 'wrap',
     },
     profileImageContainer: {
         marginRight: 20,
@@ -40,10 +40,11 @@ const styles = (color) => StyleSheet.create({
         width: 100,
         height: 100,
         borderRadius: 50,
+        objectFit: 'cover',
     },
     headerContent: {
         flex: 1,
-        flexShrink: 1, // Allow content to shrink if needed
+        flexShrink: 1,
         lineHeight: 1.5,
     },
     name: {
@@ -61,46 +62,53 @@ const styles = (color) => StyleSheet.create({
     },
     motto: {
         fontSize: 10,
+        lineHeight: 1.5,
         fontStyle: 'italic',
         color: '#666666',
     },
     section: {
         marginBottom: 15,
-        flexGrow: 1, // Allow sections to grow
-        width: '100%', // Ensure full width within column
+        flexGrow: 1,
+        width: '100%',
     },
     sectionTitle: {
         fontSize: 12,
         fontWeight: 'bold',
-        color: color,
+        color: 'black',
         marginBottom: 8,
         textTransform: 'uppercase',
-        borderBottomWidth: 1,
+        borderBottomWidth: 2,
         borderBottomColor: color,
         borderBottomStyle: 'solid',
+        borderTopWidth: 2,
+        borderTopColor: color,
+        borderTopStyle: 'solid',
         paddingBottom: 2,
+        paddingTop: 2,
     },
     contentRow: {
         flexDirection: 'row',
         marginBottom: 4,
-        flexWrap: 'wrap', // Allow row content to wrap
+        flexWrap: 'wrap',
+        alignItems: 'flex-start',
     },
     icon: {
         width: 16,
         height: 16,
-        minWidth: 16, // Add minWidth to prevent icon shrinking
+        minWidth: 16,
         borderRadius: 8,
         backgroundColor: color,
         marginRight: 8,
         justifyContent: 'center',
         alignItems: 'center',
+        marginTop: 1,
     },
     field: {
         flex: 1,
         fontSize: 10,
         lineHeight: 1.5,
-        flexWrap: 'wrap', // Ensure text wraps
-        width: '100%', // Ensure text has full width to wrap properly
+        flexWrap: 'wrap',
+        width: '100%',
     },
     timelineContainer: {
         flexDirection: 'row',
@@ -155,19 +163,22 @@ const styles = (color) => StyleSheet.create({
     rowLayout: {
         flexDirection: 'row',
         marginBottom: 15,
-        flexWrap: 'wrap', // Allow row to wrap if content is too wide
-        width: '100%', // Ensure full width
+        flexWrap: 'wrap',
+        width: '100%',
     },
     column: {
         flex: 1,
         paddingRight: 10,
-        minWidth: 150, // Minimum width for columns
-        maxWidth: '100%', // Don't exceed container width
-        flexShrink: 1, // Allow column to shrink if needed
+        minWidth: 150,
+        maxWidth: '100%',
+        flexShrink: 1,
     },
     fullWidthSection: {
         marginBottom: 15,
-        width: '100%', // Ensure full width
+        width: '100%',
+    },
+    lastColumn: {
+        paddingRight: 0,
     }
 });
 
@@ -199,6 +210,10 @@ const LocationIcon = ({ color }) => (
 export const CVPDF = ({ formData, primaryColor }) => {
     const currentStyles = styles(primaryColor);
     
+    // Get arrays with fallback to single item arrays
+    const experiences = formData.experiences || [{ period: '', company: '', details: '' }];
+    const activities = formData.activities || [{ period: '', project: '', description: '' }];
+
     return (
         <Document>
             <Page size="A4" style={currentStyles.page} wrap>
@@ -217,7 +232,7 @@ export const CVPDF = ({ formData, primaryColor }) => {
                     <View style={currentStyles.headerContent}>
                         <Text style={currentStyles.name}>{formData.fullName || "Họ và tên"}</Text>
                         <Text style={currentStyles.jobTitle}>{formData.jobTitle || "Vị trí ứng tuyển"}</Text>
-                        <Text style={currentStyles.motto}>{formData.motto || "Châm ngôn nghề nghiệp"}</Text>
+                        <Text style={currentStyles.motto}>{formData.motto || "Châm ngôn nghề nghiệp của bạn. Bạn giỏi nhất điều gì và có thể làm"}</Text>
                     </View>
                 </View>
 
@@ -271,7 +286,7 @@ export const CVPDF = ({ formData, primaryColor }) => {
                     </View>
 
                     {/* Skills */}
-                    <View style={currentStyles.column}>
+                    <View style={[currentStyles.column, currentStyles.lastColumn]}>
                         <View style={currentStyles.section}>
                             <Text style={currentStyles.sectionTitle}>Các kỹ năng</Text>
                             <View style={currentStyles.contentRow}>
@@ -281,23 +296,59 @@ export const CVPDF = ({ formData, primaryColor }) => {
                     </View>
                 </View>
 
+                {/* Experience Section - Full width */}
+                <View style={currentStyles.fullWidthSection}>
+                    <Text style={currentStyles.sectionTitle}>Kinh nghiệm làm việc</Text>
+                    {experiences.map((exp, index) => (
+                        <View key={index} style={currentStyles.timelineContainer}>
+                            <View style={currentStyles.timelineBarContainer}>
+                                <View style={currentStyles.timelineDot} />
+                                {index < experiences.length && (
+                                    <View style={currentStyles.timelineBar} />
+                                )}
+                            </View>
+                            <View style={currentStyles.timelineContent}>
+                                <Text style={currentStyles.timelinePeriod}>
+                                    {exp.period || "Bắt đầu — Kết thúc"}
+                                </Text>
+                                <Text style={currentStyles.timelineTitle}>
+                                    {exp.company || "Tên công ty"}
+                                </Text>
+                                <Text style={currentStyles.timelineDescription}>
+                                    {exp.details || "Mô tả kinh nghiệm làm việc cụ thể"}
+                                </Text>
+                            </View>
+                        </View>
+                    ))}
+                </View>
+
                 {/* Second row layout */}
                 <View style={currentStyles.rowLayout}>
-                    {/* Experience */}
-                    <View style={currentStyles.column}>
+                    {/* Activities */}
+                    <View style={[currentStyles.column, currentStyles.lastColumn]}>
                         <View style={currentStyles.section}>
-                            <Text style={currentStyles.sectionTitle}>Kinh nghiệm làm việc</Text>
-                            <View style={currentStyles.timelineContainer}>
-                                <View style={currentStyles.timelineBarContainer}>
-                                    <View style={currentStyles.timelineDot} />
-                                    <View style={currentStyles.timelineBar} />
+                            <Text style={currentStyles.sectionTitle}>Hoạt động</Text>
+                            {activities.map((activity, index) => (
+                                <View key={index} style={currentStyles.timelineContainer}>
+                                    <View style={currentStyles.timelineBarContainer}>
+                                        <View style={currentStyles.timelineDot} />
+                                        {index < activities.length && (
+                                            <View style={currentStyles.timelineBar} />
+                                        )}
+                                    </View>
+                                    <View style={currentStyles.timelineContent}>
+                                        <Text style={currentStyles.timelinePeriod}>
+                                            {activity.period || "Bắt đầu — Kết thúc"}
+                                        </Text>
+                                        <Text style={currentStyles.timelineTitle}>
+                                            {activity.project || "Tên dự án"}
+                                        </Text>
+                                        <Text style={currentStyles.timelineDescription}>
+                                            {activity.description || "Mô tả hoạt động"}
+                                        </Text>
+                                    </View>
                                 </View>
-                                <View style={currentStyles.timelineContent}>
-                                    <Text style={currentStyles.timelinePeriod}>{formData.experience || "Bắt đầu — Kết thúc"}</Text>
-                                    <Text style={currentStyles.timelineTitle}>{formData.company || "Tên công ty"}</Text>
-                                    <Text style={currentStyles.timelineDescription}>{formData.experienceDetails || "Mô tả kinh nghiệm làm việc cụ thể"}</Text>
-                                </View>
-                            </View>
+                            ))}
                         </View>
                     </View>
 
@@ -311,23 +362,6 @@ export const CVPDF = ({ formData, primaryColor }) => {
                         </View>
                     </View>
 
-                    {/* Activities */}
-                    <View style={currentStyles.column}>
-                        <View style={currentStyles.section}>
-                            <Text style={currentStyles.sectionTitle}>Hoạt động</Text>
-                            <View style={currentStyles.timelineContainer}>
-                                <View style={currentStyles.timelineBarContainer}>
-                                    <View style={currentStyles.timelineDot} />
-                                    <View style={currentStyles.timelineBar} />
-                                </View>
-                                <View style={currentStyles.timelineContent}>
-                                    <Text style={currentStyles.timelinePeriod}>{formData.activities || "Bắt đầu — Kết thúc"}</Text>
-                                    <Text style={currentStyles.timelineTitle}>{formData.activityDetails || "Tên dự án"}</Text>
-                                    <Text style={currentStyles.timelineDescription}>{formData.activityDesc || "Mô tả hoạt động"}</Text>
-                                </View>
-                            </View>
-                        </View>
-                    </View>
                 </View>
 
                 {/* Third row layout */}
@@ -353,7 +387,7 @@ export const CVPDF = ({ formData, primaryColor }) => {
                     </View>
 
                     {/* References */}
-                    <View style={currentStyles.column}>
+                    <View style={[currentStyles.column, currentStyles.lastColumn]}>
                         <View style={currentStyles.section}>
                             <Text style={currentStyles.sectionTitle}>Người giới thiệu</Text>
                             <View style={currentStyles.contentRow}>

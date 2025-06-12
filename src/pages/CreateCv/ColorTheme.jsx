@@ -10,7 +10,7 @@ export default function ColorPicker({ onColorChange }) {
   });
 
   // Update RGB when hex color changes
-  useEffect(() => {
+  const handleChangeColor = () => {
     const hex = color.replace('#', '');
     const r = parseInt(hex.substring(0, 2), 16);
     const g = parseInt(hex.substring(2, 4), 16);
@@ -23,7 +23,7 @@ export default function ColorPicker({ onColorChange }) {
       blue: b
     });
     onColorChange(color);
-  }, [color, onColorChange]);
+  }
 
   // Update hex and color when RGB values change
   const handleRgbChange = (colorName, value) => {
@@ -117,6 +117,8 @@ export default function ColorPicker({ onColorChange }) {
           style={{ backgroundColor: color }}
         />
       </div>
+      <button className="bg-green-400 text-white hover:text-green-400 hover:bg-white hover:border-green-300 border-2 p-2 rounded-md"
+      onClick={handleChangeColor}>Cập nhật</button>
     </div>
   );
 }

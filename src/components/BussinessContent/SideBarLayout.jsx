@@ -22,7 +22,7 @@ const Sidebar = ({ activeTab }) => {
     { id: "bang-tin", icon: <FaList size={18} />, label: "Bảng tin", path: "/recruiter/bang-tin" },
     { id: "tin-tuyen-dung", icon: <FaFileAlt size={18} />, label: "Tin tuyển dụng", path: "/recruiter/tin-tuyen-dung" },
     { id: "dang-tin", icon: <FaPlus size={18} />, label: "Đăng tin", path: "/recruiter/dang-tin" },
-    { id: "cv-de-xuat", icon: <FaThumbsUp size={18} />, label: "CV đề xuất", path: "/recruiter/cv-de-xuat" },
+    // { id: "cv-de-xuat", icon: <FaThumbsUp size={18} />, label: "CV đề xuất", path: "/recruiter/cv-de-xuat" },
     { id: "quan-ly-cv", icon: <FaFileAlt size={18} />, label: "Quản lý CV", path: "/recruiter/quan-ly-cv/ " },
     { id: "profile", icon: <FaUser size={16} />, label: "Hồ sơ cá nhân", path: "/recruiter/profile" },
     { id: "security", icon: <FaShieldAlt size={16} />, label: "Bảo mật", path: "/recruiter/security" },

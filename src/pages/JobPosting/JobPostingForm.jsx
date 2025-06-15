@@ -9,7 +9,7 @@ import useLoading from "../../hooks/useLoading";
 import useCustomFetch from "../../hooks/useCustomFetch";
 import { fetchAreaApi } from "../../services/userApi";
 import Select from "react-select";
-import jobCategories  from '../../components/JobCategories';
+import jobCategories from '../../components/JobCategories';
 
 const JobPostingForm = () => {
 
@@ -37,31 +37,31 @@ const JobPostingForm = () => {
         : [];
 
     const [formData, setFormData] = useState({
-        jobTitle: '',
-        profession: '',
-        candidateNumber: '',
-        jobLevel: '',
-        workType: '',
-        degree: '',
-        jobAddress: '',
+        jobTitle: 'Frontend Developer',
+        profession: 'Công nghệ thông tin',
+        candidateNumber: '2',
+        jobLevel: 'Junior',
+        workType: 'Toàn thời gian',
+        degree: 'Đại học',
+        jobAddress: 'Quận 1, TP.HCM',
         salary: {
-            min: '',
-            max: '',
-            negotiable: false,
+            min: '12000000',
+            max: '18000000',
+            negotiable: true,
         },
-        experience: '',
+        experience: '1-3 năm',
         workDateIn: '',
-        workDetail: '',
-        jobRequirements: '',
-        benefits: '',
+        workDetail: 'Phát triển và tối ưu hóa giao diện người dùng cho các ứng dụng web. Phối hợp với backend để tích hợp API.',
+        jobRequirements: 'Thành thạo HTML/CSS, JavaScript. Có kinh nghiệm sử dụng React hoặc Vue.js. Ưu tiên biết Tailwind CSS.',
+        benefits: 'Lương tháng 13, bonus hiệu suất, BHYT đầy đủ, môi trường trẻ trung năng động.',
         applicationDeadline: '',
         uploadMethod: 'link',
-        videoUrl: '',
+        videoUrl: 'https://www.youtube.com/watch?v=g7DW5YsJD5M',
         contactInfo: {
-            name: '',
-            address: '',
-            phone: '',
-            email: '',
+            name: 'Nguyễn Văn A',
+            address: 'Tầng 5, Tòa nhà ABC, Quận 1, TP.HCM',
+            phone: '0909123456',
+            email: 'hr@example.com',
         },
     });
 
@@ -718,72 +718,27 @@ const JobPostingForm = () => {
                     </h2>
 
                     <div className="form-group">
-                        <div className="radio-group mb-4 flex items-center">
-                            <div className="radio-item flex items-center">
-                                <input
-                                    type="radio"
-                                    id="upload"
-                                    name="uploadMethod"
-                                    value="file"
-                                    checked={formData.uploadMethod === 'file'}
-                                    onChange={() => handleInputChange('uploadMethod', 'file')}
-                                    className="mr-2"
-                                />
-                                <label htmlFor="upload" className="text-sm select-none">Tập tin lên</label>
-                            </div>
-                            <div className="text-sm mx-4 text-gray-500">Hoặc</div>
-                            <div className="radio-item flex items-center">
-                                <input
-                                    type="radio"
-                                    id="link"
-                                    name="uploadMethod"
-                                    value="link"
-                                    checked={formData.uploadMethod === 'link'}
-                                    onChange={() => handleInputChange('uploadMethod', 'link')}
-                                    className="mr-2"
-                                />
-                                <label htmlFor="link" className="text-sm select-none">Link liên kết</label>
-                            </div>
+                        <div className="radio-item flex items-center">
+                            <input
+                                type="radio"
+                                id="link"
+                                name="uploadMethod"
+                                value="link"
+                                checked={formData.uploadMethod === 'link'}
+                                onChange={() => handleInputChange('uploadMethod', 'link')}
+                                className="mr-2"
+                            />
+                            <label htmlFor="link" className="text-sm select-none">Link liên kết</label>
                         </div>
 
-                        {formData.uploadMethod === 'file' ? (
-                            <div className="mb-4">
-                                <input
-                                    type="file"
-                                    id="video-upload"
-                                    className="hidden"
-                                    accept="video/*"
-                                    onChange={handleVideoUpload}
-                                />
-                                <label htmlFor="video-upload" className="block">
-                                    <div className="border border-dashed border-gray-300 rounded-md p-8 text-center text-sm text-gray-500 cursor-pointer hover:bg-gray-50 transition-colors">
-                                        <FaUpload className="mx-auto mb-2 text-gray-400" size={24} />
-                                        <p className="text-gray-500">Tải ảnh hoặc video (Tối đa 5 ảnh và 1 video dung lượng tối đa 10MB)</p>
-                                    </div>
-                                </label>
-                                {videoFile && (
-                                    <div className="mt-2 text-sm text-green-600">
-                                        Đã chọn: {videoFile.name}
-                                    </div>
-                                )}
-                            </div>
-                        ) : (
-                            <div className="mb-4">
-                                <input
-                                    type="text"
-                                    className={inputFieldClass}
-                                    placeholder="Nhập URL video (YouTube, Vimeo,...)"
-                                    value={formData.videoUrl}
-                                    onChange={(e) => handleInputChange('videoUrl', e.target.value)}
-                                />
-                            </div>
-                        )}
-
-                        <div className="flex mt-4">
-                            <div className="bg-gray-50 border border-dashed border-gray-300 rounded flex flex-col items-center justify-center w-40 h-40 cursor-pointer hover:bg-gray-100 transition-colors">
-                                <FaUpload size={24} className="mb-2 text-gray-400" />
-                                <span className="text-sm text-gray-500">Thêm ảnh/video</span>
-                            </div>
+                        <div className="mb-4">
+                            <input
+                                type="text"
+                                className={inputFieldClass}
+                                placeholder="Nhập URL video (YouTube, Vimeo,...)"
+                                value={formData.videoUrl}
+                                onChange={(e) => handleInputChange('videoUrl', e.target.value)}
+                            />
                         </div>
                     </div>
                 </div>

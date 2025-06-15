@@ -18,12 +18,12 @@ export default function RenderContent({ activeTab }) {
             );
         case 'dang-tin':
             return <JobPostingForm />;
-        case 'cv-de-xuat':
-            return (
-                <div className='flex text-center text-green-400 justify-center font-bold text-4xl animate-pulse'>
-                    COMING SOON
-                </div>
-            );
+        // case 'cv-de-xuat':
+        //     return (
+        //         <div className='flex text-center text-green-400 justify-center font-bold text-4xl animate-pulse'>
+        //             COMING SOON
+        //         </div>
+        //     );
         case 'profile':
             return <ProfileSettingPage />;
         case 'quan-ly-cv':

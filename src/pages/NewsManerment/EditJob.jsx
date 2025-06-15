@@ -44,12 +44,12 @@ const EditJob = () => {
   // Tạo options cho Select quận/huyện dựa vào tỉnh/thành phố đã chọn
   const districtOptions = selectedProvince
     ? (
-        areaData.find((item) => item.province === selectedProvince.value)
-          ?.districts || []
-      ).map((district) => ({
-        label: district,
-        value: district,
-      }))
+      areaData.find((item) => item.province === selectedProvince.value)
+        ?.districts || []
+    ).map((district) => ({
+      label: district,
+      value: district,
+    }))
     : [];
 
   // Form state
@@ -944,84 +944,30 @@ const EditJob = () => {
             </h2>
 
             <div className="form-group">
-              <div className="radio-group mb-4 flex items-center">
-                <div className="radio-item flex items-center">
-                  <input
-                    type="radio"
-                    id="upload"
-                    name="uploadMethod"
-                    value="file"
-                    checked={formData.uploadMethod === "file"}
-                    onChange={() => handleInputChange("uploadMethod", "file")}
-                    className="mr-2"
-                  />
-                  <label htmlFor="upload" className="text-sm select-none">
-                    Tập tin lên
-                  </label>
-                </div>
-                <div className="text-sm mx-4 text-gray-500">Hoặc</div>
-                <div className="radio-item flex items-center">
-                  <input
-                    type="radio"
-                    id="link"
-                    name="uploadMethod"
-                    value="link"
-                    checked={formData.uploadMethod === "link"}
-                    onChange={() => handleInputChange("uploadMethod", "link")}
-                    className="mr-2"
-                  />
-                  <label htmlFor="link" className="text-sm select-none">
-                    Link liên kết
-                  </label>
-                </div>
+              <div className="radio-item flex items-center">
+                <input
+                  type="radio"
+                  id="link"
+                  name="uploadMethod"
+                  value="link"
+                  checked={formData.uploadMethod === "link"}
+                  onChange={() => handleInputChange("uploadMethod", "link")}
+                  className="mr-2"
+                />
+                <label htmlFor="link" className="text-sm select-none">
+                  Link liên kết
+                </label>
               </div>
-
-              {formData.uploadMethod === "file" ? (
-                <div className="mb-4">
-                  <input
-                    type="file"
-                    id="video-upload"
-                    className="hidden"
-                    accept="video/*"
-                    onChange={handleVideoUpload}
-                  />
-                  <label htmlFor="video-upload" className="block">
-                    <div className="border border-dashed border-gray-300 rounded-md p-8 text-center text-sm text-gray-500 cursor-pointer hover:bg-gray-50 transition-colors">
-                      <FaUpload
-                        className="mx-auto mb-2 text-gray-400"
-                        size={24}
-                      />
-                      <p className="text-gray-500">
-                        Tải ảnh hoặc video (Tối đa 5 ảnh và 1 video dung lượng
-                        tối đa 10MB)
-                      </p>
-                    </div>
-                  </label>
-                  {videoFile && (
-                    <div className="mt-2 text-sm text-green-600">
-                      Đã chọn: {videoFile.name}
-                    </div>
-                  )}
-                </div>
-              ) : (
-                <div className="mb-4">
-                  <input
-                    type="text"
-                    className={inputFieldClass}
-                    placeholder="Nhập URL video (YouTube, Vimeo,...)"
-                    value={formData.videoUrl}
-                    onChange={(e) =>
-                      handleInputChange("videoUrl", e.target.value)
-                    }
-                  />
-                </div>
-              )}
-
-              <div className="flex mt-4">
-                <div className="bg-gray-50 border border-dashed border-gray-300 rounded flex flex-col items-center justify-center w-40 h-40 cursor-pointer hover:bg-gray-100 transition-colors">
-                  <FaUpload size={24} className="mb-2 text-gray-400" />
-                  <span className="text-sm text-gray-500">Thêm ảnh/video</span>
-                </div>
+              <div className="mb-4">
+                <input
+                  type="text"
+                  className={inputFieldClass}
+                  placeholder="Nhập URL video (YouTube, Vimeo,...)"
+                  value={formData.videoUrl}
+                  onChange={(e) =>
+                    handleInputChange("videoUrl", e.target.value)
+                  }
+                />
               </div>
             </div>
           </div>

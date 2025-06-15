@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUpload } from "@fortawesome/free-solid-svg-icons";
 
@@ -6,7 +6,13 @@ import { faUpload } from "@fortawesome/free-solid-svg-icons";
 export default function FileUploader({ onFileUploaded, currentAvatar }) {
     const [isDragging, setIsDragging] = useState(false);
     const [preview, setPreview] = useState(currentAvatar || null);
-  
+    useEffect(() => {
+      if (currentAvatar === "") {
+        setPreview(null);
+        onFileUploaded(null);
+      }
+    }, [currentAvatar]);
+
     const handleDragEnter = (e) => {
       e.preventDefault();
       e.stopPropagation();

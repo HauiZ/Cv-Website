@@ -4,6 +4,7 @@ import { PDFDownloadLink } from "@react-pdf/renderer";
 import { CVPDF } from "./Styles";
 import PreviewButton from "./PreviewButton";
 import { RiResetLeftFill } from "react-icons/ri";
+import { a } from "react-spring";
 
 export default function FunctionTopBar({ formData, color, setFormData, setPrimaryColor }) {
   const [cvName, setCvName] = useState();
@@ -14,6 +15,7 @@ export default function FunctionTopBar({ formData, color, setFormData, setPrimar
 
   const handleResetForm = (event) => {
     setFormData({
+      avatar: "",
       fullName: "",
       jobTitle: "",
       motto: "",
@@ -39,6 +41,7 @@ export default function FunctionTopBar({ formData, color, setFormData, setPrimar
     });
     setPrimaryColor("#007F00");
     setCvName("");
+    console.log(formData)
   };
 
   return (

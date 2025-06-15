@@ -89,7 +89,7 @@ const BusinessHeader = () => {
               Tin đã đăng tuyển
             </a>
             <a
-              href="/recruiter/quan-ly-cv"
+              href="/recruiter/quan-ly-cv/%20"
               className="menu bg-[#3B546F] text-white px-4 py-2 rounded-lg hover:bg-[#4B647F] transition-colors"
             >
               Quản lý CV

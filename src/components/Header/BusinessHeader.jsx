@@ -77,7 +77,7 @@ const BusinessHeader = () => {
         <div className="flex items-center">
           <img
             src="/src/assets/image/logoNoBg.png"
-            className="h-12 w-auto object-contain hover:cursor-pointer mr-8"
+            className="h-20 w-auto object-contain hover:cursor-pointer mr-8"
             alt="Logo"
             onClick={() => navigate("/recruiter")}
           />

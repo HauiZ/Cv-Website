@@ -3,12 +3,14 @@ import { Avatar, Badge, Dropdown, Space, List, Typography } from "antd";
 import { IoNotifications } from "react-icons/io5";
 import useCustomFetch from "../../hooks/useCustomFetch";
 import { getNotificationApi } from "../../services/recruiterApi";
+import { useNavigate } from "react-router-dom";
 const { Text } = Typography;
 
 const Notification = () => {
   const [hasNotifications, setHasNotifications] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const [isRead, setIsRead] = useState(false);
+  const navigate = useNavigate();
 
   // Fetch notifications from backend API
   const { data, refetch, loading } = useCustomFetch(getNotificationApi);
@@ -45,6 +47,20 @@ const Notification = () => {
     return sender && typeof sender === 'string' ? sender.charAt(0).toUpperCase() : "?";
   };
 
+  const extractRecruitmentId = (content) => {
+    const match = content?.match(/\{\s*Bài viết số (\d+)\s*\}/);
+    return match ? match[1] : null;
+  };
+
+  const handleApplicationClick = (item) => {
+    const id = extractRecruitmentId(item.content);
+    if (id) {
+      navigate(`/recruiter/quan-ly-cv/${id}`);
+    } else {
+      console.warn("Không tìm thấy ID trong nội dung thông báo.");
+    }
+  };
+
   const notificationsList = (
     <List
       className="notification-dropdown"
@@ -65,7 +81,13 @@ const Notification = () => {
           style={{ borderBottom: "1px solid #f0f0f0", padding: "12px 8px" }}
         >
           <List.Item.Meta
-            avatar={<Avatar>{getAvatarText(item?.sender)}</Avatar>}
+            avatar={
+              item.senderAvatar ? (
+                <Avatar src={item.senderAvatar} />
+              ) : (
+                <Avatar>{getAvatarText(item?.sender)}</Avatar>
+              )
+            }
             title={
               <>
                 <Text strong>{item?.title || ""}</Text>
@@ -80,7 +102,17 @@ const Notification = () => {
             description={
               <>
                 <Text type="secondary">{item?.sender || ""}</Text>
-                <div style={{ marginTop: "4px" }}>{item?.content || ""}</div>
+                <div style={{ marginTop: "4px" }}>
+                  {item?.content || ""}
+                  {item.title === "Ứng tuyển công việc" && (
+                    <span
+                      className="text-blue-500 cursor-pointer ml-2"
+                      onClick={() => handleApplicationClick(item)}
+                    >
+                      Xem chi tiết
+                    </span>
+                  )}
+                </div>
               </>
             }
           />

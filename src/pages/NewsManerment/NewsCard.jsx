@@ -177,10 +177,6 @@ export default function NewsCard({ job, onDeleteNews}) {
           </button>{" "}
           <button
             className="px-3 py-1 bg-[#5DDA33] text-white rounded-full text-xs hover:opacity-90 whitespace-nowrap"
-            onClick={(e) => {
-              e.stopPropagation();
-              navigate("/recruiter/quan-ly-cv");
-            }}
           >
             Đơn ứng tuyển: {job?.numberApplicant || 0}
           </button>

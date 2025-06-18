@@ -64,7 +64,7 @@ const protectedRoutes = [
     element: <TemplateCV />,
   },
   { path: "/candidate-application", element: <ApplicationManerment /> },
-  { path: "/tools", element: <ToolFormat /> }
+  { path: "/tools", element: <ToolFormat /> },
 ];
 
 const router = createBrowserRouter([
@@ -74,24 +74,36 @@ const router = createBrowserRouter([
     errorElement: <Page500 />,
     children: [
       ...authRoutes,
-      ...adminRoutes,      {
+      ...adminRoutes,
+      {
         path: "/recruiter",
         element: (
           <RequireAuth>
             <BusinessLayout />
           </RequireAuth>
-        ),        children: [
+        ),
+        children: [
           { path: "bang-tin", element: <DashBoard /> },
-          { 
+          {
             path: "tin-tuyen-dung",
             children: [
               { index: true, element: <NewsManerment /> },
-              { path: "edit", element: <EditJob /> }
-            ]
+              { path: "edit", element: <EditJob /> },
+            ],
           },
           { path: "dang-tin", element: <JobPostingForm /> },
-          { path: "cv-de-xuat", element: <div className='flex text-center text-green-400 justify-center font-bold text-4xl animate-pulse'>COMING SOON</div> },
-          { path: "quan-ly-cv/:newsId", element: <ApplicantLayout funcApi={getApplicantApi} /> },
+          {
+            path: "cv-de-xuat",
+            element: (
+              <div className="flex text-center text-green-400 justify-center font-bold text-4xl animate-pulse">
+                COMING SOON
+              </div>
+            ),
+          },
+          {
+            path: "quan-ly-cv/:newsId",
+            element: <ApplicantLayout funcApi={getApplicantApi} />,
+          },
           { path: "profile", element: <ProfileSettingPage /> },
           { path: "security", element: <SecurityPage /> },
           { path: "", element: <DashBoard /> }, // Default route

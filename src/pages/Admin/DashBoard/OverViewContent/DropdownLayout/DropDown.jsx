@@ -82,7 +82,7 @@ export default function LayoutDropdown({ handleSubmit }) {
             <div className="p-2 text-gray-500 w-[15.5rem]">No users found.</div>
           ) : (
             users.slice(0, 5).map((user) => (
-              <div key={user.id} onClick={() => handleSubmit(user.id)}>
+              <div key={user.id} onMouseDown={() => handleSubmit(user.id)}>
                 <UsersCard data={user} />
               </div>
             ))

@@ -36,7 +36,7 @@ const OverViewContent = () => {
   const [contentVisible, setContentVisible] = useState(true);
   // Use timestamp for chart key to ensure it's always unique
   const [chartKey, setChartKey] = useState(Date.now());
-  const { setSearchTerm } = useSearch();
+  const { setSearchTerm, setFinalSearchTerm, setId } = useSearch();
 
   const [counts, setCounts] = useState({
     users: 0,
@@ -66,11 +66,13 @@ const OverViewContent = () => {
     if (key !== activeKey) {
       // Switching tabs
       setContentVisible(false);
-
       setTimeout(() => {
         setActiveKey(key);
         setCurrentContent(key);
 
+        setFinalSearchTerm("");
+        setSearchTerm("");
+        setId("");
         // Create a new key when switching to Overview to force remount
         if (key === "overview") {
           if (localStorage.getItem("where")) {

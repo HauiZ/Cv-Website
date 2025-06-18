@@ -32,7 +32,7 @@ export default function NewsCard({ job, onDeleteNews}) {
       class: "bg-green-500 text-white",
     },
     REJECTED: {
-      icon: <FaTimesCircle className="text-red-600" />,
+      icon: <FaTimesCircle className="text-white" />,
       class: "bg-red-500 text-white",
     },
   };

@@ -127,7 +127,6 @@ const CvCard = forwardRef((props, ref) => {
 
   const handleTagChange = (e) => {
     setEditingTagValue(e.target.value);
-    tagChange.current = true;
   };
 
   const handleTagBlur = () => {
@@ -166,6 +165,9 @@ const CvCard = forwardRef((props, ref) => {
       tags.forEach((tag) => {
         onAddToCategory(tag, { name, imageUrl });
       });
+    }
+    if(tags.join(',') !== data.propoties) {
+      tagChange.current = true;
     }
   };
 

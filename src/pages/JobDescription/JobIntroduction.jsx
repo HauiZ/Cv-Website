@@ -9,7 +9,7 @@ import {
 } from "react-icons/fa";
 import ApplyPopUp from "./ApplyPopUp";
 
-export default function JobIntroduction({data, jobId, isPreviewMode = false}) {
+export default function JobIntroduction({data, isApplied, jobId, isPreviewMode = false}) {
   const [isApplyOpen, setIsApplyOpen] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   const salaryRanges = formatSalaryRangeToVND(data?.salaryRange || "Thương lượng");
@@ -61,9 +61,14 @@ export default function JobIntroduction({data, jobId, isPreviewMode = false}) {
 
       {!isPreviewMode && (
         <div className="flex items-center justify-between gap-3">
-          <button className="bg-lime-500 text-white font-semibold py-2 w-[25rem] px-6 rounded-full hover:bg-lime-600 transition" onClick={() => setIsApplyOpen(true)}>
+          { isApplied ? <button className="bg-gray-500 text-white font-semibold py-2 w-[25rem] px-6 rounded-full transition" disabled>
+            Đã ứng tuyển
+          </button> : <button className="bg-green-500 text-white font-semibold py-2 w-[25rem] px-6 rounded-full hover:bg-lime-600 transition" onClick={() => setIsApplyOpen(true)}>
             Ứng tuyển ngay
-          </button>
+          </button>}
+          {/* <button className="bg-green-500 text-white font-semibold py-2 w-[25rem] px-6 rounded-full hover:bg-lime-600 transition" onClick={() => setIsApplyOpen(true)}>
+            Ứng tuyển ngay
+          </button> */}
 
           <button
             onClick={handleSaveClick}

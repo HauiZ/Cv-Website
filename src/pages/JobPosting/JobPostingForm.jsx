@@ -591,16 +591,26 @@ const JobPostingForm = () => {
                             className={inputFieldClass}
                             placeholder="mức lương tối thiểu (1000000)"
                             value={formData.salary.min}
-                            onChange={(e) => handleNestedInputChange('salary', 'min', e.target.value)}
+                            onChange={(e) => {
+                                const rawValue = e.target.value;
+                                if (rawValue === '' || Number(rawValue) >= 1) {
+                                    handleNestedInputChange('salary', 'min', rawValue);
+                                }
+                            }}
                             required
                         />
                         <p>-</p>
                         <input
                             type="text"
                             className={inputFieldClass}
-                            placeholder="mức lương tối thiểu tối đa (100000000)"
+                            placeholder="mức lương tối đa (100000000)"
                             value={formData.salary.max}
-                            onChange={(e) => handleNestedInputChange('salary', 'max', e.target.value)}
+                            onChange={(e) => {
+                                const rawValue = e.target.value;
+                                if (rawValue === '' || Number(rawValue) >= 1) {
+                                    handleNestedInputChange('salary', 'max', rawValue);
+                                }
+                            }}
                             required
                         />
                         <select

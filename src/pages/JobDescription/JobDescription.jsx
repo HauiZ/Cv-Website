@@ -20,7 +20,7 @@ export default function JobDescription() {
   const params = useParams();
   const { jobId } = params;
   const { data } = useCustomFetch(fetchRecruitmentNewsDetailApi, [jobId]);
-  const { company, general, introduce, detailRecruitment } = data || {};
+  const { company, general, introduce, detailRecruitment, isApplied } = data || {};
   const filterParams = useMemo(
     () => ({
       profession: detailRecruitment?.profession || "",
@@ -59,7 +59,7 @@ export default function JobDescription() {
               <CompanyIntroduction data={company} />
             </div>
             <div>
-              <JobIntroduction data={introduce} jobId={jobId} isPreviewMode={isPreviewMode} />
+              <JobIntroduction data={introduce} isApplied={isApplied} jobId={jobId} isPreviewMode={isPreviewMode} />
             </div>
           </div>
           <div className="flex justify-center gap-x-5 mb-10">

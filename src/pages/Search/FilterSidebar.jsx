@@ -211,7 +211,7 @@ const FilterSidebar = ({ onFilterChange, totalJobs, initialFilters = {} }) => {
 
           {expandedSections.experience && (
             <div className="mt-1 ml-1">
-              {['Tất cả', 'Không yêu cầu', '1 năm', '1-3 năm', '3-5 năm', 'Trên 5 năm'].map((exp) => (
+              {['Tất cả', 'Không yêu cầu', 'Dưới 1 năm', '1-3 năm', '3-5 năm', 'Trên 5 năm'].map((exp) => (
                 <label key={exp} className="flex items-center py-1 px-2 text-sm rounded hover:bg-green-50 cursor-pointer">
                   <div className="flex items-center">
                     <div className={`w-3 h-3 rounded-full ${filters.experience === exp ? 'border border-green-600 p-0.5' : 'border border-gray-300'}`}>

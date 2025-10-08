@@ -12,7 +12,7 @@ import {
 import useLoading from "../../hooks/useLoading";
 import { useToast } from "../../contexts/ToastContext";
 import Loader from "../../components/Loader";
-import { applyJobApi } from "../../services/userApi"; // Giả sử bạn đã
+import { applyJobApi } from "../../services/userApi"; 
 import useCustomMutation from "../../hooks/useCustomMutation";
 
 export default function ApplyPopUp({ isOpen, onClose, jobId }) {

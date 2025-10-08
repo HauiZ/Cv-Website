@@ -763,9 +763,12 @@ const EditJob = () => {
                     type="text"
                     className={inputFieldClass}
                     value={formData.salary.min}
-                    onChange={(e) =>
-                      handleNestedInputChange("salary", "min", e.target.value)
-                    }
+                    onChange={(e) => {
+                                const rawValue = e.target.value;
+                                if (rawValue === '' || Number(rawValue) >= 1) {
+                                    handleNestedInputChange('salary', 'min', rawValue);
+                                }
+                            }}
                     placeholder="Mức lương tối thiểu"
                   />
                   <span>-</span>
@@ -773,9 +776,12 @@ const EditJob = () => {
                     type="text"
                     className={inputFieldClass}
                     value={formData.salary.max}
-                    onChange={(e) =>
-                      handleNestedInputChange("salary", "max", e.target.value)
-                    }
+                    onChange={(e) => {
+                                const rawValue = e.target.value;
+                                if (rawValue === '' || Number(rawValue) >= 1) {
+                                    handleNestedInputChange('salary', 'max', rawValue);
+                                }
+                            }}
                     placeholder="Mức lương tối đa"
                   />
                   <select

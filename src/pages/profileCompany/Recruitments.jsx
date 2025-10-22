@@ -4,7 +4,7 @@ import Pagination from "../home/component/ListJob/Pagination";
 
 const ITEMS_PER_PAGE = 5;
 
-export default function RecruitmentNews({ data, logo }) {
+export default function RecruitmentNews({ data, logo, title }) {
   // Use destructuring to get data
   const [currentPage, setCurrentPage] = useState(1);
   useEffect(() => {
@@ -24,7 +24,7 @@ export default function RecruitmentNews({ data, logo }) {
     <div className="mt-5 rounded-[1em] bg-white shadow-md pb-10 relative">
       {/* Header */}
       <div className="w-full rounded-t-[1em] bg-gradient-to-r from-[#213E42] to-[#5DCC7C] flex items-center p-5">
-        <h1 className="text-white text-2xl font-semibold">Tuyển dụng</h1>
+        <h1 className="text-white text-2xl font-semibold"> {title} </h1>
       </div>
 
       {/* Content */}

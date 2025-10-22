@@ -8,17 +8,24 @@ import {
   FaHeart,
 } from "react-icons/fa";
 import ApplyPopUp from "./ApplyPopUp";
+import { useEffect } from "react";
+import useCustomMutation from "../../hooks/useCustomMutation";
+import { saveNews } from "../../services/userApi";
 
-export default function JobIntroduction({data, isApplied, jobId, isPreviewMode = false}) {
+export default function JobIntroduction({data, status, jobId, isPreviewMode = false}) {
   const [isApplyOpen, setIsApplyOpen] = useState(false);
-  const [isSaved, setIsSaved] = useState(false);
   const salaryRanges = formatSalaryRangeToVND(data?.salaryRange || "Thương lượng");
+  const { mutate } = useCustomMutation(saveNews);
+  const [isSaved, setIsSaved] = useState(!!status?.isSaved);
+  useEffect(() => setIsSaved(!!status?.isSaved), [status?.isSaved]);
+  const [isApplied, setIsApplied] = useState(!!status?.isApplied);
+  useEffect(() => setIsApplied(!!status?.isApplied), [status?.isApplied]);
 
   const handleSaveClick = () => {
-    setIsSaved(!isSaved);
-    // Bạn có thể thêm API call hoặc toast ở đây nếu muốn
-    console.log(isSaved ? "Đã hủy lưu tin" : "Đã lưu tin");
-  };
+    const next = !isSaved;
+    setIsSaved(next);
+    mutate(jobId);
+  }
   return (
     <div className="p-6 bg-white w-[39rem] h-fit">
       <h2 className="text-lg font-semibold mb-4">{data?.jobTitle || ""}</h2>
@@ -83,8 +90,8 @@ export default function JobIntroduction({data, isApplied, jobId, isPreviewMode =
           </button>
         </div>
       )}
-      
-      <ApplyPopUp isOpen={isApplyOpen} onClose={() => setIsApplyOpen(false)} jobId={jobId}/>
+
+      <ApplyPopUp isOpen={isApplyOpen} onClose={() => setIsApplyOpen(false)} jobId={jobId} setIsApplied={setIsApplied}/>
     </div>
   );
 }

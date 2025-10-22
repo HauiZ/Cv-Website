@@ -40,7 +40,7 @@ function ConfirmDialog({ open, onCancel, onConfirm, changes }) {
                         skills: "Kỹ năng",
                         expectedSalary: "Mức lương mong đợi",
                         yearsExperience: "Kinh nghiệm (năm)",
-                        educationLevel: "Trình độ hiện tại",
+                        currentLevel: "Trình độ hiện tại",
                         about: "Mô tả bản thân"
                       }[k]) || k}
                     </div>
@@ -88,7 +88,7 @@ export default function PersonalInfoForm() {
     skills: Array.isArray(user?.skills) ? user.skills : [],
     expectedSalary: user?.expectedSalary || "",
     yearsExperience: user?.yearsExperience ?? "",
-    educationLevel: user?.educationLevel || "",
+    currentLevel: user?.currentLevel || "",
     about: user?.about || ""
   });
 
@@ -107,7 +107,7 @@ export default function PersonalInfoForm() {
       skills: Array.isArray(user?.skills) ? user.skills : [],
       expectedSalary: user?.expectedSalary || "",
       yearsExperience: user?.yearsExperience ?? "",
-      educationLevel: user?.educationLevel || "",
+      currentLevel: user?.currentLevel || "",
       about: user?.about || ""
     });
   }, [user]);
@@ -186,7 +186,7 @@ export default function PersonalInfoForm() {
       skills: true,
       expectedSalary: true,
       yearsExperience: true,
-      educationLevel: true,
+      currentLevel: true,
       about: true
     });
     return ok;
@@ -210,7 +210,7 @@ export default function PersonalInfoForm() {
     putIfChanged("skills", formData.skills);
     putIfChanged("expectedSalary", formData.expectedSalary === "" ? "" : Number(formData.expectedSalary));
     putIfChanged("yearsExperience", formData.yearsExperience === "" ? "" : Number(formData.yearsExperience));
-    putIfChanged("educationLevel", formData.educationLevel);
+    putIfChanged("currentLevel", formData.currentLevel);
     putIfChanged("about", formData.about);
     return out;
   };
@@ -316,9 +316,9 @@ export default function PersonalInfoForm() {
             </div>
 
             <div>
-              <label htmlFor="educationLevel" className={labelBase}>Trình độ hiện tại</label>
+              <label htmlFor="currentLevel" className={labelBase}>Trình độ hiện tại</label>
               <select
-                id="educationLevel" name="educationLevel" value={formData.educationLevel} onChange={handleChange}
+                id="currentLevel" name="currentLevel" value={formData.currentLevel} onChange={handleChange}
                 className={inputBase}
               >
                 <option value="">-- Chọn trình độ --</option>
@@ -371,7 +371,7 @@ export default function PersonalInfoForm() {
                   skills: Array.isArray(user?.skills) ? user.skills : [],
                   expectedSalary: user?.expectedSalary || "",
                   yearsExperience: user?.yearsExperience ?? "",
-                  educationLevel: user?.educationLevel || "",
+                  currentLevel: user?.currentLevel || "",
                   about: user?.about || ""
                 });
                 setErrors({});

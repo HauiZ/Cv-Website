@@ -12,10 +12,10 @@ import {
 import useLoading from "../../hooks/useLoading";
 import { useToast } from "../../contexts/ToastContext";
 import Loader from "../../components/Loader";
-import { applyJobApi } from "../../services/userApi"; 
+import { applyJobApi } from "../../services/userApi";
 import useCustomMutation from "../../hooks/useCustomMutation";
 
-export default function ApplyPopUp({ isOpen, onClose, jobId }) {
+export default function ApplyPopUp({ isOpen, onClose, jobId, setIsApplied }) {
   const [file, setFile] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef(null);
@@ -56,8 +56,13 @@ export default function ApplyPopUp({ isOpen, onClose, jobId }) {
       return;
     }
     withLoading(async () => {
-      await mutate(jobId, file);
-      handleClose();
+      try {
+        await mutate(jobId, file);
+        handleClose();
+        setIsApplied(true);
+      } catch (error) {
+        showToast("Đã xảy ra lỗi khi ứng tuyển!", error);
+      }
     });
   };
 
@@ -104,13 +109,12 @@ export default function ApplyPopUp({ isOpen, onClose, jobId }) {
             </label>
 
             <div
-              className={`border-2 border-dashed rounded-lg p-6 text-center cursor-pointer transition-all duration-200 ${
-                isDragging
-                  ? "border-blue-500 bg-blue-50"
-                  : file
-                    ? "border-green-500 bg-green-50"
-                    : "border-gray-300 hover:border-blue-400 hover:bg-blue-50"
-              }`}
+              className={`border-2 border-dashed rounded-lg p-6 text-center cursor-pointer transition-all duration-200 ${isDragging
+                ? "border-blue-500 bg-blue-50"
+                : file
+                  ? "border-green-500 bg-green-50"
+                  : "border-gray-300 hover:border-blue-400 hover:bg-blue-50"
+                }`}
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
               onDrop={handleDrop}
@@ -218,11 +222,10 @@ export default function ApplyPopUp({ isOpen, onClose, jobId }) {
               Hủy
             </button>
             <button
-              className={`px-5 py-2.5 w-[30rem] justify-center rounded-lg font-medium transition-all duration-200 flex items-center ${
-                file
-                  ? "bg-blue-600 hover:bg-blue-700 text-white shadow-lg hover:shadow-blue-200"
-                  : "bg-blue-400 text-white cursor-not-allowed opacity-75"
-              }`}
+              className={`px-5 py-2.5 w-[30rem] justify-center rounded-lg font-medium transition-all duration-200 flex items-center ${file
+                ? "bg-blue-600 hover:bg-blue-700 text-white shadow-lg hover:shadow-blue-200"
+                : "bg-blue-400 text-white cursor-not-allowed opacity-75"
+                }`}
               onClick={handleApply}
               disabled={!file}
             >

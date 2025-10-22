@@ -5,6 +5,7 @@ import Filter from "./Filter";
 import LocationFilter from "./LocationFilter";
 import Pagination from "./Pagination";
 import useCustomFetch from "../../../../hooks/useCustomFetch";
+import { useAuthContext } from "../../../../contexts/AuthContext";
 
 const formatSalaryRange = (value) => {
   if (value === "10up") {
@@ -24,8 +25,12 @@ const formatSalaryRange = (value) => {
 const ListJobBox = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const jobsPerPage = 9;
-  const [filters, setFilters] = useState({});
-
+  const { user, fetchUser } = useAuthContext();
+  const [filters, setFilters] = useState({
+    // keyword: user?.desiredJob,
+    // salaryMin: user?.expectedSalary,
+  });
+  
   // Custom hook fetch theo query
   const {
     data: jobs,
@@ -110,7 +115,7 @@ const ListJobBox = () => {
           </div>
         )}
 
-        <div className="absolute bottom-6 left-0 right-0">
+        <div className=" bottom-6 left-0 right-0 mb-2">
           {totalPages > 1 && (
             <Pagination
               currentPage={currentPage}

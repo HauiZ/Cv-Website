@@ -42,7 +42,6 @@ const JobItem = ({ job }) => {
         </span>
       </div>
 
-      <LikeButton />
     </div>
   );
 };

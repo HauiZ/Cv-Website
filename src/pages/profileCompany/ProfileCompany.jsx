@@ -24,7 +24,7 @@ export default function ProfileCompany() {
           <div>
             <ProfileIntroduction data={companyData}></ProfileIntroduction>
             <div className="w-[35rem]">
-              <Recruitments data={jobs} logo={companyData?.logoUrl || ""} />
+              <Recruitments data={jobs} logo={companyData?.logoUrl || ""} title={'Tuyển dụng'}/>
             </div>
           </div>
           <div>

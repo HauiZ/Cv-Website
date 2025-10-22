@@ -12,6 +12,7 @@ import useAuth from "../../hooks/useAuth";
 import { ImProfile } from "react-icons/im";
 import { TbLockPassword } from "react-icons/tb";
 import { MdManageAccounts } from "react-icons/md";
+import { FaBookmark } from "react-icons/fa";
 
 const Header1 = () => {
   const { user } = useAuthContext();
@@ -51,6 +52,12 @@ const Header1 = () => {
     },
     {
       key: "5",
+      label: <a href="/list-news-saved">Tin đã lưu</a>,
+      icon: <FaBookmark />,
+      extra: "⌘",
+    },
+    {
+      key: "6",
       label: (
         <button
           onClick={() => {

@@ -70,7 +70,7 @@ function Home() {
       >
         <Mix />
       </div>
-      <div className="w-full h-[630px] bg-[#F5F5F5]">
+      <div className="w-full h-fit bg-[#F5F5F5]">
         <ListJobBox />
       </div>
       <div className="w-full h-[75rem]">

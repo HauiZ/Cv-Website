@@ -22,6 +22,7 @@ import EditJob from "../pages/NewsManerment/EditJob";
 import ProfileSettingPage from "../pages/InfomationPage/BusinessInfomation/ProfileSettingPage";
 import SecurityPage from "../pages/InfomationPage/BusinessInfomation/SecurityPage";
 import ApplicantLayout from "../pages/CVManagement/ApplicantLayout";
+import SavedList from "../pages/ListNewsSaved/SavedList";
 
 // Route nhóm
 import { adminRoutes } from "./adminRoutes";
@@ -65,6 +66,7 @@ const protectedRoutes = [
   },
   { path: "/candidate-application", element: <ApplicationManerment /> },
   { path: "/tools", element: <ToolFormat /> },
+  { path: "/list-news-saved", element: <SavedList /> },
 ];
 
 const router = createBrowserRouter([

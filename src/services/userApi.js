@@ -38,9 +38,9 @@ const changePassword = async ({ oldPassword, newPassword, confirmNewPassword }) 
   return await axios.patch(URL_API, data);
 }
 
-const changeProfileCandidate = async ({ name, phone }) => {
+const changeProfileCandidate = async ({ name, phone, desiredJob, skills, expectedSalary, yearsExperience, currentLevel, about }) => {
   const URL_API = "/users/changeProfile";
-  const data = { name, phone };
+  const data = { name, phone, desiredJob, skills, expectedSalary, yearsExperience, currentLevel, about };
   return await axios.patch(URL_API, data);
 }
 const getNotificationApi = async() =>{
@@ -53,4 +53,16 @@ const getInfoApplicationApi = async() =>{
   const res = await axios(URL_API);
   return res.data;
 }
-export { fetchUserApi, fetchAreaApi, applyJobApi, changeAvatar, changePassword, changeProfileCandidate, getNotificationApi, getInfoApplicationApi };
+
+const saveNews = async (jobId) => {
+  const res = await axios.post(`/users/saveNews/${jobId}`);
+  return res.data;
+}
+
+const fetchSavedNewsApi = async () => {
+  const res = await axios.get("/users/getAllNewsSaved");
+  const data = res.data;
+  return data;
+}
+export { fetchUserApi, fetchAreaApi, applyJobApi, changeAvatar, changePassword, changeProfileCandidate, getNotificationApi, getInfoApplicationApi, saveNews, fetchSavedNewsApi };
+

@@ -13,13 +13,15 @@ import useLoading from "../../hooks/useLoading";
 import { useToast } from "../../contexts/ToastContext";
 import Loader from "../../components/Loader";
 import { applyJobApi } from "../../services/userApi";
+import { emitEvent } from "../../services/emitEvent";
 import useCustomMutation from "../../hooks/useCustomMutation";
 
 export default function ApplyPopUp({ isOpen, onClose, jobId, setIsApplied }) {
   const [file, setFile] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef(null);
-  const { mutate } = useCustomMutation(applyJobApi);
+  const { mutate: applyJobMutate } = useCustomMutation(applyJobApi);
+  const { mutate: emitEventMutate } = useCustomMutation(emitEvent);
   const { withLoading, loading } = useLoading();
   const { showToast } = useToast();
   const handleClose = () => {
@@ -57,7 +59,8 @@ export default function ApplyPopUp({ isOpen, onClose, jobId, setIsApplied }) {
     }
     withLoading(async () => {
       try {
-        await mutate(jobId, file);
+        await applyJobMutate(jobId, file);
+        emitEventMutate({ event_name: 'apply_job', job_id: jobId });
         handleClose();
         setIsApplied(true);
       } catch (error) {

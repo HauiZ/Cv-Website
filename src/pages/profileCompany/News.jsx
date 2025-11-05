@@ -1,18 +1,22 @@
 import React from "react";
 import formatSalaryRangeToVND from "../../utils/formatSalaryRangeToVND";
 import { useNavigate } from "react-router-dom";
+import useCustomMutation from "../../hooks/useCustomMutation.js"
+import { emitEvent } from "../../services/emitEvent.js";
 
 export default function News({ job, companyName, logo }) {
   const salaryRange = formatSalaryRangeToVND(
     `${job.salaryMin} - ${job.salaryMax}`
   );
   const navigate = useNavigate();
+  const { mutate: mutateViewCount } = useCustomMutation(emitEvent);
 
   return (
     <div
       className="flex gap-4 border p-3 rounded-lg shadow-sm hover:shadow-[0_0_10px_rgba(12,142,94,0.5)] hover:border-[#0C8E5E] hover:border-1 transition-all duration-300 cursor-pointer group relative"
       onClick={() => {
         window.open(`/job/${job.id}`, '_blank');
+        mutateViewCount({ event_name: 'job_view', job_id: job.id });
       }}
     >
       <img

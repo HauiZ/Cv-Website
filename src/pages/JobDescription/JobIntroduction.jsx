@@ -11,11 +11,13 @@ import ApplyPopUp from "./ApplyPopUp";
 import { useEffect } from "react";
 import useCustomMutation from "../../hooks/useCustomMutation";
 import { saveNews } from "../../services/userApi";
+import { emitEvent } from "../../services/emitEvent";
 
 export default function JobIntroduction({data, status, jobId, isPreviewMode = false}) {
   const [isApplyOpen, setIsApplyOpen] = useState(false);
   const salaryRanges = formatSalaryRangeToVND(data?.salaryRange || "Thương lượng");
-  const { mutate } = useCustomMutation(saveNews);
+  const { mutate: saveNewsMutate } = useCustomMutation(saveNews);
+  const { mutate: emitEventMutate } = useCustomMutation(emitEvent);
   const [isSaved, setIsSaved] = useState(!!status?.isSaved);
   useEffect(() => setIsSaved(!!status?.isSaved), [status?.isSaved]);
   const [isApplied, setIsApplied] = useState(!!status?.isApplied);
@@ -24,7 +26,10 @@ export default function JobIntroduction({data, status, jobId, isPreviewMode = fa
   const handleSaveClick = () => {
     const next = !isSaved;
     setIsSaved(next);
-    mutate(jobId);
+    saveNewsMutate(jobId);
+    if (next) {
+      emitEventMutate({ event_name: 'save_job', job_id: jobId });
+    }
   }
   return (
     <div className="p-6 bg-white w-[39rem] h-fit">

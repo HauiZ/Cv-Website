@@ -3,16 +3,20 @@ import LikeButton from "./LikeButton";
 
 import formatSalaryRangeToVND from "../../../../utils/formatSalaryRangeToVND.js";
 import { useNavigate } from "react-router-dom";
+import useCustomMutation from "../../../../hooks/useCustomMutation.js"
+import { emitEvent } from "../../../../services/emitEvent.js";
 const JobItem = ({ job }) => {
   const salaryRange = formatSalaryRangeToVND(
     `${job.salaryMin} - ${job.salaryMax}`
   );
   const navigate = useNavigate();
+  const { mutate: mutateViewCount } = useCustomMutation(emitEvent);
   return (
     <div
       className="relative border border-gray-300 rounded-xl w-[300px] h-[130px] bg-white p-3 shadow-sm hover:shadow-[0_0_10px_rgba(12,142,94,0.5)] hover:border-[#0C8E5E] hover:border-2 transition-all duration-300 cursor-pointer group "
       onClick={() => {
         navigate(`/job/${job.id}`);
+        mutateViewCount({ event_name: 'job_view', job_id: job.id });
       }}
     >
       <div className="flex">

@@ -4,14 +4,9 @@ import useCustomMutation from "../../hooks/useCustomMutation";
 import Loader from "../../components/Loader";
 import useLoading from "../../hooks/useLoading";
 import { changeProfileCandidate } from '../../services/userApi';
-
-const EDUCATION_OPTIONS = [
-  "Sinh viên/Thực tập", "Trung cấp/Cao đẳng", "Đại học", "Thạc sĩ", "Tiến sĩ", "Khác"
-];
-
-const LOCATION_OPTIONS = [
-  "TP. Hồ Chí Minh", "Hà Nội", "Đà Nẵng", "Cần Thơ", "Hải Phòng", "Khác"
-];
+import useCustomFetch from '../../hooks/useCustomFetch';
+import { fetchAreaApi } from '../../services/userApi';
+import Select from "react-select";
 
 // --- Modal xác nhận ---
 function ConfirmDialog({ open, onCancel, onConfirm, changes }) {
@@ -79,6 +74,11 @@ export default function PersonalInfoForm() {
   const email = user?.email || "";
   const { mutate } = useCustomMutation(changeProfileCandidate);
   const { loading, withLoading } = useLoading();
+  const { data } = useCustomFetch(fetchAreaApi);
+  const provincesOptions = data?.map((item) => ({
+    label: item.province,
+    value: item.province,
+  })) || [];
 
   const [formData, setFormData] = useState({
     fullName: user?.userName || "",
@@ -212,6 +212,7 @@ export default function PersonalInfoForm() {
     putIfChanged("yearsExperience", formData.yearsExperience === "" ? "" : Number(formData.yearsExperience));
     putIfChanged("currentLevel", formData.currentLevel);
     putIfChanged("about", formData.about);
+    console.log("Location:", formData.location);
     return out;
   };
 
@@ -289,10 +290,17 @@ export default function PersonalInfoForm() {
 
             <div>
               <label htmlFor="location" className={labelBase}>Địa điểm</label>
-              <select id="location" name="location" value={formData.location} onChange={handleChange} className={inputBase}>
-                <option value="">-- Chọn địa điểm --</option>
-                {LOCATION_OPTIONS.map(loc => <option key={loc} value={loc}>{loc}</option>)}
-              </select>
+              <Select
+                options={provincesOptions}
+                value={provincesOptions.find(opt => opt.value === formData.location) || null}
+                onChange={(option) => {
+                  setField("location", option?.value || "");
+                }}
+                placeholder="Chọn tỉnh/thành"
+                className="basic-select"
+                classNamePrefix="select"
+              />
+              {touched.location && errors.location && <p className="text-red-500 ...">{errors.location}</p>}
             </div>
 
             <div>
@@ -317,13 +325,11 @@ export default function PersonalInfoForm() {
 
             <div>
               <label htmlFor="currentLevel" className={labelBase}>Trình độ hiện tại</label>
-              <select
-                id="currentLevel" name="currentLevel" value={formData.currentLevel} onChange={handleChange}
+              <input
+                id="currentLevel" name="currentLevel" type="text" placeholder="VD: Junior Developer"
+                value={formData.currentLevel} onChange={handleChange}
                 className={inputBase}
-              >
-                <option value="">-- Chọn trình độ --</option>
-                {EDUCATION_OPTIONS.map(opt => <option key={opt} value={opt}>{opt}</option>)}
-              </select>
+              />
             </div>
 
             <div className="md:col-span-2">
@@ -391,15 +397,16 @@ export default function PersonalInfoForm() {
             </button>
           </div>
         </form>
-      </div>
+      </div >
 
       {/* Popup xác nhận */}
-      <ConfirmDialog
+      < ConfirmDialog
         open={confirmOpen}
-        onCancel={() => setConfirmOpen(false)}
+        onCancel={() => setConfirmOpen(false)
+        }
         onConfirm={confirmAndSave}
         changes={pendingChanges}
       />
-    </div>
+    </div >
   );
 }

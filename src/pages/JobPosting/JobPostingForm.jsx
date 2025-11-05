@@ -11,6 +11,15 @@ import { fetchAreaApi } from "../../services/userApi";
 import Select from "react-select";
 import jobCategories from '../../components/JobCategories';
 
+const LEVEL_OPTIONS = [
+    "Nhân viên",
+    "Trưởng nhóm",
+    "Quản lý / Giám sát",
+    "Trưởng chi nhánh",
+    "Giám đốc / Phó giám đốc",
+    "Thực tập sinh",
+];
+
 const JobPostingForm = () => {
 
     const [notification, setNotification] = useState(null);
@@ -483,23 +492,22 @@ const JobPostingForm = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                         <div className="form-group">
                             <label className="form-label block mb-1 font-medium">
-                                Cấp bậc
-                                <span className="text-red-500 ml-1">*</span>
+                                Cấp bậc <span className="text-red-500 ml-1">*</span>
                             </label>
-                            <select
+
+                            <input
                                 className={selectFieldClass}
-                                value={formData.jobLevel}
-                                onChange={(e) => handleInputChange('jobLevel', e.target.value)}
+                                list="job-level-list"
+                                value={formData.jobLevel || ""}
+                                onChange={(e) => handleInputChange("jobLevel", e.target.value)}
+                                placeholder="Chọn hoặc nhập cấp bậc"
                                 required
-                            >
-                                <option value="" disabled>Chọn cấp bậc</option>
-                                <option value="Nhân viên">Nhân viên</option>
-                                <option value="Trưởng nhóm">Trưởng nhóm</option>
-                                <option value="Quản lý / Giám sát">Quản lý / Giám sát</option>
-                                <option value="Trưởng chi nhánh">Trưởng chi nhánh</option>
-                                <option value="Giám đốc / Phó giám đốc">Giám đốc / Phó giám đốc</option>
-                                <option value="Thực tập sinh">Thực tập sinh</option>
-                            </select>
+                            />
+                            <datalist id="job-level-list">
+                                {LEVEL_OPTIONS.map(opt => (
+                                    <option key={opt} value={opt} />
+                                ))}
+                            </datalist>
                         </div>
 
                         <div className="form-group">

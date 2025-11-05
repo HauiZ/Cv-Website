@@ -1,5 +1,4 @@
 import React from 'react';
-import PersonalInfoForm from './PersonalInfoForm';
 import PersonalInfoForm2 from './PersonalInfoForm2';
 import Introduce from './Introduce';
 

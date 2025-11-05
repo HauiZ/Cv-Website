@@ -12,7 +12,7 @@ export default function useCustomMutation(mutationFunction) {
     try {
       const result = await mutationFunction(...params);
       const message = result?.message || result.data.message
-      showToast( message, "success");
+      if (message) showToast(message, "success");
       return result;
     } catch (err) {
       const msg =

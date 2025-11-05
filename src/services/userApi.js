@@ -38,9 +38,9 @@ const changePassword = async ({ oldPassword, newPassword, confirmNewPassword }) 
   return await axios.patch(URL_API, data);
 }
 
-const changeProfileCandidate = async ({ name, phone, desiredJob, skills, expectedSalary, yearsExperience, currentLevel, about }) => {
+const changeProfileCandidate = async ({ name, phone, desiredJob, skills, expectedSalary, yearsExperience, currentLevel, about, location }) => {
   const URL_API = "/users/changeProfile";
-  const data = { name, phone, desiredJob, skills, expectedSalary, yearsExperience, currentLevel, about };
+  const data = { name, phone, desiredJob, skills, expectedSalary, yearsExperience, currentLevel, about, location };
   return await axios.patch(URL_API, data);
 }
 const getNotificationApi = async() =>{

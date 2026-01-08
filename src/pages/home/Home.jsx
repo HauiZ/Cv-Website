@@ -8,6 +8,8 @@ import { FaAngleRight } from "react-icons/fa6";
 import Hotline from "./component/HotLine/HotLine";
 import Search from "../../components/Search/Search";
 import { useNavigate } from "react-router-dom";
+import { useAuthContext } from "../../contexts/AuthContext";
+import UpdateProfilePopup from "./component/UpdateProfilePopup";
 
 import background_ColorGreen from "../../assets/image/background_ColorGreen.png";
 import { useState } from "react";
@@ -27,9 +29,10 @@ const Mix = () => {
       <h1 className="text-2xl text-white font-semibold mt-2 mb-2 animate-pulse">
         Tìm việc làm nhanh, việc làm mới nhất trên toàn quốc
       </h1>
-      <Search onSearch={handleFilterChange} 
-      initialValues={{
-        keyword: filters}}/>
+      <Search onSearch={handleFilterChange}
+        initialValues={{
+          keyword: filters
+        }} />
       <div className="flex justify-center mt-2 gap-x-10">
         <div className="w-[300px] h-[240px] bg-white rounded-2xl shadow-md">
           <ul className="space-y-3 ml-3 pr-3 py-4">
@@ -61,7 +64,16 @@ const Mix = () => {
   );
 };
 
+
 function Home() {
+  const { user } = useAuthContext();
+
+  const isProfileIncomplete =
+    user &&
+    (!user.skills ||
+      !user.yearsExperience ||
+      !user.currentLevel ||
+      !user.location);
   return (
     <>
       <div
@@ -80,6 +92,7 @@ function Home() {
       </div>
       <Hotline />
       <div className="w-full h-[50px]" />
+      <UpdateProfilePopup show={isProfileIncomplete} />
     </>
   );
 }

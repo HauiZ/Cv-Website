@@ -72,7 +72,6 @@ function Home() {
     user &&
     (!user.skills ||
       !user.yearsExperience ||
-      !user.currentLevel ||
       !user.location);
   return (
     <>

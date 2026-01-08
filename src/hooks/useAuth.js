@@ -229,6 +229,7 @@ export default function useAuth(navigationCallback = null) {
       try {
         await logoutApi();
         localStorage.removeItem("access_token");
+        sessionStorage.removeItem("hasSeenUpdateProfilePopup");
         clearUser(); // ✅ clear user from context
         showToast("Đăng xuất thành công!", "success");
         const getLoginPath = (pathname) => {

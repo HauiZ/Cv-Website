@@ -73,7 +73,7 @@ export default function News({ job, companyName, logo }) {
           <div className="flex justify-between  xl:gap-x-5 text-sm text-black mt-1">
             <div className="flex gap-4">
               <div className="bg-gray-300 h-fit w-fit text-center p-1.5 rounded-[.5em] hover:bg-gray-200 transition-colors duration-200">
-                {job?.companyAddress || "ha noi"}
+                {job?.Area?.province || "ha noi"}
               </div>
               <div className="bg-gray-300 h-fit w-fit text-center p-1.5 rounded-[.5em] hover:bg-gray-200 transition-colors duration-200 ">
                 Hạn: {job?.applicationDeadline || "0"}

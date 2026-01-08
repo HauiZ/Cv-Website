@@ -80,7 +80,7 @@ const JobItem = ({ job }) => {
           {salaryRange || "Thương lượng"}
         </span>
         <span className="bg-[#EDEFF0] rounded-full px-3 py-1 hover:bg-gray-200 transition-colors duration-200">
-          {job?.companyAddress || "Hà Nội"}
+          {job?.Area?.province || "Hà Nội"}
         </span>
       </div>
 
